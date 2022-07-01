@@ -1,0 +1,150 @@
+﻿@model IEnumerable<SGVisitasTecnicasASPCore.Models.productos>
+
+@{
+    ViewData["Title"] = "SGVT - Gestión de Productos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int a = 0;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/no-more-tables.css" rel="stylesheet" />
+    <title>Gestión de Productos</title>
+</head>
+<body>
+    <h4 class="text-center text-primary">Gestión de Productos</h4>
+    <hr />
+    <center>
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width:50%">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            </ol>
+            <div class="carousel-inner">
+                @foreach (var i in Model)
+                {
+                    a++;
+                    var active = a == 1 ? "active" : "";
+                    <div class="carousel-item @active">
+                        <img class="d-block w-100" src="@Url.Content("~/image/"+i.ImageName)" alt="@i.nombre">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>@i.nombre</h5>
+                            <p>@i.marca</p>
+                        </div>
+                    </div>
+                }
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </center>
+    <div class="container-fluid">
+        <section id="no-more-tables" style="padding-top: 0;">
+            <p>
+                <a class="btn btn-primary" asp-action="Create">Nuevo Producto</a>
+            </p>
+            <table class="table-bordered table-striped table-condensed">
+                <thead class="text-center">
+                    <tr>
+                        @*<th>
+                                @Html.DisplayNameFor(model => model.id_producto)
+                            </th>*@
+                        <th>
+                            @Html.DisplayNameFor(model => model.nombre)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.marca)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.descripcion)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ImageName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.unidad)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.cantidad)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.precioUnitario)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.stock)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.descuento)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.porcentaje)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.categoria_id)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.id_producto)
+                                </td>*@
+                            <td data-title="@Html.DisplayNameFor(model => model.nombre)">
+                                @Html.DisplayFor(modelItem => item.nombre)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.marca)">
+                                @Html.DisplayFor(modelItem => item.marca)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.descripcion)">
+                                @Html.DisplayFor(modelItem => item.descripcion)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.ImageName)">
+                                @Html.DisplayFor(modelItem => item.ImageName)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.unidad)">
+                                @Html.DisplayFor(modelItem => item.unidad)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.cantidad)">
+                                @Html.DisplayFor(modelItem => item.cantidad)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.precioUnitario)">
+                                @Html.DisplayFor(modelItem => item.precioUnitario)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.stock)">
+                                @Html.DisplayFor(modelItem => item.stock)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.descuento)">
+                                @Html.DisplayFor(modelItem => item.descuento)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.porcentaje)">
+                                @Html.DisplayFor(modelItem => item.porcentaje)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.categoria_id)">
+                                @Html.DisplayFor(modelItem => item.categoria_id)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", new { id = item.id_producto }, new { @class = "btn btn-warning" }) |
+                                @*@Html.ActionLink("Detalles", "Details", new { id = item.id_producto }, new { @class = "btn btn-info" }) |*@
+                                @Html.ActionLink("Eliminar", "Delete", new { id = item.id_producto }, new { @class = "btn btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

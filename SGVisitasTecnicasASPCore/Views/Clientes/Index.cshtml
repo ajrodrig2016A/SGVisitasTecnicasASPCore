@@ -1,0 +1,101 @@
+﻿@model IEnumerable<SGVisitasTecnicasASPCore.Models.clientes>
+
+@{
+    ViewData["Title"] = "SGVT - Gestión de Clientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/no-more-tables.css" rel="stylesheet" />
+    <title>Gestión de Clientes</title>
+</head>
+<body>
+    <h4 class="text-center text-primary">Gestión de Clientes</h4>
+    <hr />
+    <div class="container-fluid">
+        <section id="no-more-tables" style="padding-top: 0;">
+            <p>
+                <a class="btn btn-primary" asp-action="Create">Crear Nuevo Cliente</a>
+            </p>
+            <table class="table-bordered table-striped table-condensed">
+                <thead class="text-center">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.numero_documento)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nombres)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.apellidos)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.fecha_registro)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.genero)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.direccion)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.password)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.numero_contacto)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td data-title="@Html.DisplayNameFor(model => model.numero_documento)">
+                                @Html.DisplayFor(modelItem => item.numero_documento)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.nombres)">
+                                @Html.DisplayFor(modelItem => item.nombres)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.apellidos)">
+                                @Html.DisplayFor(modelItem => item.apellidos)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.fecha_registro)">
+                                @Html.DisplayFor(modelItem => item.fecha_registro)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.genero)">
+                                @Html.DisplayFor(modelItem => item.genero)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.direccion)">
+                                @Html.DisplayFor(modelItem => item.direccion)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.email)">
+                                @Html.DisplayFor(modelItem => item.email)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.password)">
+                                @Html.DisplayFor(modelItem => item.password)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.numero_contacto)">
+                                @Html.DisplayFor(modelItem => item.numero_contacto)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", new { id = item.id_cliente }, new { @class = "btn btn-warning" }) |
+                                @Html.ActionLink("Detalles", "Details", new { id = item.id_cliente }, new { @class = "btn btn-info" }) |
+                                @Html.ActionLink("Eliminar", "Delete", new { id = item.id_cliente }, new { @class = "btn btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

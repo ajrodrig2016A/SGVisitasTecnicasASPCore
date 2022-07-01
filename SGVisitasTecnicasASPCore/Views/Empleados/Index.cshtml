@@ -1,0 +1,107 @@
+﻿@model IEnumerable<SGVisitasTecnicasASPCore.Models.empleados>
+
+@{
+    ViewData["Title"] = "SGVT - Gestión de Empleados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/no-more-tables.css" rel="stylesheet" />
+    <title>Gestión de Empleados</title>
+</head>
+<body>
+    <h4 class="text-center text-primary">Gestión de Empleados</h4>
+    <hr />
+    <div class="container-fluid">
+        <section id="no-more-tables" style="padding-top: 0;">
+            <p>
+                <a class="btn btn-primary" asp-action="Create">Nuevo Empleado</a>
+            </p>
+            <table class="table-bordered table-striped table-condensed">
+                <thead class="text-center">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.numero_documento)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nombres)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.apellidos)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.fecha_registro)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.es_activo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.telefono)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.password)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.perfil)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.cargo)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td data-title="@Html.DisplayNameFor(model => model.numero_documento)">
+                                @Html.DisplayFor(modelItem => item.numero_documento)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.nombres)">
+                                @Html.DisplayFor(modelItem => item.nombres)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.apellidos)">
+                                @Html.DisplayFor(modelItem => item.apellidos)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.fecha_registro)">
+                                @Html.DisplayFor(modelItem => item.fecha_registro)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.es_activo)">
+                                @Html.DisplayFor(modelItem => item.es_activo)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.email)">
+                                @Html.DisplayFor(modelItem => item.email)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.telefono)">
+                                @Html.DisplayFor(modelItem => item.telefono)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.password)">
+                                @Html.DisplayFor(modelItem => item.password)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.perfil)">
+                                @Html.DisplayFor(modelItem => item.perfil)
+                            </td>
+                            <td data-title="@Html.DisplayNameFor(model => model.cargo)">
+                                @Html.DisplayFor(modelItem => item.cargo)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", new { id = item.id_empleado }, new { @class = "btn btn-warning" }) |
+                                @Html.ActionLink("Detalles", "Details", new { id = item.id_empleado }, new { @class = "btn btn-info" }) |
+                                @Html.ActionLink("Eliminar", "Delete", new { id = item.id_empleado }, new { @class = "btn btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

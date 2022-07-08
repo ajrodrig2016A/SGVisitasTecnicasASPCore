@@ -19,21 +19,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
         {
             _context = context;
         }
-        bool IsAnyNullOrEmpty(object myObject)
-        {
-            foreach (PropertyInfo pi in myObject.GetType().GetProperties())
-            {
-                if (pi.PropertyType == typeof(string))
-                {
-                    string value = (string)pi.GetValue(myObject);
-                    if (string.IsNullOrEmpty(value))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
+
         // GET: Clientes
         [Authorize]
         public ActionResult Index()
@@ -65,9 +51,10 @@ namespace SGVisitasTecnicasASPCore.Controllers
         {
             try
             {
-                if (!IsAnyNullOrEmpty(cliente) && Utils.VerificaIdentificacion(cliente.numero_documento))
+                if (!Utils.IsAnyNullOrEmpty(cliente) /*&& Utils.VerificaIdentificacion(cliente.numero_documento)*/)
                 {
                     _context.clientes.Add(cliente);
+                    _context.usuarios.Add(new Usuario { Nombre = cliente.nombres, Correo = cliente.email, Clave = cliente.password, token_recovery = null, Rol = "CLI" });
                     _context.SaveChanges();
                 }
                 else
@@ -96,9 +83,23 @@ namespace SGVisitasTecnicasASPCore.Controllers
         [HttpPost]
         public ActionResult Edit(clientes cliente)
         {
-            if (!IsAnyNullOrEmpty(cliente))
+            if (!Utils.IsAnyNullOrEmpty(cliente))
             {
                 _context.Entry(cliente).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                Usuario user = new Usuario();
+                user = _context.usuarios.Where(u => u.Correo.Trim() == cliente.email.Trim()).FirstOrDefault();
+                if (user != null && (!cliente.nombres.Trim().Equals(user.Nombre.Trim()) || !cliente.email.Trim().Equals(user.Correo.Trim()) || !cliente.password.Trim().Equals(user.Clave.Trim()) || !user.Rol.Trim().Equals("CLI")))
+                {
+                    user.Nombre = cliente.nombres;
+                    user.Correo = cliente.email;
+                    user.Clave = cliente.password;
+                    user.Rol = "CLI";
+                    _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                }
+                /*else
+                {
+                    _context.usuarios.Add(new Usuario { Nombre = cliente.nombres, Correo = cliente.email, Clave = cliente.password, token_recovery = null, Rol = "CLI" });
+                }*/
                 _context.SaveChanges();
             }
             else
@@ -123,7 +124,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
         public ActionResult Delete(int id, IFormCollection collection)
         {
             clientes cliente = _context.clientes.Where(x => x.id_cliente == id).FirstOrDefault();
+            Usuario user = _context.usuarios.Where(u => u.Correo.Trim() == cliente.email.Trim()).FirstOrDefault();
             _context.clientes.Remove(cliente);
+            _context.usuarios.Remove(user);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

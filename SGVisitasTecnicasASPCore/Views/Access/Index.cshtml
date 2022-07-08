@@ -20,7 +20,6 @@
 </head>
 <body class="bg-gradient-primary">
     <div class="container">
-
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
@@ -36,7 +35,17 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Bienvenido al SGVT!</h1>
                                     </div>
+                                    <div style="color:green;">
+                                        @ViewBag.Message
+                                    </div>
+                                    <div style="color:red;">
+                                        @ViewBag.Error
+                                    </div>
+                                    <div style="color:red;">
+                                        @ViewBag.UserNotFound
+                                    </div>
 
+                                    <br />
                                     <form class="user" asp-controller="Access" asp-action="Index" method="post">
                                         <div class="form-group">
                                             <label asp-for="Correo" class="form-label">Email</label>
@@ -52,7 +61,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" asp-controller="Access" asp-action="ForgotPassword">Olvidó su Contraseña?</a>
+                                        <a class="small" asp-controller="Access" asp-action="StartRecovery">Olvidó su Contraseña?</a>
                                     </div>
                                     <div class="text-center" style="display:none;">
                                         <a class="small" href="register.html">Create an Account!</a>

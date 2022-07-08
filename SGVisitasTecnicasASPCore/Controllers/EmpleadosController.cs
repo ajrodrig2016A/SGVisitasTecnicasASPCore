@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using SGVisitasTecnicasASPCore.Models;
 using Microsoft.AspNetCore.Http;
@@ -18,21 +17,6 @@ namespace SGVisitasTecnicasASPCore.Controllers
         public EmpleadosController(SgvtDB context)
         {
             _context = context;
-        }
-        bool IsAnyNullOrEmpty(object myObject)
-        {
-            foreach (PropertyInfo pi in myObject.GetType().GetProperties())
-            {
-                if (pi.PropertyType == typeof(string))
-                {
-                    string value = (string)pi.GetValue(myObject);
-                    if (string.IsNullOrEmpty(value))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
 
         // GET: Empleados
@@ -66,9 +50,10 @@ namespace SGVisitasTecnicasASPCore.Controllers
         {
             try
             {
-                if (!IsAnyNullOrEmpty(empleado) && Utils.VerificaIdentificacion(empleado.numero_documento))
+                if (!Utils.IsAnyNullOrEmpty(empleado) /*&& Utils.VerificaIdentificacion(empleado.numero_documento)*/)
                 {
                     _context.empleados.Add(empleado);
+                    _context.usuarios.Add(new Usuario { Nombre = empleado.nombres, Correo = empleado.email, Clave = empleado.password, token_recovery = null, Rol = empleado.perfil });
                     _context.SaveChanges();
                 }
                 else
@@ -97,9 +82,23 @@ namespace SGVisitasTecnicasASPCore.Controllers
         [HttpPost]
         public ActionResult Edit(empleados empleado)
         {
-            if (!IsAnyNullOrEmpty(empleado))
+            if (!Utils.IsAnyNullOrEmpty(empleado))
             {
                 _context.Entry(empleado).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                Usuario user = new Usuario();
+                user = _context.usuarios.Where(u => u.Correo.Trim() == empleado.email.Trim()).FirstOrDefault();
+                if (user != null && (!empleado.nombres.Trim().Equals(user.Nombre.Trim()) || !empleado.email.Trim().Equals(user.Correo.Trim()) || !empleado.password.Trim().Equals(user.Clave.Trim()) || !empleado.perfil.Trim().Equals(user.Rol.Trim())))
+                {
+                    user.Nombre = empleado.nombres;
+                    user.Correo = empleado.email;
+                    user.Clave = empleado.password;
+                    user.Rol = empleado.perfil;
+                    _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                }
+                /*else
+                {
+                    _context.usuarios.Add(new Usuario { Nombre = empleado.nombres, Correo = empleado.email, Clave = empleado.password, token_recovery = null, Rol = empleado.perfil });
+                }*/
                 _context.SaveChanges();
             }
             else
@@ -125,7 +124,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
         public ActionResult Delete(int id, IFormCollection collection)
         {
             empleados empleado = _context.empleados.Where(x => x.id_empleado == id).FirstOrDefault();
+            Usuario user = _context.usuarios.Where(u => u.Correo.Trim() == empleado.email.Trim()).FirstOrDefault();
             _context.empleados.Remove(empleado);
+            _context.usuarios.Remove(user);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

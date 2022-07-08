@@ -7,9 +7,14 @@
   <ItemGroup>
     <Compile Remove="Migrations\20220624225035_IntialDb_productos_categorias.cs" />
     <Compile Remove="Migrations\20220624225035_IntialDb_productos_categorias.Designer.cs" />
+    <Compile Remove="Migrations\20220707202120_IntialDb_usuarios.cs" />
+    <Compile Remove="Migrations\20220707202120_IntialDb_usuarios.Designer.cs" />
+    <Compile Remove="Migrations\20220708023152_IntialDb_ChangesErrorMessages_RequiredFields.cs" />
+    <Compile Remove="Migrations\20220708023152_IntialDb_ChangesErrorMessages_RequiredFields.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EASendMail" Version="7.9.0.1" />
     <PackageReference Include="jQuery.UI" Version="1.12.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.10">
       <PrivateAssets>all</PrivateAssets>

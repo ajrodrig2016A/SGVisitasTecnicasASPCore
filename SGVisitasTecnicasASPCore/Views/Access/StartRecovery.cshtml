@@ -1,4 +1,8 @@
-﻿@model ForgotPasswordViewModel
+﻿@model RecoveryViewModel
+@{
+    ViewData["Title"] = "StartRecovery";
+}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,24 +48,32 @@
                                             Lo entendemos, las cosas pasan. Sólo tienes que introducir tu dirección de correo electrónico
                                             y te enviaremos un enlace para restablecer tu contraseña!.
                                         </p>
+                                        <div style="color:green;">
+                                            @ViewBag.SucessEmail
+                                        </div>
+                                        <div style="color:red;">
+                                            @ViewBag.FailEmail
+                                        </div>
+                                        <div style="color:red;">
+                                            @ViewBag.UserNotFound
+                                        </div>                                     
+                                        <br />
                                     </div>
-                                    <form class="user" method="post">
-                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                    <form class="user" asp-controller="Access" asp-action="StartRecovery" method="post">
+                                        @*<div asp-validation-summary="All" class="text-danger"></div>*@
                                         <div class="form-group">
                                             <input asp-for="email" type="email" class="form-control form-control-user"
-                                                   placeholder="Introduzca la dirección de correo electrónico..."/>
+                                                   placeholder="Introduzca la dirección de correo electrónico..." />
                                             <span asp-validation-for="email" class="text-danger"></span>
                                         </div>
-                                        <a asp-controller="Access" asp-action="ForgotPassword" class="btn btn-primary btn-user btn-block">
-                                            Resetear Contraseña
-                                        </a>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Resetear Contraseña</button>
                                     </form>
                                     <hr>
                                     <div class="text-center" style="display:none;">
                                         <a class="small" href="register.html">Create an Account!</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" asp-controller="Access" asp-action="Index" >¿Ya tienes una cuenta? Inicie sesión!</a>
+                                        <a class="small" asp-controller="Access" asp-action="Index">¿Ya tienes una cuenta? Inicie sesión!</a>
                                     </div>
                                 </div>
                             </div>
@@ -88,3 +100,4 @@
 </body>
 
 </html>
+

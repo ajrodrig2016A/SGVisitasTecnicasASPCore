@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SGVisitasTecnicasASPCore.Models;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Http.Features;
 
 namespace SGVisitasTecnicasASPCore
 {
@@ -35,6 +35,11 @@ namespace SGVisitasTecnicasASPCore
                 option.LoginPath = "/Access/Index";
                 option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
                 option.AccessDeniedPath = "/Home/Privacy";
+            });
+            services.Configure<FormOptions>(options =>
+            {
+                // Set the limit to 4 MB
+                options.MultipartBodyLengthLimit = 4194304;
             });
         }
 

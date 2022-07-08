@@ -14,15 +14,15 @@ namespace SGVisitasTecnicasASPCore.Models
         [Key]
         public int id_producto { get; set; }
 
-        [Required(ErrorMessage = "Por favor ingrese el nombre.")]
+        [Required(ErrorMessage = "Ingrese el nombre.")]
         [StringLength(90)]
         public string nombre { get; set; }
 
-        [Required(ErrorMessage = "Por favor ingrese la marca.")]
+        [Required(ErrorMessage = "Ingrese la marca.")]
         [StringLength(60)]
         public string marca { get; set; }
 
-        [Required(ErrorMessage = "Por favor ingrese la descripción.")]
+        [Required(ErrorMessage = "Ingrese la descripción.")]
         [StringLength(int.MaxValue)]
         public string descripcion { get; set; }
 
@@ -30,10 +30,10 @@ namespace SGVisitasTecnicasASPCore.Models
         public string ImageName { get; set; }
 
         [NotMapped]
-        [DisplayName("Subir Imagen")]
+        [DisplayName("Subir imagen")]
         public IFormFile ImageFile { get; set; }
 
-        [Required(ErrorMessage = "Por favor ingrese la unidad.")]
+        [Required(ErrorMessage = "Ingrese la unidad.")]
         [StringLength(8)]
         public string unidad { get; set; }
 
@@ -46,7 +46,7 @@ namespace SGVisitasTecnicasASPCore.Models
         public decimal descuento { get; set; }
 
         public decimal porcentaje { get; set; }
-
+        [Required(ErrorMessage = "Seleccione la categoría.")]
         public int categoria_id { get; set; }
 
         public categorias Categoria { get; set; }

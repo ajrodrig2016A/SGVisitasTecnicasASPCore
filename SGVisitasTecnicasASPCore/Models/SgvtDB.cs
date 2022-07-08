@@ -19,6 +19,7 @@ namespace SGVisitasTecnicasASPCore.Models
         
         public DbSet<empleados> empleados { get; set; }
         public DbSet<clientes> clientes { get; set; }
+        public DbSet<Usuario> usuarios { get; set; }
         public DbSet<visitas> visitas { get; set; }
         public DbSet<categorias> categorias { get; set; }
         public DbSet<productos> productos { get; set; }

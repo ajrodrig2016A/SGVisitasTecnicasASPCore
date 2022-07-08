@@ -13,15 +13,15 @@ namespace SGVisitasTecnicasASPCore.Models
         [Key]
         public int id_categoria { get; set; }
 
-        [Required(ErrorMessage = "Por favor ingrese el nombre.")]
+        [Required(ErrorMessage = "Ingrese el nombre.")]
         [StringLength(64)]
         public string nombre { get; set; }
         
-        [Required(ErrorMessage = "Por favor ingrese la descripción.")]
+        [Required(ErrorMessage = "Ingrese la descripción.")]
         [StringLength(int.MaxValue)]
         public string descripcion { get; set; }
 
-        [Required(ErrorMessage = "Por favor seleccione el estado.")]
+        [Required(ErrorMessage = "Seleccione el estado.")]
         [StringLength(64)]
         public string estado { get; set; }
 

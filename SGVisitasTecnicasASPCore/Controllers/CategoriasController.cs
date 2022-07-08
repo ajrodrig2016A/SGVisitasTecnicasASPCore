@@ -19,21 +19,6 @@ namespace SGVisitasTecnicasASPCore.Controllers
         {
             _context = context;
         }
-        bool IsAnyNullOrEmpty(object myObject)
-        {
-            foreach (PropertyInfo pi in myObject.GetType().GetProperties())
-            {
-                if (pi.PropertyType == typeof(string))
-                {
-                    string value = (string)pi.GetValue(myObject);
-                    if (string.IsNullOrEmpty(value))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
 
         // GET: CategoriasController
         [Authorize]
@@ -67,7 +52,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
         {
             try
             {
-                if (!IsAnyNullOrEmpty(categoria))
+                if (!Utils.IsAnyNullOrEmpty(categoria))
                 {
                     _context.categorias.Add(categoria);
                     _context.SaveChanges();
@@ -99,7 +84,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(categorias categoria)
         {
-            if (!IsAnyNullOrEmpty(categoria))
+            if (!Utils.IsAnyNullOrEmpty(categoria))
             {
                 _context.Entry(categoria).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 _context.SaveChanges();

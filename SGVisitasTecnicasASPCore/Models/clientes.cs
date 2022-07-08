@@ -11,42 +11,42 @@ namespace SGVisitasTecnicasASPCore.Models
         [Key]
         public int id_cliente { get; set; }
 
-        [Required(ErrorMessage = "Por favor ingrese un número de identificación válido.")]
+        [Required(ErrorMessage = "Ingrese un número de identificación válido.")]
         [StringLength(13)]
         public string numero_documento { get; set; }
 
         [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
-        [Required(ErrorMessage = "Por favor ingrese los nombres.")]
+        [Required(ErrorMessage = "Ingrese los nombres.")]
         [StringLength(64)]
         public string nombres { get; set; }
 
         [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
-        [Required(ErrorMessage = "Por favor ingrese los apellidos.")]
+        [Required(ErrorMessage = "Ingrese los apellidos.")]
         [StringLength(64)]
         public string apellidos { get; set; }
 
-        [Required(ErrorMessage = "Por favor seleccione la fecha de registro.")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy - MM - dd}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Seleccione la fecha de registro.")]
         public DateTime fecha_registro { get; set; }
 
-        [Required(ErrorMessage = "Por favor seleccione el género.")]
+        [Required(ErrorMessage = "Seleccione el género.")]
         [StringLength(16)]
         public string genero { get; set; }
 
-        [Required(ErrorMessage = "Por favor ingrese la dirección.")]
+        [Required(ErrorMessage = "Ingrese la dirección.")]
         [StringLength(128)]
         public string direccion { get; set; }
 
-        [Required(ErrorMessage = "Por favor ingrese el email.")]
+        [Required(ErrorMessage = "Ingrese el email.")]
         [StringLength(64)]
         public string email { get; set; }
 
-        [Required(ErrorMessage = "Por favor ingrese el password.")]
+        [Required(ErrorMessage = "Ingrese el password.")]
         [StringLength(20)]
         public string password { get; set; }
 
-        [Required(ErrorMessage = "Por favor ingrese el número de contacto.")]
+        [Required(ErrorMessage = "Ingrese el número de contacto.")]
         [StringLength(20)]
         public string numero_contacto { get; set; }
 

@@ -1,12 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+using System.Net.Mail;
+using System.Reflection;
 
 namespace SGVisitasTecnicasASPCore.Data
 {
     public class Utils
     {
+        internal static bool IsAnyNullOrEmpty(object myObject)
+        {
+            foreach (PropertyInfo pi in myObject.GetType().GetProperties())
+            {
+                if (pi.PropertyType == typeof(string))
+                {
+                    string value = (string)pi.GetValue(myObject);
+                    if (string.IsNullOrEmpty(value))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         internal static bool VerificaIdentificacion(string identificacion)
         {
             bool estado = false;
@@ -147,5 +167,58 @@ namespace SGVisitasTecnicasASPCore.Data
                 return false;
             }
         }
+
+        public static string ConvertStringtoMD5(string strword)
+        {
+            MD5 md5 = MD5.Create();
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(strword);
+            byte[] hash = md5.ComputeHash(inputBytes);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("x2"));
+            }
+            return sb.ToString();
+        }
+
+        public static string GetSHA256(string str)
+        {
+            SHA256 sha256 = SHA256Managed.Create();
+            ASCIIEncoding encoding = new ASCIIEncoding();
+            byte[] stream = null;
+            StringBuilder sb = new StringBuilder();
+            stream = sha256.ComputeHash(encoding.GetBytes(str));
+            for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
+            return sb.ToString();
+        }
+        public bool SendEmail(string sender, string recipient, string subject, string bodyText)
+        {
+            try
+            {
+                MailAddress to = new MailAddress(recipient);
+                MailAddress from = new MailAddress(sender);
+
+                MailMessage message = new MailMessage(from, to);
+                message.Subject = subject;
+                message.Body = bodyText;
+                message.IsBodyHtml = true;
+
+                SmtpClient client = new SmtpClient("smtp.mailtrap.io", 2525)
+                {
+                    Credentials = new NetworkCredential("c5caf274a330ff", "d4489958dcdc18"),
+                    EnableSsl = true
+                };
+                // code in brackets above needed if authentication required
+                client.Send(message);
+                return true;
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+
+        }
+
     }
 }

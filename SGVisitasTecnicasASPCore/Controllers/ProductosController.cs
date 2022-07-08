@@ -42,11 +42,11 @@ namespace SGVisitasTecnicasASPCore.Controllers
                     producto.ImageFile.CopyTo(fileStream);
                 }
             }
-
+            ViewData["message"] =$"{producto.ImageFile.Length} bytes uploaded successfully!";
             return fileName;
         }
 
-        //bool IsAnyNullOrEmpty(object myObject)
+        //bool Utils.IsAnyNullOrEmpty(object myObject)
         //{
         //    foreach (PropertyInfo pi in myObject.GetType().GetProperties())
         //    {
@@ -93,6 +93,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
         // POST: ProductosController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestFormLimits(MultipartBodyLengthLimit = 4194304)]
         public async Task<IActionResult> Create(productos producto)
         {
             if (ModelState.IsValid)
@@ -214,13 +215,6 @@ namespace SGVisitasTecnicasASPCore.Controllers
             _context.productos.Remove(producto);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-            //using (SgvtDB SgvtEntities = new SgvtDB())
-            //{
-            //    productos producto = SgvtEntities.productos.Where(x => x.id_producto == id).FirstOrDefault();
-            //    SgvtEntities.productos.Remove(producto);
-            //    SgvtEntities.SaveChanges();
-            //}
-            //return RedirectToAction("Index");
         }
     }
 }

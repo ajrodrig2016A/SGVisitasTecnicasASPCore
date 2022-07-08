@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SGVisitasTecnicasASPCore.Models
 {
-    public class ForgotPasswordViewModel
+    public class RecoveryViewModel
     {
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Escriba su email.")]
         public string email { get; set; }
     }
 }

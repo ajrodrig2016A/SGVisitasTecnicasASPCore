@@ -28,7 +28,7 @@ namespace SGVisitasTecnicasASPCore.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy - MM - dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Seleccione la fecha de registro.")]
-        public DateTime fecha_registro { get; set; }
+        public DateTime fecha_registro { get; set; } //= DateTime.Now;
 
         public bool es_activo { get; set; }
         
@@ -59,5 +59,6 @@ namespace SGVisitasTecnicasASPCore.Models
             COM
         }
         public virtual ICollection<visitas> Visitas { get; set; }
+        public virtual ICollection<cotizaciones> Cotizaciones { get; set; }
     }
 }

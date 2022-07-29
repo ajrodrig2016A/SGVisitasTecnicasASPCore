@@ -1,65 +1,121 @@
 ﻿@model IEnumerable<SGVisitasTecnicasASPCore.Models.categorias>
 
 @{
-    ViewData["Title"] = "SGVT - Gestión de Categorías";
+    ViewData["Title"] = "Gestión de Categorías";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    SortModel sortModel = (SortModel)ViewData["sortModel"];
+
+    PagerModel pager = ViewBag.Pager;
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/css/no-more-tables.css" rel="stylesheet" />
-    <title>Gestión de Categorías</title>
-</head>
-<body>
-    <h4 class="text-center text-primary">Gestión de Categorías</h4>
-    <hr />
-    <div class="container-fluid">
-        <section id="no-more-tables" style="padding-top: 0;">
-            <p>
-                <a class="btn btn-primary" asp-action="Create">Nueva Categoría</a>
-            </p>
-            <table class="table-bordered table-striped table-condensed">
-                <thead class="text-center">
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.nombre)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.descripcion)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.estado)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td data-title="@Html.DisplayNameFor(model => model.nombre)">
-                                @Html.DisplayFor(modelItem => item.nombre)
-                            </td>
-                            <td data-title="@Html.DisplayNameFor(model => model.descripcion)">
-                                @Html.DisplayFor(modelItem => item.descripcion)
-                            </td>
-                            <td data-title="@Html.DisplayNameFor(model => model.estado)">
-                                @Html.DisplayFor(modelItem => item.estado)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Editar", "Edit", new { id = item.id_categoria }, new { @class = "btn btn-warning" }) |
-                                @Html.ActionLink("Detalles", "Details", new { id = item.id_categoria }, new { @class = "btn btn-info" }) |
-                                @Html.ActionLink("Eliminar", "Delete", new { id = item.id_categoria }, new { @class = "btn btn-danger" })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </section>
+<hr />
+<h4 class="text-center text-primary">Gestión de Categorías</h4>
+<hr />
+<div class="container">
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Nueva Categoría</a>
+    </p>
+    <div class="row">
+        <div class="col-12">
+            <partial name="_topBar" model="@pager" />
+        </div>
     </div>
-</body>
-</html>
+    <section id="no-more-tables" style="padding-top: 0;">
+        <table class="table-bordered table-striped table-condensed">
+            <thead class="text-center">
+                <tr>
+                    <th>
+                        <i class="@sortModel.GetColumn("Nombre").SortIcon" arial-hidden="true"></i>
+
+                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Nombre").SortExpression">
+                            Nombre
+                        </a>
+                    </th>
+                    <th>
+                        <i class="@sortModel.GetColumn("Descripción").SortIcon" arial-hidden="true"></i>
+
+                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Descripción").SortExpression">
+                            Descripción
+                        </a>
+                    </th>
+                    <th>
+                        <i class="@sortModel.GetColumn("Estado").SortIcon" arial-hidden="true"></i>
+
+                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Estado").SortExpression">
+                            Estado
+                        </a>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td data-title="@Html.DisplayNameFor(model => model.nombre)">
+                            @Html.DisplayFor(modelItem => item.nombre)
+                        </td>
+                        <td data-title="@Html.DisplayNameFor(model => model.descripcion)">
+                            @Html.DisplayFor(modelItem => item.descripcion)
+                        </td>
+                        <td data-title="@Html.DisplayNameFor(model => model.estado)">
+                            @Html.DisplayFor(modelItem => item.estado)
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a asp-action="Edit" asp-route-id="@item.id_categoria">
+                                    <span class="btn btn-sm btn-outline-primary">
+                                        <i class="fa fa-edit" aria-hidden="true"></i>
+                                    </span>
+                                </a>
+
+                                <a asp-action="Details" asp-route-id="@item.id_categoria">
+                                    <span class="btn btn-sm btn-outline-dark">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                    </span>
+                                </a>
+
+                                <a asp-action="Delete" asp-route-id="@item.id_categoria">
+                                    <span class="btn btn-sm btn-outline-danger">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </span>
+                                </a>
+
+                            </div>
+                            @*@Html.ActionLink("Editar", "Edit", new { id = item.id_categoria }, new { @class = "btn btn-warning" }) |
+                                @Html.ActionLink("Detalles", "Details", new { id = item.id_categoria }, new { @class = "btn btn-info" }) |
+                                @Html.ActionLink("Eliminar", "Delete", new { id = item.id_categoria }, new { @class = "btn btn-danger" })*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+    <div class="row">
+        <div class="col-12">
+            <partial name="_bottomBar" model="@pager" />
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function openSuccessModal(strMessage) {
+            var myDiv = document.getElementById("myModalSuccessAlertBody");
+            myDiv.innerHTML = strMessage;
+            $('#myModalSuccess').modal('show');
+
+        }
+
+        $(document).ready(function () {
+            var msg = "@TempData["SuccessMessage"]";
+            if (msg) {
+                openSuccessModal(msg);
+
+            }
+
+        });
+
+    </script>
+}

@@ -1,0 +1,196 @@
+﻿@model IEnumerable<SGVisitasTecnicasASPCore.Models.cotizaciones>
+
+@{
+    ViewData["Title"] = "Gestión de Cotizaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    SortModel sortModel = (SortModel)ViewData["sortModel"];
+
+    PagerModel pager = ViewBag.Pager;
+}
+
+<hr />
+<h4 class="text-center text-primary">Gestión de Cotizaciones</h4>
+<hr />
+<div class="container-fluid">
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Crear Nueva Cotizacion</a>
+    </p>
+    <div class="row">
+        <div class="col-12">
+            <partial name="_topBar" model="@pager" />
+        </div>
+    </div>
+</div>
+<section id="no-more-tables" style="padding-top: 0;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="display:none;">
+                    @Html.DisplayNameFor(model => model.id_cotizacion)
+                </th>
+                <th>
+                    <i class="@sortModel.GetColumn("Nombre Cliente").SortIcon" arial-hidden="true"></i>
+
+                    <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Nombre Cliente").SortExpression">
+                        Nombre Cliente
+                    </a>
+                </th>
+                <th>
+                    <i class="@sortModel.GetColumn("Sector Inmueble").SortIcon" arial-hidden="true"></i>
+
+                    <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Sector Inmueble").SortExpression">
+                        Sector Inmueble
+                    </a>
+                </th>
+                <th>
+                    <i class="@sortModel.GetColumn("Dirección Inmueble").SortIcon" arial-hidden="true"></i>
+
+                    <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Dirección Inmueble").SortExpression">
+                        Dirección Inmueble
+                    </a>
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.nombre_cliente)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.sector_inmueble)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.direccion_inmueble)
+                    </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.fecha_registro)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.telefono)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.estado)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tiempo_entrega)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.instalacion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.garantia_equipos)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.forma_pago)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.subtotal)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.validez)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.observaciones)
+                </th>*@
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="display:none;">
+                        @Html.DisplayFor(modelItem => item.id_cotizacion)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.nombre_cliente)">
+                        @Html.DisplayFor(modelItem => item.nombre_cliente)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.sector_inmueble)">
+                        @Html.DisplayFor(modelItem => item.sector_inmueble)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.direccion_inmueble)">
+                        @Html.DisplayFor(modelItem => item.direccion_inmueble)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.fecha_registro)">
+                        @Html.DisplayFor(modelItem => item.fecha_registro)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.telefono)">
+                        @Html.DisplayFor(modelItem => item.telefono)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.estado)">
+                        @Html.DisplayFor(modelItem => item.estado)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.tiempo_entrega)">
+                        @Html.DisplayFor(modelItem => item.tiempo_entrega)
+                    </td>
+                    @*<td data-title="@Html.DisplayNameFor(model => model.instalacion)">
+                        @Html.DisplayFor(modelItem => item.instalacion)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.garantia_equipos)">
+                        @Html.DisplayFor(modelItem => item.garantia_equipos)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.forma_pago)">
+                        @Html.DisplayFor(modelItem => item.forma_pago)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.subtotal)">
+                        @Html.DisplayFor(modelItem => item.subtotal)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.validez)">
+                        @Html.DisplayFor(modelItem => item.validez)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.observaciones)">
+                        @Html.DisplayFor(modelItem => item.observaciones)
+                    </td>*@
+                    <td>
+                        <div class="btn-group">
+                            <a asp-action="Edit" asp-route-id="@item.id_cotizacion">
+                                <span class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                </span>
+                            </a>
+
+                            <a asp-action="Details" asp-route-id="@item.id_cotizacion">
+                                <span class="btn btn-sm btn-outline-dark">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </span>
+                            </a>
+
+                            <a asp-action="Delete" asp-route-id="@item.id_cotizacion">
+                                <span class="btn btn-sm btn-outline-danger">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </span>
+                            </a>
+
+                        </div>
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.id_cotizacion }, new { @class = "btn btn-warning" }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.id_cotizacion }, new { @class = "btn btn-info" }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.id_cotizacion }, new { @class = "btn btn-danger" })*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
+<div class="row">
+    <div class="col-12">
+        <partial name="_bottomBar" model="@pager" />
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        function openSuccessModal(strMessage) {
+            var myDiv = document.getElementById("myModalSuccessAlertBody");
+            myDiv.innerHTML = strMessage;
+            $('#myModalSuccess').modal('show');
+
+        }
+        $(document).ready(function () {
+            var msg = "@TempData["SuccessMessage"]";
+            if (msg) {
+                openSuccessModal(msg);
+
+            }
+
+        });
+
+    </script>
+}

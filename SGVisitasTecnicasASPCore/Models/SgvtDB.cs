@@ -24,6 +24,9 @@ namespace SGVisitasTecnicasASPCore.Models
         public DbSet<categorias> categorias { get; set; }
         public DbSet<productos> productos { get; set; }
 
+        public DbSet<cotizaciones> cotizaciones { get; set; }
+        public DbSet<detalles_cotizacion> detallesCotizacion { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // configures one-to-many relationship
@@ -42,6 +45,13 @@ namespace SGVisitasTecnicasASPCore.Models
                 .HasOne(s => s.Categoria)
                 .WithMany(g => g.Productos)
                 .HasForeignKey(s => s.categoria_id);
+
+            modelBuilder.Entity<cotizaciones>()
+                .HasOne(s => s.Empleado)
+                .WithMany(g => g.Cotizaciones)
+                .HasForeignKey(s => s.empleado_id);
+
+
         }
     }
 

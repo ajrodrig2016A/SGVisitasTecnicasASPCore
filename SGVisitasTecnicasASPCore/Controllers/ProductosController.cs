@@ -11,210 +11,280 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SGVisitasTecnicasASPCore.Interfaces;
 
 namespace SGVisitasTecnicasASPCore.Controllers
 {
+    [Authorize]
     public class ProductosController : Controller
     {
-        private readonly SgvtDB _context;
-        private readonly IWebHostEnvironment _hostEnvironment;
-
-        public ProductosController(SgvtDB context, IWebHostEnvironment hostEnvironment)
+        private readonly IWebHostEnvironment _webHost;
+        private readonly ICategorias _categoriasRepo;
+        private readonly IProductos _productosRepo;
+        public ProductosController(IProductos productosRepo, ICategorias categoriasRepo, IWebHostEnvironment webHost) // here the repository will be passed by the dependency injection.
         {
-            _context = context;
-            _hostEnvironment = hostEnvironment;
+            _webHost = webHost;
+            _productosRepo = productosRepo;
+            _categoriasRepo = categoriasRepo;
         }
 
-        //Upload file
-        private string UploadedFile(productos producto)
+        private string GetUploadedFileName(productos producto)
         {
-            string fileName = null;
+            string uniqueFileName = null;
 
             if (producto.ImageFile != null)
             {
-                string wwwRootPath = _hostEnvironment.WebRootPath;
-                fileName = Path.GetFileNameWithoutExtension(producto.ImageFile.FileName);
-                string extension = Path.GetExtension(producto.ImageFile.FileName);
-                producto.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-                string path = Path.Combine(wwwRootPath + "/image/", fileName);
-                using (var fileStream = new FileStream(path, FileMode.Create))
+                string uploadsFolder = Path.Combine(_webHost.WebRootPath, "image");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + producto.ImageFile.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     producto.ImageFile.CopyTo(fileStream);
                 }
             }
-            ViewData["message"] =$"{producto.ImageFile.Length} bytes uploaded successfully!";
-            return fileName;
+            //ViewData["message"] = $"{producto.ImageFile.Length} bytes uploaded successfully!";
+            return uniqueFileName;
         }
 
-        //bool Utils.IsAnyNullOrEmpty(object myObject)
-        //{
-        //    foreach (PropertyInfo pi in myObject.GetType().GetProperties())
-        //    {
-        //        if (pi.PropertyType == typeof(string))
-        //        {
-        //            string value = (string)pi.GetValue(myObject);
-        //            if (string.IsNullOrEmpty(value))
-        //            {
-        //                return true;
-        //            }
-        //        }
-        //    }
-        //    return false;
-        //}
-        // GET: ProductosController
-        [Authorize]
-        public async Task<IActionResult> Index()
+
+        public IActionResult Index(string sortExpression = "", string SearchText = "", int pg = 1, int pageSize = 5)
         {
-            return View(await _context.productos.ToListAsync());
+            SortModel sortModel = new SortModel();
+            sortModel.AddColumn("Nombre");
+            sortModel.AddColumn("Marca");
+            sortModel.AddColumn("Descripción");
+            //sortModel.AddColumn("Nombre Imagen");
+            //sortModel.AddColumn("Unidad");
+            //sortModel.AddColumn("Cantidad");
+            //sortModel.AddColumn("Precio Unitario");
+            //sortModel.AddColumn("Stock");
+            //sortModel.AddColumn("Descuento");
+            //sortModel.AddColumn("Porcentaje"); 
+            //sortModel.AddColumn("Categoría");
+            sortModel.ApplySort(sortExpression);
+            ViewData["sortModel"] = sortModel;
+
+            ViewBag.SearchText = SearchText;
+
+            PaginatedList<productos> items = _productosRepo.GetItems(sortModel.SortedProperty, sortModel.SortedOrder, SearchText, pg, pageSize);
+
+
+            var pager = new PagerModel(items.TotalRecords, pg, pageSize);
+            pager.SortExpression = sortExpression;
+            this.ViewBag.Pager = pager;
+
+
+            TempData["CurrentPage"] = pg;
+
+
+            return View(items);
         }
 
-        //// GET: ProductosController/Details/5
-        //[Authorize]
-        //public ActionResult Details(int id)
-        //{
-        //    productos producto = new productos();
-        //    using (SgvtDB SgvtEntities = new SgvtDB())
-        //    {
-        //        producto = SgvtEntities.productos.Where(x => x.id_producto == id).FirstOrDefault();
-        //    }
-        //    return View(producto);
-        //}
+        private void PopulateViewbags()
+        {
 
-        // GET: ProductosController/Create
-        [Authorize]
+            //ViewBag.Units = GetUnits();
+
+            //ViewBag.Brands = GetBrands();
+
+            ViewBag.Categorias = GetCategorias();
+
+        }
+
         public IActionResult Create()
         {
-            var categoryList = _context.categorias.Select(r => new { r.id_categoria, r.nombre }).ToList();
-            ViewData["CategoryID"] = new SelectList(categoryList, "id_categoria", "nombre");
-
-            return View(new productos());
+            productos item = new productos();
+            PopulateViewbags();
+            return View(item);
         }
 
-        // POST: ProductosController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [RequestFormLimits(MultipartBodyLengthLimit = 4194304)]
-        public async Task<IActionResult> Create(productos producto)
+        public IActionResult Create(productos product)
         {
-            if (ModelState.IsValid)
+            bool bolret = false;
+            string errMessage = "";
+            try
             {
-                //Save image to wwwroot/image
-                producto.ImageName = UploadedFile(producto);
+                if (product.descripcion.Length < 4 || product.descripcion == null)
+                    errMessage = "Descripción del producto Debe tener al menos 4 caracteres";
 
-                //Insert record
-                _context.Add(producto);
-                await _context.SaveChangesAsync();
+
+
+                if (_productosRepo.IsItemCodeExists(product.id_producto) == true)
+                    errMessage = errMessage + " " + " El código de producto " + product.id_producto + " ya existe";
+
+
+
+                if (_productosRepo.IsItemExists(product.nombre) == true)
+                    errMessage = errMessage + " " + " El nombre del producto " + product.nombre + " ya existe";
+
+                if (errMessage == "")
+                {
+
+                    string uniqueFileName = GetUploadedFileName(product);
+                    product.ImageName = uniqueFileName;
+
+
+                    product = _productosRepo.Create(product);
+                    bolret = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                errMessage = errMessage + " " + ex.Message;
+            }
+            if (bolret == false)
+            {
+                TempData["ErrorMessage"] = errMessage;
+                ModelState.AddModelError("", errMessage);
+                PopulateViewbags();
+                return View(product);
+
+                //return RedirectToAction(nameof(Create));
+            }
+            else
+            {
+                TempData["SuccessMessage"] = "Producto " + product.nombre + " creado exitosamente";
                 return RedirectToAction(nameof(Index));
             }
-
-            var categoryList = _context.categorias.Select(r => new { r.id_categoria, r.nombre }).ToList();
-            ViewData["CategoryID"] = new SelectList(categoryList, "id_categoria", "nombre");
-            return View();
         }
 
-        // GET: ProductosController/Edit/5
-        [Authorize]
-        public async Task<IActionResult> Edit(int? id)
+        //public IActionResult Details(int id) //Read
+        //{
+        //    productos item = _productosRepo.GetItem(id);
+        //    return View(item);
+        //}
+
+
+        public IActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var producto = await _context.productos.FindAsync(id);
-            var categoryList = _context.categorias.Select(r => new { r.id_categoria, r.nombre }).ToList();
-            ViewData["CategoryID"] = new SelectList(categoryList, "id_categoria", "nombre");
-
-            if (producto == null)
-            {
-                return NotFound();
-            }
+            productos producto = _productosRepo.GetItem(id);
+            ViewBag.Categorias = GetCategorias();
+            TempData.Keep();
             return View(producto);
-
         }
 
-        // POST: ProductosController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, productos producto)
+        public IActionResult Edit(productos product)
         {
-            if (id != producto.id_producto)
+            bool bolret = false;
+            string errMessage = "";
+
+            try
             {
-                return NotFound();
+                if (product.descripcion.Length < 4 || product.descripcion == null)
+                    errMessage = "Descripción del producto debe tener al menos 4 caracteres";
+
+
+                if (_productosRepo.IsItemCodeExists(product.id_producto, product.nombre) == true)
+                    errMessage = errMessage + " " + " El código de producto " + product.id_producto.ToString() + " ya existe";
+
+                if (_productosRepo.IsItemExists(product.nombre, product.id_producto) == true)
+                    errMessage = errMessage + " El nombre del producto " + product.nombre + " ya existe";
+
+                if (product.ImageFile != null)
+                {
+                    string filePath = Path.Combine(_webHost.WebRootPath, "image", product.ImageName);
+                    System.IO.File.Delete(filePath);
+
+                    string uniqueFileName = GetUploadedFileName(product);
+                    product.ImageName = uniqueFileName;
+                }
+
+                if (errMessage == "")
+                {
+                    product = _productosRepo.Edit(product);
+                    TempData["SuccessMessage"] = product.nombre + ", producto guardado exitosamente";
+                    bolret = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                errMessage = errMessage + " " + ex.Message;
             }
 
-            if (ModelState.IsValid)
+
+
+            int currentPage = 1;
+            if (TempData["CurrentPage"] != null)
+                currentPage = (int)TempData["CurrentPage"];
+
+
+            if (bolret == false)
             {
-                try
-                {
-                    if (producto.ImageFile != null)
-                    {
-                        if (producto.ImageName != null)
-                        {
-                            string filePath = Path.Combine(_hostEnvironment.WebRootPath, "image", producto.ImageName);
-                            System.IO.File.Delete(filePath);
-                        }
-                        producto.ImageName = UploadedFile(producto);
-                    }
-                    _context.Update(producto);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ImageExists(producto.id_producto))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                TempData["ErrorMessage"] = errMessage;
+                ModelState.AddModelError("", errMessage);
+                ViewBag.Categorias = GetCategorias();
+                return View(product);
             }
+            else
+                return RedirectToAction(nameof(Index), new { pg = currentPage });
+        }
+
+        public IActionResult Delete(int id)
+        {
+            productos producto = _productosRepo.GetItem(id);
+            TempData.Keep();
             return View(producto);
         }
 
-        private bool ImageExists(int id)
-        {
-            return _context.productos.Any(e => e.id_producto == id);
-        }
 
-        // GET: ProductosController/Delete/5
-        [Authorize]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var producto = await _context.productos
-                .FirstOrDefaultAsync(m => m.id_producto == id);
-            if (producto == null)
-            {
-                return NotFound();
-            }
-
-            return View(producto);
-        }
-
-        // POST: ProductosController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id, IFormCollection collection)
         {
-            var producto = await _context.productos.FindAsync(id);
+            productos producto = new productos();
+            try
+            {
+                //delete from wwwroot/image
+                var imagePath = Path.Combine(_webHost.WebRootPath, "image", producto.ImageName);
+                if (System.IO.File.Exists(imagePath))
+                    System.IO.File.Delete(imagePath);
+                producto = _productosRepo.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                string errMessage = ex.Message;
+                if (ex.InnerException != null)
+                    errMessage = ex.InnerException.Message;
 
-            //delete from wwwroot/image
-            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "image", producto.ImageName);
-            if (System.IO.File.Exists(imagePath))
-                System.IO.File.Delete(imagePath);
+                TempData["ErrorMessage"] = errMessage;
+                ModelState.AddModelError("", errMessage);
+                return View(producto);
+            }
 
-            //delete the record
-            _context.productos.Remove(producto);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            int currentPage = 1;
+            if (TempData["CurrentPage"] != null)
+                currentPage = (int)TempData["CurrentPage"];
+
+            TempData["SuccessMessage"] = "Producto " + producto.nombre + " borrado exitosamente";
+            return RedirectToAction(nameof(Index), new { pg = currentPage });
+
+
         }
+
+
+        private List<SelectListItem> GetCategorias()
+        {
+            var lstItems = new List<SelectListItem>();
+
+            PaginatedList<categorias> items = _categoriasRepo.GetItems("nombre", SortOrder.Ascending, "", 1, 1000);
+            lstItems = items.Select(ut => new SelectListItem()
+            {
+                Value = ut.id_categoria.ToString(),
+                Text = ut.nombre
+            }).ToList();
+
+            var defItem = new SelectListItem()
+            {
+                Value = "",
+                Text = "----Seleccione la Categoría----"
+            };
+
+            lstItems.Insert(0, defItem);
+
+            return lstItems;
+        }
+
     }
 }

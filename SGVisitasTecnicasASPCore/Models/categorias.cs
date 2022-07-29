@@ -32,7 +32,7 @@ namespace SGVisitasTecnicasASPCore.Models
             No_disponible
         }
         [NotMapped]
-        public SelectList CategorySelectList { get; set; }
+        public SelectList CategoriasSelectList { get; set; }
         public virtual ICollection<productos> Productos { get; set; }
     }
 }

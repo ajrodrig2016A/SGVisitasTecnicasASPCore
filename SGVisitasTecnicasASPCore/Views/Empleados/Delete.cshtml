@@ -1,116 +1,111 @@
 ﻿@model SGVisitasTecnicasASPCore.Models.empleados
 
 @{
-    ViewData["Title"] = "SGVT - Eliminar Empleado";
+    ViewData["Title"] = "Eliminar Empleado";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<hr />
+<div class="text-center bg-danger">
+    <h3>Usted está seguro de borrar este empleado?</h3>
+</div>
+<div>
+    <h4 class="text-center text-primary">Eliminar Empleado</h4>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 offset-md-3">
+                <dl class="d-lg-table">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.id_empleado)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.id_empleado)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.numero_documento)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.numero_documento)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.nombres)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.nombres)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.apellidos)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.apellidos)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.fecha_registro)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.fecha_registro)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.es_activo)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.es_activo)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.email)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.email)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.telefono)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.telefono)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.password)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.password)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.perfil)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.perfil)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.cargo)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.cargo)
+                    </dd>
+                </dl>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-    <title>Eliminar Empleado</title>
-</head>
-<body>
-
-    <h3 class="text-center">Usted está seguro de borrar este empleado?</h3>
-    <div>
-        <h4 class="text-center text-primary">Eliminar Empleado</h4>
-        <hr />
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-6 offset-md-3">
-                    <dl class="d-lg-table">
-                        <dt>
-                            @Html.DisplayNameFor(model => model.id_empleado)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.id_empleado)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.numero_documento)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.numero_documento)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.nombres)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.nombres)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.apellidos)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.apellidos)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.fecha_registro)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.fecha_registro)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.es_activo)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.es_activo)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.email)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.email)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.telefono)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.telefono)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.password)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.password)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.perfil)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.perfil)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.cargo)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.cargo)
-                        </dd>
-                    </dl>
-
-                    <form asp-action="Delete">
-                        <div class="row">
-                            <div class="col text-center">
+                <form asp-action="Delete">
+                    <div class="row">
+                        <div class="col text-center">
+                            <input type="submit" value="Eliminar" class="btn btn-danger" />
+                        </div>
+                        <div class="col text-center">
+                            <a class="btn btn-secondary" asp-action="Index">Cancelar</a>
+                        </div>
+                    </div>
+                    @*<div class="w-100">
+                            <div class="col-sm-12 col-md-12 text-center form-group">
                                 <input type="submit" value="Eliminar" class="btn btn-danger" />
-                            </div>
-                            <div class="col text-center">
                                 <a class="btn btn-secondary" asp-action="Index">Cancelar</a>
                             </div>
-                        </div>
-                        @*<div class="w-100">
-                                <div class="col-sm-12 col-md-12 text-center form-group">
-                                    <input type="submit" value="Eliminar" class="btn btn-danger" />
-                                    <a class="btn btn-secondary" asp-action="Index">Cancelar</a>
-                                </div>
-                            </div>*@
-                    </form>
+                        </div>*@
+                </form>
 
-                </div>
             </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

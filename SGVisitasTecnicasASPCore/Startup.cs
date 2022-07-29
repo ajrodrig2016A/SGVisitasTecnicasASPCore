@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using SGVisitasTecnicasASPCore.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.Features;
+using SGVisitasTecnicasASPCore.Interfaces;
+using SGVisitasTecnicasASPCore.Repositories;
 
 namespace SGVisitasTecnicasASPCore
 {
@@ -30,6 +32,13 @@ namespace SGVisitasTecnicasASPCore
             services.AddDbContext<SgvtDB>(options => options.UseMySQL(connString));
 
             services.AddControllersWithViews();
+
+            services.AddScoped<ICategorias, CategoriasRepo>();
+            services.AddScoped<IProductos, ProductosRepo>();
+            services.AddScoped<IEmpleados, EmpleadosRepo>();
+            services.AddScoped<IClientes, ClientesRepo>();
+            services.AddScoped<ICotizaciones, CotizacionesRepo>();
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
             {
                 option.LoginPath = "/Access/Index";

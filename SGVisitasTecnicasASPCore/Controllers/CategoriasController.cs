@@ -8,113 +8,179 @@ using System.Threading.Tasks;
 using SGVisitasTecnicasASPCore.Models;
 using Microsoft.AspNetCore.Authorization;
 using SGVisitasTecnicasASPCore.Data;
+using SGVisitasTecnicasASPCore.Interfaces;
 
 namespace SGVisitasTecnicasASPCore.Controllers
 {
+    [Authorize]
     public class CategoriasController : Controller
     {
-        private readonly SgvtDB _context;
-
-        public CategoriasController(SgvtDB context)
+        private readonly ICategorias _Repo;
+        public CategoriasController(ICategorias repo) // here the repository will be passed by the dependency injection.
         {
-            _context = context;
+            _Repo = repo;
         }
 
-        // GET: CategoriasController
-        [Authorize]
-        public ActionResult Index()
+
+        public IActionResult Index(string sortExpression = "", string SearchText = "", int pg = 1, int pageSize = 5)
         {
-            List<categorias> categorias = new List<categorias>();
-            categorias = _context.categorias.ToList();
-            return View(categorias);
+            SortModel sortModel = new SortModel();
+            sortModel.AddColumn("Nombre");
+            sortModel.AddColumn("Descripción");
+            sortModel.AddColumn("Estado");
+            sortModel.ApplySort(sortExpression);
+            ViewData["sortModel"] = sortModel;
+
+            ViewBag.SearchText = SearchText;
+
+            PaginatedList<categorias> items = _Repo.GetItems(sortModel.SortedProperty, sortModel.SortedOrder, SearchText, pg, pageSize);
+
+
+            var pager = new PagerModel(items.TotalRecords, pg, pageSize);
+            pager.SortExpression = sortExpression;
+            this.ViewBag.Pager = pager;
+
+
+            TempData["CurrentPage"] = pg;
+
+
+            return View(items);
         }
 
-        // GET: CategoriasController/Details/5
-        [Authorize]
-        public ActionResult Details(int id)
+
+        public IActionResult Create()
         {
-            categorias categoria = new categorias();
-            categoria = _context.categorias.Where(x => x.id_categoria == id).FirstOrDefault();
-            return View(categoria);
+            categorias item = new categorias();
+            return View(item);
         }
 
-        // GET: CategoriasController/Create
-        [Authorize]
-        public ActionResult Create()
-        {
-            return View(new categorias());
-        }
-
-        // POST: CategoriasController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(categorias categoria)
+        public IActionResult Create(categorias item)
         {
+            bool bolret = false;
+            string errMessage = "";
             try
             {
-                if (!Utils.IsAnyNullOrEmpty(categoria))
+                if (item.descripcion.Length < 4 || item.descripcion == null)
+                    errMessage = "Descripción debe ser al menos de 4 caracteres";
+
+                if (_Repo.IsItemExists(item.nombre) == true)
+                    errMessage = errMessage + " " + " nombre " + item.nombre + " ya existe";
+
+                if (errMessage == "")
                 {
-                    _context.categorias.Add(categoria);
-                    _context.SaveChanges();
-                }
-                else
-                {
-                    return View();
+                    item = _Repo.Create(item);
+                    bolret = true;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message.ToString());
+                errMessage = errMessage + " " + ex.Message;
             }
-
-            return RedirectToAction("Index");
-        }
-
-        // GET: CategoriasController/Edit/5
-        [Authorize]
-        public ActionResult Edit(int id)
-        {
-            categorias categoria = new categorias();
-            categoria = _context.categorias.Where(x => x.id_categoria == id).FirstOrDefault();
-            return View(categoria);
-        }
-
-        // POST: CategoriasController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(categorias categoria)
-        {
-            if (!Utils.IsAnyNullOrEmpty(categoria))
+            if (bolret == false)
             {
-                _context.Entry(categoria).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                _context.SaveChanges();
+                TempData["ErrorMessage"] = errMessage;
+                ModelState.AddModelError("", errMessage);
+                return View(item);
             }
             else
             {
-                return View();
+                TempData["SuccessMessage"] = "" + item.nombre + " creado exitosamente";
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        public IActionResult Details(int id) //Read
+        {
+            categorias item = _Repo.GetItem(id);
+            return View(item);
+        }
+
+
+        public IActionResult Edit(int id)
+        {
+            categorias item = _Repo.GetItem(id);
+            TempData.Keep();
+            return View(item);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(categorias item)
+        {
+            bool bolret = false;
+            string errMessage = "";
+
+            try
+            {
+                if (item.descripcion.Length < 4 || item.descripcion == null)
+                    errMessage = "Descripción debe ser al menos de 4 caracteres";
+
+                if (_Repo.IsItemExists(item.nombre, item.id_categoria) == true)
+                    errMessage = errMessage + item.nombre + " ya existe";
+
+                if (errMessage == "")
+                {
+                    item = _Repo.Edit(item);
+                    TempData["SuccessMessage"] = item.nombre + ", guardado exitosamente";
+                    bolret = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                errMessage = errMessage + " " + ex.Message;
             }
 
-            return RedirectToAction("Index");
+
+
+            int currentPage = 1;
+            if (TempData["CurrentPage"] != null)
+                currentPage = (int)TempData["CurrentPage"];
+
+
+            if (bolret == false)
+            {
+                TempData["ErrorMessage"] = errMessage;
+                ModelState.AddModelError("", errMessage);
+                return View(item);
+            }
+            else
+                return RedirectToAction(nameof(Index), new { pg = currentPage });
         }
 
-        // GET: CategoriasController/Delete/5
-        [Authorize]
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
-            categorias categoria = new categorias();
-            categoria = _context.categorias.Where(x => x.id_categoria == id).FirstOrDefault();
-            return View(categoria);
+            categorias item = _Repo.GetItem(id);
+            TempData.Keep();
+            return View(item);
         }
 
-        // POST: CategoriasController/Delete/5
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult Delete(int id, IFormCollection collection)
         {
-            categorias categoria = _context.categorias.Where(x => x.id_categoria == id).FirstOrDefault();
-            _context.categorias.Remove(categoria);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            categorias item = new categorias();
+            try
+            {
+                item = _Repo.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                string errMessage = ex.Message;
+                TempData["ErrorMessage"] = errMessage;
+                ModelState.AddModelError("", errMessage);
+                return View(item);
+
+            }
+
+            int currentPage = 1;
+            if (TempData["CurrentPage"] != null)
+                currentPage = (int)TempData["CurrentPage"];
+
+            TempData["SuccessMessage"] = item.nombre + " borrado exitosamente";
+            return RedirectToAction(nameof(Index), new { pg = currentPage });
+
         }
+
     }
 }

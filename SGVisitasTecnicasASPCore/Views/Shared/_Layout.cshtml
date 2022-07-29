@@ -3,109 +3,356 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SGVT</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="~/css/styles.css" rel="stylesheet" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="~/css/animate.css">
+
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="~/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="~/css/jquery.timepicker.css">
+
+    <link rel="stylesheet" href="~/css/flaticon.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link href="~/css/no-more-tables.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/style.css">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand text-dark" asp-area="" asp-controller="Home" asp-action="Index">SGVT - SAIMEC</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1 text-uppercase ms-auto py-4 py-lg-0">
-                        @if (User.IsInRole("ADM") || User.IsInRole("COM") || User.IsInRole("TEC"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Empleados" asp-action="Index">Empleados</a>
-                            </li>
-                        }
-
-                        @if (User.IsInRole("ADM") || User.IsInRole("COM"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
-                            </li>
-                        }
-
-                        @if (User.IsInRole("CLI"))
-                        {
-                            <li class="nav-item"><a class="nav-link text-dark" href="#services">Services</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" href="#portfolio">Portfolio</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" href="#about">About</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" href="#team">Team</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark" href="#contact">Contact</a></li>
-                        }
-
-                        @if (User.IsInRole("ADM"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Categorias" asp-action="Index">Categorias</a>
-                            </li>
-                        }
-
-                        @if (User.IsInRole("ADM"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Productos" asp-action="Index">Productos</a>
-                            </li>
-                        }
-
-                        @*@if (User.IsInRole("Administrador") || User.IsInRole("Supervisor") || User.IsInRole("Empleado"))
-        {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Empleados">Empleados</a>
-            </li>
-        }
-
-        @if (User.IsInRole("Administrador") || User.IsInRole("Supervisor"))
-        {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Clientes">Clientes</a>
-            </li>
-        }*@
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Access" asp-action="Salir">Salir</a>
-                        </li>
-                    </ul>
+    <div class="py-1 top">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm text-center text-md-left mb-md-0 mb-2 pr-md-4 d-flex topper align-items-center">
+                    <p class="mb-0 w-100">
+                        <span class="fa fa-paper-plane"></span>
+                        <span class="text">ventas.saimec@gmail.com</span>
+                    </p>
+                </div>
+                <div class="col-sm justify-content-center d-flex mb-md-0 mb-2">
+                    <div class="social-media">
+                        <p class="mb-0 d-flex">
+                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-facebook"><i class="sr-only">Facebook</i></span></a>
+                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-twitter"><i class="sr-only">Twitter</i></span></a>
+                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-instagram"><i class="sr-only">Instagram</i></span></a>
+                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-7 d-flex topper align-items-center text-lg-right justify-content-end">
+                    <p class="mb-0 register-link"><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Inquire Now</a></p>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container-fluid">
+        </div>
+    </div>
+    <div class="pt-4 pb-5">
+        <div class="container">
+            <div class="row d-flex align-items-start align-items-center px-3 px-md-0">
+                <div class="col-md-4 d-flex mb-2 mb-md-0">
+                    <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                        <span class="flaticon flaticon-crane"></span>
+                        <span class="ml-2">Saimec <small>Servicios de automatización industrial y mecánica</small></span>
+                    </a>
+                </div>
+                <div class="col-md-4 d-flex topper mb-md-0 mb-2 align-items-center">
+                    <div class="icon d-flex justify-content-center align-items-center">
+                        <span class="fa fa-map"></span>
+                    </div>
+                    <div class="pr-md-4 pl-md-3 pl-3 text">
+                        <p class="con"><span>Número de contacto</span> <span>+593 981895300</span></p>
+                        <p class="con">Llámenos ahora 24/7 Soporte al cliente</p>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex topper mb-md-0 align-items-center">
+                    <div class="icon d-flex justify-content-center align-items-center">
+                        <span class="fa fa-paper-plane"></span>
+                    </div>
+                    <div class="text pl-3 pl-md-3">
+                        <p class="hr"><span>Nuestra Ubicación</span></p>
+                        <p class="con">Antonio Tandazo y pascual Ati, Sangolquí, Ecuador</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar">
+        <div class="container d-flex align-items-center">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span> Menu
+            </button>
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav mr-auto">
+                    @if (User.IsInRole("ADM") || User.IsInRole("COM") || User.IsInRole("TEC"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Empleados" asp-action="Index">Empleados</a>
+                        </li>
+                    }
+
+                    @if (User.IsInRole("ADM") || User.IsInRole("COM"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
+                        </li>
+                    }
+
+                    @if (User.IsInRole("CLI"))
+                    {
+                        <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+                        <li class="nav-item"><a href="project.html" class="nav-link">Projects</a></li>
+                        <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                    }
+
+                    @if (User.IsInRole("ADM"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Categorias" asp-action="Index">Categorias</a>
+                        </li>
+                    }
+
+                    @if (User.IsInRole("ADM"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Productos" asp-action="Index">Productos</a>
+                        </li>
+                    }
+
+                    @if (User.IsInRole("ADM") || User.IsInRole("TEC"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Cotizaciones" asp-action="Index">Cotizaciones</a>
+                        </li>
+                    }
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Access" asp-action="Salir">Salir</a>
+                    </li>
+
+                </ul>
+                <a href="#" class="btn-custom" data-toggle="modal" data-target="#exampleModalCenter">Inquire Now</a>
+            </div>
+        </div>
+    </nav>
+    <!-- END nav -->
+
+    <div class="container">
         <main role="main" class="pb-3">
+
+            <!--Success Dialog Start-->
+            <div id="myModalSuccess" class="modal fade text-width:30%;" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h2 class="w-100 text-center">Información</h2>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <div id="myModalSuccessAlertBody" class="modal-body alert alert-success w-100 text-center">
+                            this is a modal body. our message will appear here.
+                        </div>
+
+                        <div class="modal-footer">
+                            &nbsp;
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--Success Dialog End-->
+            <!--Error Dialog Start-->
+            <div id="myModalError" class="modal fade text-width:30%;" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h2 class="text-center">Error</h2>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <div id="MyModalErrorAlertBody" class="modal-body alert alert-danger">
+                            this is a modal body. our message will appear here.
+                        </div>
+
+                        <div class="modal-footer">
+                            &nbsp;
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--Error Dialog End-->
+
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container-fluid">
-            &copy; 2022 - Sistema de Gestión para Visitas Técnicas SAIMEC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="ftco-footer">
+        <div class="container mb-5 pb-4">
+            <div class="row">
+                <div class="col-lg col-md-6">
+                    <div class="ftco-footer-widget">
+                        <h2 class="ftco-heading-2 d-flex align-items-center">About</h2>
+                        <p>Imagínalo y nosotros lo hacemos posible.</p>
+                        <ul class="ftco-footer-social list-unstyled mt-4">
+                            <li><a href="#"><span class="fa fa-twitter"></span></a></li>
+                            <li><a href="#"><span class="fa fa-facebook"></span></a></li>
+                            <li><a href="#"><span class="fa fa-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="ftco-footer-widget">
+                        <h2 class="ftco-heading-2">Links</h2>
+                        <div class="d-flex">
+                            <ul class="list-unstyled mr-md-4">
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Project</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>About Us</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Services</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Blog Posts</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Industries</a></li>
+                            </ul>
+                            <ul class="list-unstyled ml-md-5">
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Contact</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Help</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Privacy Policy</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Terms of Use</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg col-md-6">
+                    <div class="ftco-footer-widget">
+                        <h2 class="ftco-heading-2">Services</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Customer Services</a></li>
+                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Prompt Delivery</a></li>
+                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Reliable Equipment</a></li>
+                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>New Heavy Equipment</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg col-md-6">
+                    <div class="ftco-footer-widget">
+                        <h2 class="ftco-heading-2">Have a Questions?</h2>
+                        <div class="block-23 mb-3">
+                            <ul>
+                                <li><span class="fa fa-map-marker mr-3"></span><span class="text">Antonio Tandazo y Pascual Ati, Salgolquí, Ecuador</span></li>
+                                <li><a href="#"><span class="fa fa-phone mr-3"></span><span class="text">+593 981895300</span></a></li>
+                                <li><a href="#"><span class="fa fa-paper-plane mr-3"></span><span class="text">ventas.saimec@gmail.com</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-primary">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 aside-stretch py-3">
+
+                        <p class="mb-0">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> Todos los derechos reservados | Esta plantilla está hecha con <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close d-flex align-items-center justify-content-center" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="fa fa-close"></span>
+                    </button>
+                </div>
+                <div class="modal-body p-4 p-md-5">
+                    <form action="#" class="appointment-form ftco-animate">
+                        <h3>Request Quote</h3>
+                        <div class="">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="First Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Last Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Phone">
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="form-group">
+                                <div class="form-field">
+                                    <div class="select-wrap">
+                                        <div class="icon"><span class="fa fa-chevron-down"></span></div>
+                                        <select name="" id="" class="form-control">
+                                            <option value="">Select Your Services</option>
+                                            <option value="">Architecture</option>
+                                            <option value="">Renovation</option>
+                                            <option value="">Construction</option>
+                                            <option value="">Interior &amp; Exterior</option>
+                                            <option value="">Chemical Research</option>
+                                            <option value="">Petroleum &amp; Gas</option>
+                                            <option value="">Other Services</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="form-group">
+                                <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Message"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Request A Quote" class="btn btn-primary py-3 px-4">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery.easing.1.3.js"></script>
+    <script src="~/js/jquery.waypoints.min.js"></script>
+    <script src="~/js/jquery.stellar.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/js/jquery.animateNumber.min.js"></script>
+    <script src="~/js/bootstrap-datepicker.js"></script>
+    <script src="~/js/jquery.timepicker.min.js"></script>
+    <script src="~/js/scrollax.min.js"></script>
+    @*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>*@
+    @*<script src="~/js/google-map.js"></script>*@
+
+    <script src="~/js/main.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="~/js/scripts.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

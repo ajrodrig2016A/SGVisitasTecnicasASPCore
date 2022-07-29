@@ -2,133 +2,193 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using SGVisitasTecnicasASPCore.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using SGVisitasTecnicasASPCore.Data;
+using SGVisitasTecnicasASPCore.Interfaces;
 
 namespace SGVisitasTecnicasASPCore.Controllers
 {
+    [Authorize]
     public class EmpleadosController : Controller
     {
-        private readonly SgvtDB _context;
-
-        public EmpleadosController(SgvtDB context)
+        private readonly IEmpleados _Repo;
+        public EmpleadosController(IEmpleados repo) // here the repository will be passed by the dependency injection.
         {
-            _context = context;
+            _Repo = repo;
         }
 
-        // GET: Empleados
-        [Authorize]
-        public ActionResult Index()
+
+        public IActionResult Index(string sortExpression = "", string SearchText = "", int pg = 1, int pageSize = 5)
         {
-            List<empleados> empleados = new List<empleados>();
-            empleados = _context.empleados.ToList();
-            return View(empleados);
+            SortModel sortModel = new SortModel();
+            sortModel.AddColumn("Número Documento");
+            sortModel.AddColumn("Nombres");
+            sortModel.AddColumn("Apellidos");
+            //sortModel.AddColumn("Fecha Registro");
+            //sortModel.AddColumn("Es Activo");
+            //sortModel.AddColumn("Email");
+            //sortModel.AddColumn("Teléfono");
+            //sortModel.AddColumn("Password");
+            //sortModel.AddColumn("Perfil");
+            //sortModel.AddColumn("Cargo");
+            sortModel.ApplySort(sortExpression);
+            ViewData["sortModel"] = sortModel;
+
+            ViewBag.SearchText = SearchText;
+
+            PaginatedList<empleados> items = _Repo.GetItems(sortModel.SortedProperty, sortModel.SortedOrder, SearchText, pg, pageSize);
+
+
+            var pager = new PagerModel(items.TotalRecords, pg, pageSize);
+            pager.SortExpression = sortExpression;
+            this.ViewBag.Pager = pager;
+
+
+            TempData["CurrentPage"] = pg;
+
+
+            return View(items);
         }
 
-        // GET: Empleados/Details/5
-        [Authorize]
-        public ActionResult Details(int id)
+
+        public IActionResult Create()
         {
-            empleados empleado = new empleados();
-            empleado = _context.empleados.Where(x => x.id_empleado == id).FirstOrDefault();
-            return View(empleado);
+            empleados item = new empleados();
+            return View(item);
         }
 
-        // GET: Empleados/Create
-        [Authorize]
-        public ActionResult Create()
-        {
-            return View(new empleados());
-        }
-
-        // POST: Empleados/Create
         [HttpPost]
-        public ActionResult Create(empleados empleado)
+        public IActionResult Create(empleados item)
         {
+            bool bolret = false;
+            string errMessage = "";
             try
             {
-                if (!Utils.IsAnyNullOrEmpty(empleado) /*&& Utils.VerificaIdentificacion(empleado.numero_documento)*/)
+                if (item.numero_documento.Length < 10 || item.numero_documento == null)
+                    errMessage = "Número de identificación debe ser al menos de 10 caracteres";
+
+                if (_Repo.IsEmployeeExists(item.nombres) == true)
+                    errMessage = errMessage + " " + " nombres " + item.nombres + " ya existe";
+
+                if (errMessage == "")
                 {
-                    _context.empleados.Add(empleado);
-                    _context.usuarios.Add(new Usuario { Nombre = empleado.nombres, Correo = empleado.email, Clave = empleado.password, token_recovery = null, Rol = empleado.perfil });
-                    _context.SaveChanges();
-                }
-                else
-                {
-                    return View();
+                    item = _Repo.Create(item);
+                    bolret = true;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message.ToString());
+                errMessage = errMessage + " " + ex.Message;
             }
-
-            return RedirectToAction("Index");
-        }
-
-        // GET: Empleados/Edit/5
-        [Authorize]
-        public ActionResult Edit(int id)
-        {
-            empleados empleado = new empleados();
-            empleado = _context.empleados.Where(x => x.id_empleado == id).FirstOrDefault();
-            return View(empleado);
-        }
-
-        // POST: Empleados/Edit/5
-        [HttpPost]
-        public ActionResult Edit(empleados empleado)
-        {
-            if (!Utils.IsAnyNullOrEmpty(empleado))
+            if (bolret == false)
             {
-                _context.Entry(empleado).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                Usuario user = new Usuario();
-                user = _context.usuarios.Where(u => u.Correo.Trim() == empleado.email.Trim()).FirstOrDefault();
-                if (user != null && (!empleado.nombres.Trim().Equals(user.Nombre.Trim()) || !empleado.email.Trim().Equals(user.Correo.Trim()) || !empleado.password.Trim().Equals(user.Clave.Trim()) || !empleado.perfil.Trim().Equals(user.Rol.Trim())))
-                {
-                    user.Nombre = empleado.nombres;
-                    user.Correo = empleado.email;
-                    user.Clave = empleado.password;
-                    user.Rol = empleado.perfil;
-                    _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                }
-                /*else
-                {
-                    _context.usuarios.Add(new Usuario { Nombre = empleado.nombres, Correo = empleado.email, Clave = empleado.password, token_recovery = null, Rol = empleado.perfil });
-                }*/
-                _context.SaveChanges();
+                TempData["ErrorMessage"] = errMessage;
+                ModelState.AddModelError("", errMessage);
+                return View(item);
             }
             else
             {
-                return View();
+                TempData["SuccessMessage"] = "" + item.nombres + " creado exitosamente";
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        public IActionResult Details(int id) //Read
+        {
+            empleados item = _Repo.GetItem(id);
+            return View(item);
+        }
+
+
+        public IActionResult Edit(int id)
+        {
+            empleados item = _Repo.GetItem(id);
+            TempData.Keep();
+            return View(item);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(empleados item)
+        {
+            bool bolret = false;
+            string errMessage = "";
+
+            try
+            {
+                if (item.numero_documento.Length < 10 || item.numero_documento == null)
+                    errMessage = "Número de identificación debe ser al menos de 10 caracteres";
+
+                if (_Repo.IsEmployeeExists(item.nombres, item.id_empleado) == true)
+                    errMessage = errMessage + item.nombres + " ya existe";
+
+                if (errMessage == "")
+                {
+                    item = _Repo.Edit(item);
+                    TempData["SuccessMessage"] = item.nombres + ", guardado exitosamente";
+                    bolret = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                errMessage = errMessage + " " + ex.Message;
             }
 
-            return RedirectToAction("Index");
 
+
+            int currentPage = 1;
+            if (TempData["CurrentPage"] != null)
+                currentPage = (int)TempData["CurrentPage"];
+
+
+            if (bolret == false)
+            {
+                TempData["ErrorMessage"] = errMessage;
+                ModelState.AddModelError("", errMessage);
+                return View(item);
+            }
+            else
+                return RedirectToAction(nameof(Index), new { pg = currentPage });
         }
 
-        // GET: Empleados/Delete/5
-        [Authorize]
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
-            empleados empleado = new empleados();
-            empleado = _context.empleados.Where(x => x.id_empleado == id).FirstOrDefault();
-            return View(empleado);
+            empleados item = _Repo.GetItem(id);
+            TempData.Keep();
+            return View(item);
         }
 
-        // POST: Empleados/Delete/5
+
         [HttpPost]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id, IFormCollection collection)
         {
-            empleados empleado = _context.empleados.Where(x => x.id_empleado == id).FirstOrDefault();
-            Usuario user = _context.usuarios.Where(u => u.Correo.Trim() == empleado.email.Trim()).FirstOrDefault();
-            _context.empleados.Remove(empleado);
-            _context.usuarios.Remove(user);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            empleados item = new empleados();
+            try
+            {
+                item = _Repo.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                string errMessage = ex.Message;
+                TempData["ErrorMessage"] = errMessage;
+                ModelState.AddModelError("", errMessage);
+                return View(item);
+
+            }
+
+            int currentPage = 1;
+            if (TempData["CurrentPage"] != null)
+                currentPage = (int)TempData["CurrentPage"];
+
+            TempData["SuccessMessage"] = item.nombres + " borrado exitosamente";
+            return RedirectToAction(nameof(Index), new { pg = currentPage });
+
+
         }
+
     }
 }

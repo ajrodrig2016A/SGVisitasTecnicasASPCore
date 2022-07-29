@@ -29,14 +29,15 @@
 
 	#no-more-tables tr { border: 1px solid #ccc; }
 
-	#no-more-tables td { 
+	#no-more-tables td {
 		/* Behave  like a "row" */
 		border: none;
-		border-bottom: 1px solid #eee; 
+		border-bottom: 1px solid #eee;
 		position: relative;
-		padding-left: 50%; 
+		padding-left: 50%;
 		white-space: normal;
-		text-align:left;
+		text-align: left;
+		overflow-wrap: break-word;
 	}
 
 	#no-more-tables td:before { 

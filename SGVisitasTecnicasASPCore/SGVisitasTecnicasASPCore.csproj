@@ -11,6 +11,41 @@
     <Compile Remove="Migrations\20220707202120_IntialDb_usuarios.Designer.cs" />
     <Compile Remove="Migrations\20220708023152_IntialDb_ChangesErrorMessages_RequiredFields.cs" />
     <Compile Remove="Migrations\20220708023152_IntialDb_ChangesErrorMessages_RequiredFields.Designer.cs" />
+    <Compile Remove="Migrations\20220713171842_IntialDb_cotizaciones_detallesCotizacion.cs" />
+    <Compile Remove="Migrations\20220713171842_IntialDb_cotizaciones_detallesCotizacion.Designer.cs" />
+    <Compile Remove="Migrations\20220713172842_IntialDb_cotizaciones_detallesCotizacion.cs" />
+    <Compile Remove="Migrations\20220713172842_IntialDb_cotizaciones_detallesCotizacion.Designer.cs" />
+    <Compile Remove="Migrations\20220713173047_IntialDb_cotizaciones_detallesCotizacion.cs" />
+    <Compile Remove="Migrations\20220713173047_IntialDb_cotizaciones_detallesCotizacion.Designer.cs" />
+    <Compile Remove="Migrations\20220713173427_IntialDb_cotizaciones_detallesCotizacion.cs" />
+    <Compile Remove="Migrations\20220713173427_IntialDb_cotizaciones_detallesCotizacion.Designer.cs" />
+    <Compile Remove="Migrations\20220713175315_IntialDb_cotizaciones_detallesCotizacion.cs" />
+    <Compile Remove="Migrations\20220713175315_IntialDb_cotizaciones_detallesCotizacion.Designer.cs" />
+    <Compile Remove="Migrations\20220713175956_IntialDb_cotizaciones_detallesCotizacion.cs" />
+    <Compile Remove="Migrations\20220713175956_IntialDb_cotizaciones_detallesCotizacion.Designer.cs" />
+    <Compile Remove="Migrations\20220713180331_IntialDb_cotizaciones_detallesCotizacion.cs" />
+    <Compile Remove="Migrations\20220713180331_IntialDb_cotizaciones_detallesCotizacion.Designer.cs" />
+    <Compile Remove="Migrations\20220713181532_IntialDb_cotizaciones_detallesCotizacion.cs" />
+    <Compile Remove="Migrations\20220713181532_IntialDb_cotizaciones_detallesCotizacion.Designer.cs" />
+    <Compile Remove="Migrations\20220721184400_IntialDb_upd_FK_detallescotizacion_cotizaciones.cs" />
+    <Compile Remove="Migrations\20220721184400_IntialDb_upd_FK_detallescotizacion_cotizaciones.Designer.cs" />
+    <Compile Remove="Migrations\20220721184807_IntialDb_upd02_FK_detallescotizacion_cotizaciones.cs" />
+    <Compile Remove="Migrations\20220721184807_IntialDb_upd02_FK_detallescotizacion_cotizaciones.Designer.cs" />
+    <Compile Remove="Migrations\20220722222129_IntialDb_upd_msg_detallescotizacion.cs" />
+    <Compile Remove="Migrations\20220722222129_IntialDb_upd_msg_detallescotizacion.Designer.cs" />
+    <Compile Remove="Migrations\20220729011137_IntialDb_FK_Cotizaciones_Clientes.cs" />
+    <Compile Remove="Migrations\20220729011137_IntialDb_FK_Cotizaciones_Clientes.Designer.cs" />
+    <Compile Remove="Migrations\20220729013150_IntialDb_upd_FK_detallescotizacion_cotizaciones.cs" />
+    <Compile Remove="Migrations\20220729013150_IntialDb_upd_FK_detallescotizacion_cotizaciones.Designer.cs" />
+    <Compile Remove="Migrations\20220729014232_IntialDb_FK_Cotizaciones_Clientes.cs" />
+    <Compile Remove="Migrations\20220729014232_IntialDb_FK_Cotizaciones_Clientes.Designer.cs" />
+    <Compile Remove="Migrations\20220729015106_IntialDb_FK_Cotizaciones_Clientes.cs" />
+    <Compile Remove="Migrations\20220729015106_IntialDb_FK_Cotizaciones_Clientes.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Cotizaciones\oldDetails.cshtml" />
+    <Content Remove="Views\Cotizaciones\respCreate.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

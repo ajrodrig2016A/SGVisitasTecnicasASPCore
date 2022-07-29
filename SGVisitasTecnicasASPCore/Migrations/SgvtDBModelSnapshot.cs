@@ -125,6 +125,128 @@ namespace SGVisitasTecnicasASPCore.Migrations
                     b.ToTable("clientes");
                 });
 
+            modelBuilder.Entity("SGVisitasTecnicasASPCore.Models.cotizaciones", b =>
+                {
+                    b.Property<int>("id_cotizacion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("direccion_inmueble")
+                        .IsRequired()
+                        .HasColumnType("varchar(90)")
+                        .HasMaxLength(90);
+
+                    b.Property<int>("empleado_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("estado")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<DateTime>("fecha_registro")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("forma_pago")
+                        .IsRequired()
+                        .HasColumnType("varchar(60)")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("garantia_equipos")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("instalacion")
+                        .IsRequired()
+                        .HasColumnType("varchar(160)")
+                        .HasMaxLength(160);
+
+                    b.Property<string>("nombre_cliente")
+                        .IsRequired()
+                        .HasColumnType("varchar(60)")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("observaciones")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasMaxLength(2147483647);
+
+                    b.Property<string>("sector_inmueble")
+                        .IsRequired()
+                        .HasColumnType("varchar(60)")
+                        .HasMaxLength(60);
+
+                    b.Property<decimal>("subtotal")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("telefono")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("tiempo_entrega")
+                        .IsRequired()
+                        .HasColumnType("varchar(160)")
+                        .HasMaxLength(160);
+
+                    b.Property<string>("validez")
+                        .IsRequired()
+                        .HasColumnType("varchar(160)")
+                        .HasMaxLength(160);
+
+                    b.HasKey("id_cotizacion");
+
+                    b.HasIndex("empleado_id");
+
+                    b.ToTable("cotizaciones");
+                });
+
+            modelBuilder.Entity("SGVisitasTecnicasASPCore.Models.detalles_cotizacion", b =>
+                {
+                    b.Property<int>("id_detalle_cotización")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("cantidad")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("descripcion")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasMaxLength(2147483647);
+
+                    b.Property<int>("id_cotizacion")
+                        .HasColumnType("int");
+
+                    b.Property<string>("marca")
+                        .IsRequired()
+                        .HasColumnType("varchar(60)")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("ubicación")
+                        .IsRequired()
+                        .HasColumnType("varchar(90)")
+                        .HasMaxLength(90);
+
+                    b.Property<string>("unidad")
+                        .IsRequired()
+                        .HasColumnType("varchar(8)")
+                        .HasMaxLength(8);
+
+                    b.Property<decimal>("valorTotal")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("valorUnitario")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.HasKey("id_detalle_cotización");
+
+                    b.HasIndex("id_cotizacion");
+
+                    b.ToTable("detallesCotizacion");
+                });
+
             modelBuilder.Entity("SGVisitasTecnicasASPCore.Models.empleados", b =>
                 {
                     b.Property<int>("id_empleado")
@@ -289,6 +411,24 @@ namespace SGVisitasTecnicasASPCore.Migrations
                     b.HasIndex("empleado_id");
 
                     b.ToTable("visitas");
+                });
+
+            modelBuilder.Entity("SGVisitasTecnicasASPCore.Models.cotizaciones", b =>
+                {
+                    b.HasOne("SGVisitasTecnicasASPCore.Models.empleados", "Empleado")
+                        .WithMany("Cotizaciones")
+                        .HasForeignKey("empleado_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SGVisitasTecnicasASPCore.Models.detalles_cotizacion", b =>
+                {
+                    b.HasOne("SGVisitasTecnicasASPCore.Models.cotizaciones", "Cotizacion")
+                        .WithMany("DetallesCotizacion")
+                        .HasForeignKey("id_cotizacion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SGVisitasTecnicasASPCore.Models.productos", b =>

@@ -8,127 +8,187 @@ using SGVisitasTecnicasASPCore.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using SGVisitasTecnicasASPCore.Data;
+using SGVisitasTecnicasASPCore.Interfaces;
 
 namespace SGVisitasTecnicasASPCore.Controllers
 {
+    [Authorize]
     public class ClientesController : Controller
     {
-        private readonly SgvtDB _context;
-
-        public ClientesController(SgvtDB context)
+        private readonly IClientes _Repo;
+        public ClientesController(IClientes repo) // here the repository will be passed by the dependency injection.
         {
-            _context = context;
+            _Repo = repo;
         }
 
-        // GET: Clientes
-        [Authorize]
-        public ActionResult Index()
+
+        public IActionResult Index(string sortExpression = "", string SearchText = "", int pg = 1, int pageSize = 5)
         {
-            List<clientes> clientes = new List<clientes>();
-            clientes = _context.clientes.ToList();
-            return View(clientes);
+            SortModel sortModel = new SortModel();
+            sortModel.AddColumn("Número Documento");
+            sortModel.AddColumn("Nombres");
+            sortModel.AddColumn("Apellidos");
+            //sortModel.AddColumn("Fecha Registro");
+            //sortModel.AddColumn("Es Activo");
+            //sortModel.AddColumn("Email");
+            //sortModel.AddColumn("Teléfono");
+            //sortModel.AddColumn("Password");
+            //sortModel.AddColumn("Perfil");
+            //sortModel.AddColumn("Cargo");
+            sortModel.ApplySort(sortExpression);
+            ViewData["sortModel"] = sortModel;
+
+            ViewBag.SearchText = SearchText;
+
+            PaginatedList<clientes> items = _Repo.GetItems(sortModel.SortedProperty, sortModel.SortedOrder, SearchText, pg, pageSize);
+
+
+            var pager = new PagerModel(items.TotalRecords, pg, pageSize);
+            pager.SortExpression = sortExpression;
+            this.ViewBag.Pager = pager;
+
+
+            TempData["CurrentPage"] = pg;
+
+
+            return View(items);
         }
 
-        // GET: Clientes/Details/5
-        [Authorize]
-        public ActionResult Details(int id)
+
+        public IActionResult Create()
         {
-            clientes cliente = new clientes();
-            cliente = _context.clientes.Where(x => x.id_cliente == id).FirstOrDefault();
-            return View(cliente);
+            clientes item = new clientes();
+            return View(item);
         }
 
-        // GET: Clientes/Create
-        [Authorize]
-        public ActionResult Create()
-        {
-            return View(new clientes());
-        }
-
-        // POST: Clientes/Create
         [HttpPost]
-        public ActionResult Create(clientes cliente)
+        public IActionResult Create(clientes item)
         {
+            bool bolret = false;
+            string errMessage = "";
             try
             {
-                if (!Utils.IsAnyNullOrEmpty(cliente) /*&& Utils.VerificaIdentificacion(cliente.numero_documento)*/)
+                if (item.numero_documento.Length < 10 || item.numero_documento == null)
+                    errMessage = "Número de identificación debe ser al menos de 10 caracteres";
+
+                if (_Repo.IsCustomerExists(item.nombres) == true)
+                    errMessage = errMessage + " " + " nombres " + item.nombres + " ya existe";
+
+                if (errMessage == "")
                 {
-                    _context.clientes.Add(cliente);
-                    _context.usuarios.Add(new Usuario { Nombre = cliente.nombres, Correo = cliente.email, Clave = cliente.password, token_recovery = null, Rol = "CLI" });
-                    _context.SaveChanges();
-                }
-                else
-                {
-                    return View();
+                    item = _Repo.Create(item);
+                    bolret = true;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message.ToString());
+                errMessage = errMessage + " " + ex.Message;
             }
-
-            return RedirectToAction("Index");
-        }
-
-        // GET: Clientes/Edit/5
-        [Authorize]
-        public ActionResult Edit(int id)
-        {
-            clientes cliente = new clientes();
-            cliente = _context.clientes.Where(x => x.id_cliente == id).FirstOrDefault();
-            return View(cliente);
-        }
-
-        // POST: Clientes/Edit/5
-        [HttpPost]
-        public ActionResult Edit(clientes cliente)
-        {
-            if (!Utils.IsAnyNullOrEmpty(cliente))
+            if (bolret == false)
             {
-                _context.Entry(cliente).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                Usuario user = new Usuario();
-                user = _context.usuarios.Where(u => u.Correo.Trim() == cliente.email.Trim()).FirstOrDefault();
-                if (user != null && (!cliente.nombres.Trim().Equals(user.Nombre.Trim()) || !cliente.email.Trim().Equals(user.Correo.Trim()) || !cliente.password.Trim().Equals(user.Clave.Trim()) || !user.Rol.Trim().Equals("CLI")))
-                {
-                    user.Nombre = cliente.nombres;
-                    user.Correo = cliente.email;
-                    user.Clave = cliente.password;
-                    user.Rol = "CLI";
-                    _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                }
-                /*else
-                {
-                    _context.usuarios.Add(new Usuario { Nombre = cliente.nombres, Correo = cliente.email, Clave = cliente.password, token_recovery = null, Rol = "CLI" });
-                }*/
-                _context.SaveChanges();
+                TempData["ErrorMessage"] = errMessage;
+                ModelState.AddModelError("", errMessage);
+                return View(item);
             }
             else
             {
-                return View();
+                TempData["SuccessMessage"] = "" + item.nombres + " creado exitosamente";
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        public IActionResult Details(int id) //Read
+        {
+            clientes item = _Repo.GetItem(id);
+            return View(item);
+        }
+
+
+        public IActionResult Edit(int id)
+        {
+            clientes item = _Repo.GetItem(id);
+            TempData.Keep();
+            return View(item);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(clientes item)
+        {
+            bool bolret = false;
+            string errMessage = "";
+
+            try
+            {
+                if (item.numero_documento.Length < 10 || item.numero_documento == null)
+                    errMessage = "Número de identificación debe ser al menos de 10 caracteres";
+
+                if (_Repo.IsCustomerExists(item.nombres, item.id_cliente) == true)
+                    errMessage = errMessage + item.nombres + " ya existe";
+
+                if (errMessage == "")
+                {
+                    item = _Repo.Edit(item);
+                    TempData["SuccessMessage"] = item.nombres + ", guardado exitosamente";
+                    bolret = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                errMessage = errMessage + " " + ex.Message;
             }
 
-            return RedirectToAction("Index");
+
+
+            int currentPage = 1;
+            if (TempData["CurrentPage"] != null)
+                currentPage = (int)TempData["CurrentPage"];
+
+
+            if (bolret == false)
+            {
+                TempData["ErrorMessage"] = errMessage;
+                ModelState.AddModelError("", errMessage);
+                return View(item);
+            }
+            else
+                return RedirectToAction(nameof(Index), new { pg = currentPage });
         }
 
-        // GET: Clientes/Delete/5
-        [Authorize]
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
-            clientes cliente = new clientes();
-            cliente = _context.clientes.Where(x => x.id_cliente == id).FirstOrDefault();
-            return View(cliente);
+            clientes item = _Repo.GetItem(id);
+            TempData.Keep();
+            return View(item);
         }
 
-        // POST: Clientes/Delete/5
+
         [HttpPost]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id, IFormCollection collection)
         {
-            clientes cliente = _context.clientes.Where(x => x.id_cliente == id).FirstOrDefault();
-            Usuario user = _context.usuarios.Where(u => u.Correo.Trim() == cliente.email.Trim()).FirstOrDefault();
-            _context.clientes.Remove(cliente);
-            _context.usuarios.Remove(user);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            clientes item = new clientes();
+            try
+            {
+                item = _Repo.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                string errMessage = ex.Message;
+                TempData["ErrorMessage"] = errMessage;
+                ModelState.AddModelError("", errMessage);
+                return View(item);
+
+            }
+
+            int currentPage = 1;
+            if (TempData["CurrentPage"] != null)
+                currentPage = (int)TempData["CurrentPage"];
+
+            TempData["SuccessMessage"] = item.nombres + " borrado exitosamente";
+            return RedirectToAction(nameof(Index), new { pg = currentPage });
+
+
         }
+
     }
 }

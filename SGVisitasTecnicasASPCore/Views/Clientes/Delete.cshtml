@@ -1,105 +1,98 @@
 ﻿@model SGVisitasTecnicasASPCore.Models.clientes
 
 @{
-    ViewData["Title"] = "SGVT - Eliminar Cliente";
+    ViewData["Title"] = "Eliminar Cliente";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<hr />
+<div class="text-center bg-danger">
+    <h3>Usted está seguro de borrar este cliente?</h3>
+</div>
+<div>
+    <h4 class="text-center text-primary">Eliminar Cliente</h4>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 offset-md-3">
+                <dl class="d-lg-table">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.id_cliente)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.id_cliente)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.numero_documento)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.numero_documento)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.nombres)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.nombres)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.apellidos)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.apellidos)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.fecha_registro)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.fecha_registro)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.genero)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.genero)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.direccion)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.direccion)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.email)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.email)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.password)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.password)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.numero_contacto)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.numero_contacto)
+                    </dd>
+                </dl>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-    <title>Eliminar Cliente</title>
-</head>
-<body>
-
-    <h3 class="text-center">Usted está seguro de borrar este cliente?</h3>
-    <div>
-        <h4 class="text-center text-primary">Eliminar Cliente</h4>
-        <hr />
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-6 offset-md-3">
-                    <dl class="d-lg-table">
-                        <dt>
-                            @Html.DisplayNameFor(model => model.id_cliente)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.id_cliente)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.numero_documento)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.numero_documento)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.nombres)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.nombres)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.apellidos)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.apellidos)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.fecha_registro)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.fecha_registro)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.genero)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.genero)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.direccion)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.direccion)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.email)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.email)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.password)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.password)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.numero_contacto)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.numero_contacto)
-                        </dd>
-                    </dl>
-
-                    <form asp-action="Delete">
-                        <div class="row">
-                            <div class="col text-center">
-                                <input type="submit" value="Eliminar" class="btn btn-danger" />
-                            </div>
-                            <div class="col text-center">
-                                <a class="btn btn-secondary" asp-action="Index">Cancelar</a>
-                            </div>
+                <form asp-action="Delete">
+                    <div class="row">
+                        <div class="col text-center">
+                            <input type="submit" value="Eliminar" class="btn btn-danger" />
                         </div>
-                    </form>
-                </div>
+                        <div class="col text-center">
+                            <a class="btn btn-secondary" asp-action="Index">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-
-</body>
-</html>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

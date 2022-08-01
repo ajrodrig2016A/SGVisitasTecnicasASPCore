@@ -27,32 +27,9 @@ namespace SGVisitasTecnicasASPCore.Models
         public DbSet<cotizaciones> cotizaciones { get; set; }
         public DbSet<detalles_cotizacion> detallesCotizacion { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // configures one-to-many relationship
-            modelBuilder.Entity<visitas>()
-                .HasOne(s => s.Empleado)
-                .WithMany(g => g.Visitas)
-                .HasForeignKey(s => s.empleado_id);
+        public DbSet<unidades> unidades { get; set; }
+        public DbSet<marcas> marcas { get; set; }
 
-            modelBuilder.Entity<visitas>()
-                .HasOne(s => s.Cliente)
-                .WithMany(g => g.Visitas)
-                .HasForeignKey(s => s.cliente_id);
-
-            // configures one-to-many relationship
-            modelBuilder.Entity<productos>()
-                .HasOne(s => s.Categoria)
-                .WithMany(g => g.Productos)
-                .HasForeignKey(s => s.categoria_id);
-
-            modelBuilder.Entity<cotizaciones>()
-                .HasOne(s => s.Empleado)
-                .WithMany(g => g.Cotizaciones)
-                .HasForeignKey(s => s.empleado_id);
-
-
-        }
     }
 
 }

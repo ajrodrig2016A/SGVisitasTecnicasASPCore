@@ -12,9 +12,9 @@ namespace SGVisitasTecnicasASPCore.Models
         [Key]
         public int id_cotizacion { get; set; }
 
-        [Required(ErrorMessage = "Ingrese nombre del cliente.")]
-        [StringLength(60)]
-        public string nombre_cliente { get; set; }
+        [Required]
+        [StringLength(10)]
+        public string codigo { get; set; }
 
         [Required(ErrorMessage = "Ingrese sector del inmueble.")]
         [StringLength(60)]
@@ -67,20 +67,15 @@ namespace SGVisitasTecnicasASPCore.Models
         public string observaciones { get; set; }
 
         [Required(ErrorMessage = "Seleccione el empleado.")]
-        public int empleado_id { get; set; }
+        [ForeignKey("Empleado")]//very important
+        public int id_empleado { get; set; }
+        public virtual empleados Empleado { get; set; } //very important 
 
-        public empleados Empleado { get; set; }
+        [Required(ErrorMessage = "Seleccione el cliente.")]
+        [ForeignKey("Cliente")]//very important
+        public int id_cliente { get; set; }
+        public virtual clientes Cliente { get; set; } //very important 
 
-        //[Required(ErrorMessage = "Seleccione el cliente.")]
-        //[ForeignKey("Cliente")]
-        //[Display(Name = "Cliente")]
-        //public int id_cliente { get; set; }
-        //public virtual clientes Cliente { get; set; }
-
-
-        //[ForeignKey("id_empleado")]//very important
-        //[Required(ErrorMessage = "Seleccione el empleado.")]
-        //public virtual empleados Empleado { get; set; } //very important 
 
         public enum Status
         {

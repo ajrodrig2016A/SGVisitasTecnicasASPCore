@@ -19,12 +19,16 @@ namespace SGVisitasTecnicasASPCore.Controllers
     public class ProductosController : Controller
     {
         private readonly IWebHostEnvironment _webHost;
+        private readonly IMarcas _marcasRepo;
+        private readonly IUnidades _unidadesRepo;
         private readonly ICategorias _categoriasRepo;
         private readonly IProductos _productosRepo;
-        public ProductosController(IProductos productosRepo, ICategorias categoriasRepo, IWebHostEnvironment webHost) // here the repository will be passed by the dependency injection.
+        public ProductosController(IProductos productosRepo, IMarcas marcasRepo, IUnidades unidadesRepo, ICategorias categoriasRepo, IWebHostEnvironment webHost) // here the repository will be passed by the dependency injection.
         {
             _webHost = webHost;
             _productosRepo = productosRepo;
+            _marcasRepo = marcasRepo;
+            _unidadesRepo = unidadesRepo;
             _categoriasRepo = categoriasRepo;
         }
 
@@ -82,10 +86,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
         private void PopulateViewbags()
         {
+            ViewBag.Marcas = GetMarcas();
 
-            //ViewBag.Units = GetUnits();
-
-            //ViewBag.Brands = GetBrands();
+            ViewBag.Unidades = GetUnidades();
 
             ViewBag.Categorias = GetCategorias();
 
@@ -160,6 +163,8 @@ namespace SGVisitasTecnicasASPCore.Controllers
         public IActionResult Edit(int id)
         {
             productos producto = _productosRepo.GetItem(id);
+            ViewBag.Marcas = GetMarcas();
+            ViewBag.Unidades = GetUnidades();
             ViewBag.Categorias = GetCategorias();
             TempData.Keep();
             return View(producto);
@@ -215,6 +220,8 @@ namespace SGVisitasTecnicasASPCore.Controllers
             {
                 TempData["ErrorMessage"] = errMessage;
                 ModelState.AddModelError("", errMessage);
+                ViewBag.Marcas = GetMarcas();
+                ViewBag.Unidades = GetUnidades();
                 ViewBag.Categorias = GetCategorias();
                 return View(product);
             }
@@ -224,6 +231,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
         public IActionResult Delete(int id)
         {
+            PopulateViewbags();
             productos producto = _productosRepo.GetItem(id);
             TempData.Keep();
             return View(producto);
@@ -263,6 +271,48 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
         }
 
+        private List<SelectListItem> GetMarcas()
+        {
+            var lstItems = new List<SelectListItem>();
+
+            PaginatedList<marcas> items = _marcasRepo.GetItems("nombre", SortOrder.Ascending, "", 1, 1000);
+            lstItems = items.Select(ut => new SelectListItem()
+            {
+                Value = ut.id_marca.ToString(),
+                Text = ut.nombre
+            }).ToList();
+
+            var defItem = new SelectListItem()
+            {
+                Value = "",
+                Text = "----Seleccione la Marca----"
+            };
+
+            lstItems.Insert(0, defItem);
+
+            return lstItems;
+        }
+        private List<SelectListItem> GetUnidades()
+        {
+            var lstItems = new List<SelectListItem>();
+
+            PaginatedList<unidades> items = _unidadesRepo.GetItems("nombre", SortOrder.Ascending, "", 1, 1000);
+            lstItems = items.Select(ut => new SelectListItem()
+            {
+                Value = ut.id_unidad.ToString(),
+                Text = ut.nombre
+            }).ToList();
+
+            var defItem = new SelectListItem()
+            {
+                Value = "",
+                Text = "----Seleccione la Unidad----"
+            };
+
+            lstItems.Insert(0, defItem);
+
+            return lstItems;
+        }
 
         private List<SelectListItem> GetCategorias()
         {

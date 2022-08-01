@@ -37,8 +37,9 @@ namespace SGVisitasTecnicasASPCore.Repositories
             return cotizacion;
         }
 
-        public cotizaciones Delete(int id)
+        public bool Delete(int id)
         {
+            bool retVal = false;
             cotizaciones cotizacion = new cotizaciones();
             try
             {
@@ -46,12 +47,13 @@ namespace SGVisitasTecnicasASPCore.Repositories
                 _context.Attach(cotizacion);
                 _context.Entry(cotizacion).State = EntityState.Deleted;
                 _context.SaveChanges();
+                retVal = true;
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            return cotizacion;
+            return retVal;
         }
 
         public cotizaciones Edit(cotizaciones cotizacion)
@@ -93,26 +95,26 @@ namespace SGVisitasTecnicasASPCore.Repositories
         private List<cotizaciones> DoSort(List<cotizaciones> items, string SortProperty, SortOrder sortOrder)
         {
 
-            if (SortProperty.ToLower() == "nombre cliente")
+            if (SortProperty.ToLower() == "codigo")
             {
                 if (sortOrder == SortOrder.Ascending)
-                    items = items.OrderBy(n => n.nombre_cliente).ToList();
+                    items = items.OrderBy(n => n.codigo).ToList();
                 else
-                    items = items.OrderByDescending(n => n.nombre_cliente).ToList();
+                    items = items.OrderByDescending(n => n.codigo).ToList();
             }
             else if (SortProperty.ToLower() == "sector inmueble")
             {
                 if (sortOrder == SortOrder.Ascending)
-                    items = items.OrderBy(d => d.sector_inmueble).ToList();
+                    items = items.OrderBy(d => d.direccion_inmueble).ToList();
                 else
-                    items = items.OrderByDescending(d => d.sector_inmueble).ToList();
+                    items = items.OrderByDescending(d => d.direccion_inmueble).ToList();
             }
             else
             {
                 if (sortOrder == SortOrder.Ascending)
-                    items = items.OrderBy(m => m.direccion_inmueble).ToList();
+                    items = items.OrderBy(m => m.fecha_registro).ToList();
                 else
-                    items = items.OrderByDescending(m => m.direccion_inmueble).ToList();
+                    items = items.OrderByDescending(m => m.fecha_registro).ToList();
             }
 
             return items;
@@ -124,11 +126,16 @@ namespace SGVisitasTecnicasASPCore.Repositories
 
             if (SearchText != "" && SearchText != null)
             {
-                items = _context.cotizaciones.Where(n => n.nombre_cliente.Contains(SearchText) || n.sector_inmueble.Contains(SearchText))
+                items = _context.cotizaciones.Where(n => n.codigo.Contains(SearchText) || n.sector_inmueble.Contains(SearchText))
+                    .Include(c => c.Cliente)
+                    .Include(e => e.Empleado)
                     .ToList();
             }
             else
-                items = _context.cotizaciones.ToList();
+                items = _context.cotizaciones
+                    .Include(c => c.Cliente)
+                    .Include(e => e.Empleado)
+                    .ToList();
 
             items = DoSort(items, SortProperty, sortOrder);
 
@@ -139,12 +146,14 @@ namespace SGVisitasTecnicasASPCore.Repositories
 
         public cotizaciones GetQuote(int id)
         {
-            cotizaciones item = _context.cotizaciones.Where(u => u.id_cotizacion == id).FirstOrDefault();
+            cotizaciones item = _context.cotizaciones.Where(u => u.id_cotizacion == id)
+                .Include(d => d.DetallesCotizacion)
+                .FirstOrDefault();
             return item;
         }
         public bool IsQuoteExists(string name)
         {
-            int ct = _context.cotizaciones.Where(n => n.nombre_cliente.ToLower() == name.ToLower()).Count();
+            int ct = _context.cotizaciones.Where(n => n.codigo.ToLower() == name.ToLower()).Count();
             if (ct > 0)
                 return true;
             else
@@ -153,7 +162,7 @@ namespace SGVisitasTecnicasASPCore.Repositories
 
         public bool IsQuoteExists(string name, int id)
         {
-            int ct = _context.cotizaciones.Where(n => n.nombre_cliente.ToLower() == name.ToLower() && n.id_cotizacion != id).Count();
+            int ct = _context.cotizaciones.Where(n => n.codigo.ToLower() == name.ToLower() && n.id_cotizacion != id).Count();
             if (ct > 0)
                 return true;
             else
@@ -172,12 +181,31 @@ namespace SGVisitasTecnicasASPCore.Repositories
         {
             if (name == "")
                 return IsQuoteCodeExists(itemCode);
-            var strName = _context.cotizaciones.Where(n => n.id_cotizacion == itemCode).Max(nm => nm.nombre_cliente);
+            var strName = _context.cotizaciones.Where(n => n.id_cotizacion == itemCode).Max(nm => nm.codigo);
             if (strName == null || strName == name)
                 return false;
             else
                 return IsQuoteExists(name);
         }
+        public string GetNewCTNumber()
+        {
+            string ctNumber = "";
+            var LastCtNumber = _context.cotizaciones.Max(cd => cd.codigo);
+
+            if (LastCtNumber == null)
+                ctNumber = "CT00001";
+
+            else
+            {
+                int lastDigit = 1;
+                int.TryParse(LastCtNumber.Substring(2,5).ToString(), out lastDigit);
+
+                ctNumber = "CT" + (lastDigit + 1).ToString().PadLeft(5, '0');
+            }
+
+            return ctNumber;
+        }
+
 
     }
 }

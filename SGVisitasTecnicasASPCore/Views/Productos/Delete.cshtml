@@ -14,79 +14,101 @@
     <hr />
     <div class="container">
         <div class="row">
-            <div class="col-sm-12 col-md-6 offset-md-3">
+            <div class="col-sm-12 col-md-4 offset-md-4">
                 <dl class="d-lg-table">
                     <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.id_producto)
+                        Código
+                        @*@Html.DisplayNameFor(model => model.id_producto)*@
                     </dt>
                     <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.id_producto)
+                        <input asp-for="id_producto" class="form-control" readonly/>
+                        @*@Html.DisplayFor(model => model.id_producto)*@
                     </dd>
                     <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.nombre)
+                        Nombre
+                        @*@Html.DisplayNameFor(model => model.nombre)*@
                     </dt>
                     <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.nombre)
+                        <input asp-for="nombre" class="form-control" readonly/>
+                        @*@Html.DisplayFor(model => model.nombre)*@
                     </dd>
                     <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.marca)
+                        Marca
+                        @*@Html.DisplayNameFor(model => model.marca)*@
                     </dt>
                     <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.marca)
+                        <select asp-for="id_marca" asp-items="ViewBag.Marcas" class="form-control" disabled="disabled"></select>
                     </dd>
                     <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.descripcion)
+                        Descripción
+                        @*@Html.DisplayNameFor(model => model.descripcion)*@
                     </dt>
                     <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.descripcion)
+                        <input asp-for="descripcion" class="form-control" readonly/>
+                        @*@Html.DisplayFor(model => model.descripcion)*@
                     </dd>
                     <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.ImageName)
+                        Foto
+                        @*@Html.DisplayNameFor(model => model.ImageName)*@
                     </dt>
                     <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.ImageName)
+                        <input asp-for="ImageName" class="form-control" readonly/>
+                        @*@Html.DisplayFor(model => model.ImageName)*@
                     </dd>
                     <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.unidad)
+                        Unidad
+                        @*@Html.DisplayNameFor(model => model.unidad)*@
                     </dt>
                     <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.unidad)
+                        <select asp-for="id_unidad" asp-items="ViewBag.Unidades" class="form-control" disabled="disabled"></select>
                     </dd>
                     <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.cantidad)
+                        Cantidad
+                        @*@Html.DisplayNameFor(model => model.cantidad)*@
                     </dt>
                     <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.cantidad)
+                        <input asp-for="cantidad" class="form-control" readonly/>
+                        @*@Html.DisplayFor(model => model.cantidad)*@
                     </dd>
                     <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.precioUnitario)
+                        Precio Unitario
+                        @*@Html.DisplayNameFor(model => model.precioUnitario)*@
                     </dt>
                     <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.precioUnitario)
+                        <input asp-for="precioUnitario" class="form-control" readonly/>
+                        @*@Html.DisplayFor(model => model.precioUnitario)*@
                     </dd>
                     <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.stock)
+                        Stock
+                        @*@Html.DisplayNameFor(model => model.stock)*@
                     </dt>
                     <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.stock)
+                        <input asp-for="stock" class="form-control" readonly/>
+                        @*@Html.DisplayFor(model => model.stock)*@
                     </dd>
                     <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.descuento)
+                        Descuento
+                        @*@Html.DisplayNameFor(model => model.descuento)*@
                     </dt>
                     <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.descuento)
+                        <input asp-for="descuento" class="form-control" readonly/>
+                        @*@Html.DisplayFor(model => model.descuento)*@
                     </dd>
                     <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.porcentaje)
+                        Porcentaje
+                        @*@Html.DisplayNameFor(model => model.porcentaje)*@
                     </dt>
                     <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.porcentaje)
+                        <input asp-for="porcentaje" class="form-control" readonly/>
+                        @*@Html.DisplayFor(model => model.porcentaje)*@
                     </dd>
                     <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.categoria_id)
+                        Categoría
+                        @*@Html.DisplayNameFor(model => model.id_categoria)*@
                     </dt>
                     <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.categoria_id)
+                        <select asp-for="id_categoria" asp-items="ViewBag.Categorias" class="form-control" disabled="disabled"></select>
+                        @*@Html.DisplayFor(model => model.id_categoria)*@
                     </dd>
                 </dl>
             </div>

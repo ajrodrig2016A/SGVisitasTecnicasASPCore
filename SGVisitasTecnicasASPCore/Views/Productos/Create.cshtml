@@ -19,71 +19,75 @@
                         <span asp-validation-for="id_producto" class="text-danger"></span>
                     </div>*@
                 <div class="form-group">
-                    <label asp-for="nombre" class="control-label"></label>
+                    <label asp-for="nombre" class="control-label">Nombre</label>
                     <input asp-for="nombre" class="form-control" />
                     <span asp-validation-for="nombre" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="marca" class="control-label"></label>
-                    <input asp-for="marca" class="form-control" />
-                    <span asp-validation-for="marca" class="text-danger"></span>
+                    <label asp-for="id_marca" class="control-label">Marca</label>
+                    <div style="display: inherit;">
+                        <select asp-for="id_marca" asp-items="ViewBag.Marcas" class="form-control"></select>
+                    </div>
+                    <span asp-validation-for="id_marca" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="descripcion" class="control-label"></label>
+                    <label asp-for="descripcion" class="control-label">Descripción</label>
                     <input asp-for="descripcion" class="form-control" />
                     <span asp-validation-for="descripcion" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ImageFile" class="control-label"></label>
-                    <input asp-for="ImageFile" accept="image/*" />
+                    <label asp-for="ImageFile" class="control-label">Foto</label>
+                    <div style="display: inherit;">
+                        <input asp-for="ImageFile" accept="image/*" />
+                    </div>
                     <span asp-validation-for="ImageFile" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="unidad" class="control-label"></label>
-                    <input asp-for="unidad" class="form-control" />
-                    <span asp-validation-for="unidad" class="text-danger"></span>
+                    <label asp-for="id_unidad" class="control-label">Unidad</label>
+                    <div style="display: inherit;">
+                        <select asp-for="id_unidad" asp-items="ViewBag.Unidades" class="form-control"></select>
+                    </div>
+                    <span asp-validation-for="id_unidad" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="cantidad" class="control-label"></label>
+                    <label asp-for="cantidad" class="control-label">Cantidad</label>
                     <input asp-for="cantidad" class="form-control" />
                     <span asp-validation-for="cantidad" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-sm-12 col-md-6">
                 <div class="form-group">
-                    <label asp-for="precioUnitario" class="control-label"></label>
+                    <label asp-for="precioUnitario" class="control-label">Precio Unitario</label>
                     <input asp-for="precioUnitario" class="form-control" />
                     <span asp-validation-for="precioUnitario" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="stock" class="control-label"></label>
+                    <label asp-for="stock" class="control-label">Stock</label>
                     <input asp-for="stock" class="form-control" />
                     <span asp-validation-for="stock" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="descuento" class="control-label"></label>
+                    <label asp-for="descuento" class="control-label">Descuento</label>
                     <input asp-for="descuento" class="form-control" />
                     <span asp-validation-for="descuento" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="porcentaje" class="control-label"></label>
+                    <label asp-for="porcentaje" class="control-label">Porcentaje</label>
                     <input asp-for="porcentaje" class="form-control" />
                     <span asp-validation-for="porcentaje" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="categoria_id" class="control-label"></label>
-                    @*<input asp-for="categoria_id" class="form-control" style="display:none;" />*@
+                    <label asp-for="id_categoria" class="control-label">Categoría</label>
+                    @*<input asp-for="id_categoria" class="form-control" style="display:none;" />*@
                     <div style="display: inherit;">
-                        <select asp-for="categoria_id" asp-items="ViewBag.Categorias" class="form-control">
-                            <option value="">Seleccione la categoría</option>
-                        </select>
+                        <select asp-for="id_categoria" asp-items="ViewBag.Categorias" class="form-control"></select>
                     </div>
-                    <span asp-validation-for="categoria_id" class="text-danger"></span>
+                    <span asp-validation-for="id_categoria" class="text-danger"></span>
                 </div>
                 @*<div class="form-group">
-                        <label asp-for="categoria_id" class="control-label"></label>
-                        <input asp-for="categoria_id" class="form-control" />
-                        <span asp-validation-for="categoria_id" class="text-danger"></span>
+                        <label asp-for="id_categoria" class="control-label"></label>
+                        <input asp-for="id_categoria" class="form-control" />
+                        <span asp-validation-for="id_categoria" class="text-danger"></span>
                     </div>*@
             </div>
 

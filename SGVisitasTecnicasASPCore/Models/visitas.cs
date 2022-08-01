@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,9 +26,15 @@ namespace SGVisitasTecnicasASPCore.Models
         public string descripcion_problema { get; set; }
         [StringLength(50)]
         public string estado { get; set; }
-        public int empleado_id { get; set; }
-        public virtual empleados Empleado { get; set; }
-        public int cliente_id { get; set; }
-        public virtual clientes Cliente { get; set; }
+
+        [Required(ErrorMessage = "Seleccione el empleado.")]
+        [ForeignKey("Empleado")]
+        public int id_empleado { get; set; }
+        public virtual empleados Empleado { get; set; } //very important 
+
+        [Required(ErrorMessage = "Seleccione el cliente.")]
+        [ForeignKey("Cliente")]
+        public int id_cliente { get; set; }
+        public virtual clientes Cliente { get; set; } //very important
     }
 }

@@ -34,6 +34,8 @@ namespace SGVisitasTecnicasASPCore
             services.AddControllersWithViews();
 
             services.AddScoped<ICategorias, CategoriasRepo>();
+            services.AddScoped<IUnidades, UnidadesRepo>();
+            services.AddScoped<IMarcas, MarcasRepo>();
             services.AddScoped<IProductos, ProductosRepo>();
             services.AddScoped<IEmpleados, EmpleadosRepo>();
             services.AddScoped<IClientes, ClientesRepo>();

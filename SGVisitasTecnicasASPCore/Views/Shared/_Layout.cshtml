@@ -38,15 +38,15 @@
                 <div class="col-sm justify-content-center d-flex mb-md-0 mb-2">
                     <div class="social-media">
                         <p class="mb-0 d-flex">
-                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-facebook"><i class="sr-only">Facebook</i></span></a>
-                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-twitter"><i class="sr-only">Twitter</i></span></a>
-                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-instagram"><i class="sr-only">Instagram</i></span></a>
-                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
+                            <a href="https://www.facebook.com/saimec.ec" class="d-flex align-items-center justify-content-center"><span class="fa fa-facebook"><i class="sr-only">Facebook</i></span></a>
+                            @*<a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-twitter"><i class="sr-only">Twitter</i></span></a>*@
+                            <a href="https://www.instagram.com/saimec.ec/" class="d-flex align-items-center justify-content-center"><span class="fa fa-instagram"><i class="sr-only">Instagram</i></span></a>
+                            @*<a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>*@
                         </p>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-7 d-flex topper align-items-center text-lg-right justify-content-end">
-                    <p class="mb-0 register-link"><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Inquire Now</a></p>
+                    <p class="mb-0 register-link"><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Consultar ahora</a></p>
                 </div>
             </div>
         </div>
@@ -122,6 +122,20 @@
                     @if (User.IsInRole("ADM"))
                     {
                         <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Unidades" asp-action="Index">Unidades</a>
+                        </li>
+                    }
+
+                    @if (User.IsInRole("ADM"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Marcas" asp-action="Index">Marcas</a>
+                        </li>
+                    }
+
+                    @if (User.IsInRole("ADM"))
+                    {
+                        <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Productos" asp-action="Index">Productos</a>
                         </li>
                     }
@@ -138,7 +152,7 @@
                     </li>
 
                 </ul>
-                <a href="#" class="btn-custom" data-toggle="modal" data-target="#exampleModalCenter">Inquire Now</a>
+                <a href="#" class="btn-custom" data-toggle="modal" data-target="#exampleModalCenter">Consultar ahora</a>
             </div>
         </div>
     </nav>
@@ -203,12 +217,12 @@
             <div class="row">
                 <div class="col-lg col-md-6">
                     <div class="ftco-footer-widget">
-                        <h2 class="ftco-heading-2 d-flex align-items-center">About</h2>
+                        <h2 class="ftco-heading-2 d-flex align-items-center">Acerca de</h2>
                         <p>Imagínalo y nosotros lo hacemos posible.</p>
                         <ul class="ftco-footer-social list-unstyled mt-4">
-                            <li><a href="#"><span class="fa fa-twitter"></span></a></li>
-                            <li><a href="#"><span class="fa fa-facebook"></span></a></li>
-                            <li><a href="#"><span class="fa fa-instagram"></span></a></li>
+                            @*<li><a href="#"><span class="fa fa-twitter"></span></a></li>*@
+                            <li><a href="https://www.facebook.com/saimec.ec"><span class="fa fa-facebook"></span></a></li>
+                            <li><a href="https://www.instagram.com/saimec.ec/"><span class="fa fa-instagram"></span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -218,17 +232,17 @@
                         <h2 class="ftco-heading-2">Links</h2>
                         <div class="d-flex">
                             <ul class="list-unstyled mr-md-4">
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Project</a></li>
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>About Us</a></li>
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Services</a></li>
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Blog Posts</a></li>
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Industries</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Proyecto</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Sobre nosotros</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Servicios</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Entradas de blog</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Industrias</a></li>
                             </ul>
                             <ul class="list-unstyled ml-md-5">
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Contact</a></li>
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Help</a></li>
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Privacy Policy</a></li>
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Terms of Use</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Contacte con</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Ayuda</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Política de privacidad</a></li>
+                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Condiciones de uso</a></li>
                             </ul>
                         </div>
                     </div>
@@ -236,19 +250,19 @@
 
                 <div class="col-lg col-md-6">
                     <div class="ftco-footer-widget">
-                        <h2 class="ftco-heading-2">Services</h2>
+                        <h2 class="ftco-heading-2">Servicios</h2>
                         <ul class="list-unstyled">
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Customer Services</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Prompt Delivery</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Reliable Equipment</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>New Heavy Equipment</a></li>
+                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Proyectos de Ingeniería</a></li>
+                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Alarmas para Hogar</a></li>
+                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Cámaras</a></li>
+                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Sistemas de Videovigilancia</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-lg col-md-6">
                     <div class="ftco-footer-widget">
-                        <h2 class="ftco-heading-2">Have a Questions?</h2>
+                        <h2 class="ftco-heading-2">¿Tiene preguntas?</h2>
                         <div class="block-23 mb-3">
                             <ul>
                                 <li><span class="fa fa-map-marker mr-3"></span><span class="text">Antonio Tandazo y Pascual Ati, Salgolquí, Ecuador</span></li>
@@ -287,16 +301,16 @@
                 </div>
                 <div class="modal-body p-4 p-md-5">
                     <form action="#" class="appointment-form ftco-animate">
-                        <h3>Request Quote</h3>
+                        <h3>Solicitar cotización</h3>
                         <div class="">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="First Name">
+                                <input type="text" class="form-control" placeholder="Nombres">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Last Name">
+                                <input type="text" class="form-control" placeholder="Apellidos">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Phone">
+                                <input type="text" class="form-control" placeholder="Teléfono">
                             </div>
                         </div>
                         <div class="">
@@ -305,14 +319,15 @@
                                     <div class="select-wrap">
                                         <div class="icon"><span class="fa fa-chevron-down"></span></div>
                                         <select name="" id="" class="form-control">
-                                            <option value="">Select Your Services</option>
-                                            <option value="">Architecture</option>
-                                            <option value="">Renovation</option>
-                                            <option value="">Construction</option>
-                                            <option value="">Interior &amp; Exterior</option>
-                                            <option value="">Chemical Research</option>
-                                            <option value="">Petroleum &amp; Gas</option>
-                                            <option value="">Other Services</option>
+                                            <option value="">Seleccione sus servicios</option>
+                                            <option value="">Proyectos de Ingeniería</option>
+                                            <option value="">Sistemas de Videovigilancia</option>
+                                            <option value="">Cámara móvil 360</option>
+                                            <option value="">CCTV</option>
+                                            <option value="">Cámara &amp; Domo</option>
+                                            <option value="">Visión Nocturna</option>
+                                            <option value="">Cámaras &amp; Exteriores</option>
+                                            <option value="">Otros servicios</option>
                                         </select>
                                     </div>
                                 </div>
@@ -320,10 +335,10 @@
                         </div>
                         <div class="">
                             <div class="form-group">
-                                <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Message"></textarea>
+                                <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Mensaje"></textarea>
                             </div>
                             <div class="form-group">
-                                <input type="submit" value="Request A Quote" class="btn btn-primary py-3 px-4">
+                                <input type="submit" value="Enviar" class="btn btn-primary py-3 px-4">
                             </div>
                         </div>
                     </form>

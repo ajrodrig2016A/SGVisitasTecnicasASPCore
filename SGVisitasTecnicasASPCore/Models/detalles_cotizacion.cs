@@ -16,15 +16,23 @@ namespace SGVisitasTecnicasASPCore.Models
 
         [Key]
         public int id_detalle_cotización { get; set; }
-                
+
+        [Required]                
         [ForeignKey("Cotizacion")]//very important
         public int id_cotizacion { get; set; }
         public virtual cotizaciones Cotizacion { get; private set; } //very important 
 
-        //[ForeignKey("id_producto")]//very important
-        //public virtual productos Producto { get; set; } //very important 
+        [Required(ErrorMessage = "Seleccione un producto.")]
+        [ForeignKey("Producto")]
+        public int id_producto { get; set; }
+        public virtual productos Producto { get; private set; } //very important 
 
-        [Required(ErrorMessage = "Ingrese la descripción.")]
+        [NotMapped]
+        [StringLength(10)]
+        public string codigoProducto { get; set; }
+
+        [NotMapped]
+        //[Required(ErrorMessage = "Ingrese la descripción.")]
         [StringLength(int.MaxValue)]
         public string descripcion { get; set; }
 
@@ -32,21 +40,29 @@ namespace SGVisitasTecnicasASPCore.Models
         [StringLength(90)]
         public string ubicación { get; set; }
 
-        [Required(ErrorMessage = "Ingrese la marca.")]
+        [NotMapped]
+        //[Required(ErrorMessage = "Ingrese la marca.")]
         [StringLength(60)]
         public string marca { get; set; }
 
-        [Required(ErrorMessage = "Ingrese la unidad.")]
+        [NotMapped]
+        //[Required(ErrorMessage = "Ingrese la unidad.")]
         [StringLength(8)]
         public string unidad { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:0.0000}", ApplyFormatInEditMode =true)]
         [Range(0.01, Double.MaxValue, ErrorMessage = "La cantidad debe ser mayor que cero.")]
         public decimal cantidad { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:0.0000}", ApplyFormatInEditMode = true)]
         [Range(0.01, Double.MaxValue, ErrorMessage = "El valor unitario debe ser mayor que cero.")]
         public decimal valorUnitario { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:0.0000}", ApplyFormatInEditMode = true)]
         [Range(0.01, Double.MaxValue, ErrorMessage = "El valor total debe ser mayor que cero.")]
         public decimal valorTotal { get; set; }
 
-        //[NotMapped]
-        //public bool IsDeleted { get; set; } = false;
+        [NotMapped]
+        public bool IsDeleted { get; set; } = false;
     }
 }

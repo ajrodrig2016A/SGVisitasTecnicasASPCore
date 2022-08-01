@@ -10251,3 +10251,37 @@ textarea.form-control {
   .modal-content .modal-footer {
     border: none;
     background: #f8f8f8; }
+
+    #headerPopup {
+        width: 75%;
+        margin: 0 auto;
+    }
+
+    #headerPopup iframe {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+/*    .CodesTable tbody {
+        display:block; 
+        height:250px; 
+        overflow-y:scroll; 
+        overflow-x:hidden;
+    }
+    .CodesTable thead, .CodesTable tbody tr {
+        display:table; 
+        width:98%; 
+        table-layout:fixed;
+    }
+    .CodesTable thead, .CodesTable tbody, .CodesTable td {
+        border:none !important;
+    }   */ 
+
+/*    .detCtzValUnit{
+        background-image:none;
+    }
+
+    detCtzValTotal {
+        background-image: none;
+    }*/
+

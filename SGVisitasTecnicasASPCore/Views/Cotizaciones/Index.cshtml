@@ -26,16 +26,16 @@
     <table class="table">
         <thead>
             <tr>
-                <th style="display:none;">
-                    @Html.DisplayNameFor(model => model.id_cotizacion)
-                </th>
                 <th>
-                    <i class="@sortModel.GetColumn("Nombre Cliente").SortIcon" arial-hidden="true"></i>
+                    <i class="@sortModel.GetColumn("Codigo").SortIcon" arial-hidden="true"></i>
 
-                    <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Nombre Cliente").SortExpression">
-                        Nombre Cliente
+                    <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Codigo").SortExpression">
+                        Código
                     </a>
                 </th>
+                @*<th style="display:none;">
+                    @Html.DisplayNameFor(model => model.id_cotizacion)
+                </th>*@
                 <th>
                     <i class="@sortModel.GetColumn("Sector Inmueble").SortIcon" arial-hidden="true"></i>
 
@@ -50,45 +50,55 @@
                         Dirección Inmueble
                     </a>
                 </th>
-                @*<th>
-                        @Html.DisplayNameFor(model => model.nombre_cliente)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.sector_inmueble)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.direccion_inmueble)
-                    </th>*@
                 <th>
-                    @Html.DisplayNameFor(model => model.fecha_registro)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.telefono)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.estado)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.tiempo_entrega)
+                    <i class="@sortModel.GetColumn("Fecha de Registro").SortIcon" arial-hidden="true"></i>
+
+                    <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Fecha de Registro").SortExpression">
+                        Fecha de Registro
+                    </a>
                 </th>
                 @*<th>
-                    @Html.DisplayNameFor(model => model.instalacion)
+                    @Html.DisplayNameFor(model => model.nombre_cliente)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.garantia_equipos)
+                    @Html.DisplayNameFor(model => model.sector_inmueble)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.forma_pago)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.subtotal)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.validez)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.observaciones)
+                    @Html.DisplayNameFor(model => model.direccion_inmueble)
                 </th>*@
+                @*<th>
+                    @Html.DisplayNameFor(model => model.fecha_registro)
+                </th>*@
+                <th>
+                    Teléfono
+                    @*@Html.DisplayNameFor(model => model.telefono)*@
+                </th>
+                <th>
+                    Estado
+                    @*@Html.DisplayNameFor(model => model.estado)*@
+                </th>
+                <th>
+                    Tiempo de Entrega
+                    @*@Html.DisplayNameFor(model => model.tiempo_entrega)*@
+                </th>
+                @*<th>
+            @Html.DisplayNameFor(model => model.instalacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.garantia_equipos)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.forma_pago)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.subtotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.validez)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.observaciones)
+        </th>*@
                 <th></th>
             </tr>
         </thead>
@@ -96,11 +106,11 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td style="display:none;">
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.id_cotizacion)
-                    </td>
-                    <td data-title="@Html.DisplayNameFor(model => model.nombre_cliente)">
-                        @Html.DisplayFor(modelItem => item.nombre_cliente)
+                    </td>*@
+                    <td data-title="@Html.DisplayNameFor(model => model.codigo)">
+                        @Html.DisplayFor(modelItem => item.codigo)
                     </td>
                     <td data-title="@Html.DisplayNameFor(model => model.sector_inmueble)">
                         @Html.DisplayFor(modelItem => item.sector_inmueble)

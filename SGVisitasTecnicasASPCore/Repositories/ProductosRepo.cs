@@ -52,20 +52,20 @@ namespace SGVisitasTecnicasASPCore.Repositories
                 else
                     items = items.OrderByDescending(n => n.nombre).ToList();
             }
-            else if (SortProperty.ToLower() == "descripcion")
+            else //(SortProperty.ToLower() == "descripcion")
             {
                 if (sortOrder == SortOrder.Ascending)
                     items = items.OrderBy(d => d.descripcion).ToList();
                 else
                     items = items.OrderByDescending(d => d.descripcion).ToList();
             }
-            else
-            {
-                if (sortOrder == SortOrder.Ascending)
-                    items = items.OrderBy(m => m.marca).ToList();
-                else
-                    items = items.OrderByDescending(m => m.marca).ToList();
-            }
+            //else
+            //{
+            //    if (sortOrder == SortOrder.Ascending)
+            //        items = items.OrderBy(m => m.marca).ToList();
+            //    else
+            //        items = items.OrderByDescending(m => m.marca).ToList();
+            //}
 
             return items;
         }

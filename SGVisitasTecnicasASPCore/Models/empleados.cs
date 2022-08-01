@@ -58,7 +58,6 @@ namespace SGVisitasTecnicasASPCore.Models
             TEC,
             COM
         }
-        public virtual ICollection<visitas> Visitas { get; set; }
-        public virtual ICollection<cotizaciones> Cotizaciones { get; set; }
+
     }
 }

@@ -17,40 +17,50 @@
         <div class="container-fluid">
             <div class="row">
                 <input type="hidden" asp-for="id_cotizacion" />
-
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
-                        <label asp-for="nombre_cliente" class="control-label"></label>
-                        <input asp-for="nombre_cliente" class="form-control" readonly />
+                        <label asp-for="id_cotizacion" class="control-label">Código</label>
+                        <input asp-for="id_cotizacion" class="form-control" readonly />
                     </div>
                     <div class="form-group">
-                        <label asp-for="sector_inmueble" class="control-label"></label>
+                        <label asp-for="id_cliente" class="control-label">Cliente</label>
+                        <div style="display: inherit;">
+                            <select asp-for="id_cliente" class="form-control" asp-items="ViewBag.clientes" disabled="disabled"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="codigo" class="control-label">Número Cotización</label>
+                        <input asp-for="codigo" class="form-control" />
+                        <span asp-validation-for="codigo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="sector_inmueble" class="control-label">Sector Inmueble</label>
                         <input asp-for="sector_inmueble" class="form-control" readonly />
                     </div>
                     <div class="form-group">
-                        <label asp-for="direccion_inmueble" class="control-label"></label>
+                        <label asp-for="direccion_inmueble" class="control-label">Dirección Inmueble</label>
                         <input asp-for="direccion_inmueble" class="form-control" readonly />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="fecha_registro" class="control-label"></label>
-                        <input asp-for="fecha_registro" id="datepicker" type="text" class="form-control" value="@Model.fecha_registro.ToString("yyyy-MM-dd")" readonly />
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
-                        <label asp-for="telefono" class="control-label"></label>
+                        <label asp-for="fecha_registro" class="control-label">Fecha de Registro</label>
+                        <input asp-for="fecha_registro" id="datepicker" type="text" class="form-control" value="@Model.fecha_registro.ToString("yyyy-MM-dd")" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="telefono" class="control-label">Teléfono</label>
                         <input asp-for="telefono" class="form-control" readonly />
                     </div>
                     <div class="form-group">
-                        <label asp-for="empleado_id" class="control-label"></label>
+                        <label asp-for="id_empleado" class="control-label">Empleado</label>
                         <div style="display: inherit;">
-                            <select asp-for="empleado_id" asp-items="ViewBag.empleados" disabled="disabled"></select>
+                            <select asp-for="id_empleado" class="form-group" asp-items="ViewBag.empleados" disabled="disabled"></select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label asp-for="estado" class="control-label"></label>
+                        <label asp-for="estado" class="control-label">Estado</label>
                         <div style="display: inherit;">
-                            @Html.DropDownListFor(model => model.estado, new SelectList(Enum.GetValues(typeof(SGVisitasTecnicasASPCore.Models.cotizaciones.Status))), "Seleccione un estado")
+                            <select asp-for="estado" class="form-control" asp-items="new SelectList(Enum.GetValues(typeof(SGVisitasTecnicasASPCore.Models.cotizaciones.Status)))" disabled="disabled"><option>----Seleccione un estado----</option></select>
                         </div>
                     </div>
                 </div>
@@ -120,33 +130,33 @@
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
-                        <label asp-for="tiempo_entrega" class="control-label"></label>
+                        <label asp-for="tiempo_entrega" class="control-label">Tiempo de Entrega</label>
                         <input asp-for="tiempo_entrega" class="form-control" readonly />
                     </div>
                     <div class="form-group">
-                        <label asp-for="instalacion" class="control-label"></label>
+                        <label asp-for="instalacion" class="control-label">Instalación</label>
                         <input asp-for="instalacion" class="form-control" readonly />
                     </div>
                     <div class="form-group">
-                        <label asp-for="garantia_equipos" class="control-label"></label>
+                        <label asp-for="garantia_equipos" class="control-label">Garantía de Equipos</label>
                         <input asp-for="garantia_equipos" class="form-control" readonly />
                     </div>
                     <div class="form-group">
-                        <label asp-for="forma_pago" class="control-label"></label>
+                        <label asp-for="forma_pago" class="control-label">Forma de Pago</label>
                         <input asp-for="forma_pago" class="form-control" readonly />
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
-                        <label asp-for="subtotal" class="control-label"></label>
+                        <label asp-for="subtotal" class="control-label">Subtotal</label>
                         <input asp-for="subtotal" class="form-control" readonly />
                     </div>
                     <div class="form-group">
-                        <label asp-for="validez" class="control-label"></label>
+                        <label asp-for="validez" class="control-label">Validez</label>
                         <input asp-for="validez" class="form-control" readonly />
                     </div>
                     <div class="form-group">
-                        <label asp-for="observaciones" class="control-label"></label>
+                        <label asp-for="observaciones" class="control-label">Observaciones</label>
                         <input asp-for="observaciones" class="form-control" readonly />
                     </div>
                 </div>

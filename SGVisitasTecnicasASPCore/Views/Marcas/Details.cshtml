@@ -1,0 +1,47 @@
+﻿@model SGVisitasTecnicasASPCore.Models.marcas
+
+@{
+    ViewData["Title"] = "Detalles de la Marca";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<h4 class="text-center text-primary">Detalles de la Marca</h4>
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 offset-md-3">
+            <div class="table-responsive">
+                <dl class="d-lg-table">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.id_marca)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.id_marca)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.nombre)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.nombre)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.descripcion)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.descripcion)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            @Html.ActionLink("Editar", "Edit", new { id = Model.id_marca }, new { @class = "btn btn-primary" })
+        </div>
+        <div class="col text-center">
+            <a class="btn btn-secondary" asp-action="Index">Cancelar</a>
+        </div>
+    </div>
+</div>
+

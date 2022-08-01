@@ -56,6 +56,5 @@ namespace SGVisitasTecnicasASPCore.Models
             Femenino
         }
 
-        public virtual ICollection<visitas> Visitas { get; set; }
     }
 }

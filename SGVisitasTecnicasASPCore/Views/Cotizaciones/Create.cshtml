@@ -7,9 +7,6 @@
 <style>
     .CodesTable table{width:100%}
     .CodesTable thead{width:calc(100%-1em);}
-/*    .CodesTable tbody {display:block; height:140px; overflow-y:auto; overflow-x:hidden;}
-    .CodesTable thead, .CodesTable tbody tr{display:table; width:97%; table-layout:fixed;}
-    .CodesTable thead, .CodesTable tbody, .CodesTable td{border:none !important;}*/    
 </style>
 
 <hr />
@@ -27,43 +24,50 @@
         </div>*@
             <div class="col-sm-12 col-md-6">
                 <div class="form-group">
-                    <label asp-for="nombre_cliente" class="control-label"></label>
-                    <input asp-for="nombre_cliente" class="form-control" />
-                    <span asp-validation-for="nombre_cliente" class="text-danger"></span>
+                    <label asp-for="id_cliente" class="control-label">Cliente</label>
+                    <div style="display: inherit;">
+                        <select asp-for="id_cliente" class="form-control" asp-items="ViewBag.clientes"></select>
+                    </div>
+                    <span asp-validation-for="id_cliente" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="sector_inmueble" class="control-label"></label>
+                    <label asp-for="codigo" class="control-label">Número Cotización</label>
+                    <input asp-for="codigo" class="form-control" readonly />
+                    <span asp-validation-for="codigo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="sector_inmueble" class="control-label">Sector Inmueble</label>
                     <input asp-for="sector_inmueble" class="form-control" />
                     <span asp-validation-for="sector_inmueble" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="direccion_inmueble" class="control-label"></label>
+                    <label asp-for="direccion_inmueble" class="control-label">Dirección Inmueble</label>
                     <input asp-for="direccion_inmueble" class="form-control" />
                     <span asp-validation-for="direccion_inmueble" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="fecha_registro" class="control-label"></label>
+                    <label asp-for="fecha_registro" class="control-label">Fecha de Registro</label>
                     <input asp-for="fecha_registro" class="form-control" />
                     <span asp-validation-for="fecha_registro" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-sm-12 col-md-6">
                 <div class="form-group">
-                    <label asp-for="telefono" class="control-label"></label>
+                    <label asp-for="telefono" class="control-label">Teléfono</label>
                     <input asp-for="telefono" class="form-control" />
                     <span asp-validation-for="telefono" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="empleado_id" class="control-label"></label>
+                    <label asp-for="id_empleado" class="control-label">Empleado</label>
                     <div style="display: inherit;">
-                        <select asp-for="empleado_id" asp-items="ViewBag.empleados"></select>
+                        <select asp-for="id_empleado" class="form-control" asp-items="ViewBag.empleados"></select>
                     </div>
-                    <span asp-validation-for="empleado_id" class="text-danger"></span>
+                    <span asp-validation-for="id_empleado" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="estado" class="control-label"></label>
+                    <label asp-for="estado" class="control-label">Estado</label>
                     <div style="display: inherit;">
-                        @Html.DropDownListFor(model => model.estado, new SelectList(Enum.GetValues(typeof(SGVisitasTecnicasASPCore.Models.cotizaciones.Status))), "Seleccione un estado")
+                        <select asp-for="estado" class="form-control" asp-items="new SelectList(Enum.GetValues(typeof(SGVisitasTecnicasASPCore.Models.cotizaciones.Status)))"><option>----Seleccione un estado----</option></select>
                     </div>
                     <span asp-validation-for="estado" class="text-danger"></span>
                 </div>
@@ -73,9 +77,12 @@
                 <p class="text-center text-secondary">De acuerdo con la visita realizada, cotizamos los siguientes elementos y/o accesorios:</p>
                 <br />
                 <div class="table-responsive bg-light">
-                    <table id="DetCtzTable" class="table table-hover table-sm CodesTable">
+                    <table id="DetCtzTable" class="table table-borderless table-sm mb-0 pb-0 border CodesTable">
                         <thead>
                             <tr>
+                                <th>
+                                    Código Producto
+                                </th>
                                 <th>
                                     Descripción
                                 </th>
@@ -107,47 +114,40 @@
                             {
                                 <tr>
                                     <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].descripcion" class="form-control" />
-                                        @*@Html.EditorFor(x => x.DetallesCotizacion[i].descripcion, new { htmlAttributtes = new { @class = "form-control" } })*@
+                                        <input asp-for="@Model.DetallesCotizacion[i].codigoProducto" class="form-control" onchange="fillFieldsProductDetails(this)" />
+                                        @*<br /><span asp-validation-for="@Model.DetallesCotizacion[i].id_producto" class="text-danger"></span>*@
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].descripcion" class="form-control form-control-plaintext" readonly />
                                         <br /><span asp-validation-for="@Model.DetallesCotizacion[i].descripcion" class="text-danger"></span>
                                     </td>
                                     <td>
                                         <input asp-for="@Model.DetallesCotizacion[i].ubicación" class="form-control" />
-                                        @*@Html.EditorFor(x => x.DetallesCotizacion[i].ubicación, new { htmlAttributtes = new { @class = "form-control" } })*@
                                         <br /><span asp-validation-for="@Model.DetallesCotizacion[i].ubicación" class="text-danger"></span>
                                     </td>
                                     <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].marca" class="form-control" />
-                                        @*@Html.EditorFor(x => x.DetallesCotizacion[i].marca, new { htmlAttributtes = new { @class = "form-control" } })*@
+                                        <input asp-for="@Model.DetallesCotizacion[i].marca" class="form-control form-control-plaintext detCtzNameBrand" readonly />
                                         <br /><span asp-validation-for="@Model.DetallesCotizacion[i].marca" class="text-danger"></span>
                                     </td>
                                     <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].unidad" class="form-control" />
-                                        @*@Html.EditorFor(x => x.DetallesCotizacion[i].unidad, new { htmlAttributtes = new { @class = "form-control" } })*@
+                                        <input asp-for="@Model.DetallesCotizacion[i].unidad" class="form-control form-control-plaintext detCtzNameUnit" readonly />
                                         <br /><span asp-validation-for="@Model.DetallesCotizacion[i].unidad" class="text-danger"></span>
                                     </td>
                                     <td>
                                         <input asp-for="@Model.DetallesCotizacion[i].cantidad" class="form-control detCtzCantidad" />
-                                        @*@Html.EditorFor(x => x.DetallesCotizacion[i].cantidad, new { htmlAttributtes = new { @class = "form-control" } })*@
                                         <br /><span asp-validation-for="@Model.DetallesCotizacion[i].cantidad" class="text-danger"></span>
                                     </td>
                                     <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].valorUnitario" class=" form-control detCtzValUnit" />
-                                        @*@Html.EditorFor(x => x.DetallesCotizacion[i].valorUnitario, new { htmlAttributtes = new { @class = "form-control" } })*@
+                                        <input asp-for="@Model.DetallesCotizacion[i].valorUnitario" class=" form-control form-control-plaintext detCtzValUnit" readonly />
                                         <br /><span asp-validation-for="@Model.DetallesCotizacion[i].valorUnitario" class="text-danger"></span>
                                     </td>
                                     <td>
                                         @*<input type="hidden" asp-for="@Model.DetallesCotizacion[i].IsDeleted" />*@
-                                        <input asp-for="@Model.DetallesCotizacion[i].valorTotal" class="form-control-plaintext detCtzValTotal" readonly />
+                                        <input asp-for="@Model.DetallesCotizacion[i].valorTotal" class="form-control form-control-plaintext detCtzValTotal" readonly />
                                         <br /><span asp-validation-for="@Model.DetallesCotizacion[i].valorTotal" class="text-danger"></span>
-                                        @*@Html.EditorFor(x => x.DetallesCotizacion[i].valorTotal, new { htmlAttributtes = new { @class = "form-control CtzValorTotal", @readonly = "readonly" } })*@
                                     </td>
                                     <td>
-                                        @*<button id='btnDummy-@i' type="button" class="btn btn-sm invisible">Dummy</button>*@                                        
                                         <button id='btnRemove-@i' type="button" class="btn btn-sm btn-danger visible" onclick="DeleteItem(this)">Eliminar</button>
-                                        @*@Html.ActionLink("Editar", "Edit", new { /* id=item.PrimaryKey */ }) |*@
-                                        @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                                        @*@Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ })*@
                                     </td>
                                 </tr>
                             }
@@ -157,49 +157,64 @@
             </div>
             <div class="col-sm-12 col-md-6">
                 <div class="form-group">
-                    <label asp-for="tiempo_entrega" class="control-label"></label>
+                    <label asp-for="tiempo_entrega" class="control-label">Tiempo de Entrega</label>
                     <input asp-for="tiempo_entrega" class="form-control" />
                     <span asp-validation-for="tiempo_entrega" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="instalacion" class="control-label"></label>
+                    <label asp-for="instalacion" class="control-label">Instalación</label>
                     <input asp-for="instalacion" class="form-control" />
                     <span asp-validation-for="instalacion" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="garantia_equipos" class="control-label"></label>
+                    <label asp-for="garantia_equipos" class="control-label">Garantía de Equipos</label>
                     <input asp-for="garantia_equipos" class="form-control" />
                     <span asp-validation-for="garantia_equipos" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="forma_pago" class="control-label"></label>
+                    <label asp-for="forma_pago" class="control-label">Forma de Pago</label>
                     <input asp-for="forma_pago" class="form-control" />
                     <span asp-validation-for="forma_pago" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-sm-12 col-md-6">
                 <div class="form-group">
-                    <label asp-for="subtotal" class="control-label"></label>
+                    <label asp-for="subtotal" class="control-label">Subtotal</label>
                     <input asp-for="subtotal" class="form-control" id="subtotalCtz" readonly />
                     <span asp-validation-for="subtotal" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="validez" class="control-label"></label>
+                    <label asp-for="validez" class="control-label">Validez</label>
                     <input asp-for="validez" class="form-control" />
                     <span asp-validation-for="validez" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="observaciones" class="control-label"></label>
+                    <label asp-for="observaciones" class="control-label">Observaciones</label>
                     <input asp-for="observaciones" class="form-control" />
                     <span asp-validation-for="observaciones" class="text-danger"></span>
                 </div>
             </div>
-
             <div class="w-100">
                 <div class="col-sm-12 col-md-12 text-center form-group">
                     <input type="submit" value="Guardar" class="col-md-5 btn btn-info" />
                     <a class="col-md-5 btn btn-secondary" asp-action="Index">Cancelar</a>
                 </div>
+            </div>
+            <div class="form-group invisible">
+                <select id="mySelect" class="form-control" size="15" style="visibility:hidden;" asp-items="ViewBag.productos"></select>
+                <input id="txtValue" class="form-control col-2 invisible" />
+            </div>
+            <div id="HiddenDiv" style="visibility:hidden;">
+                <select id="ddlBrandsIdAllProducts" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.IdMarcasAllProducts"></select>
+                <select id="ddlBrandNames" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.nombresMarca"></select>
+                <select id="ddlUnitsIdAllProducts" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.IdUnidadesAllProducts"></select>
+                <select id="ddlUnitNames" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.nombresUnidad"></select>
+                <select id="ddlUnitPrAllProducts" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.PrUnitariosAllProducts"></select>
+                <input id="txtIdMarca" class="form-control col-2 invisible" />
+                <input id="txtNombreMarca" class="form-control col-2 invisible" />
+                <input id="txtIdUnidad" class="form-control col-2 invisible" />
+                <input id="txtNombreUnidad" class="form-control col-2 invisible" />
+                <input id="txtvalorUnitario" class="form-control col-2 invisible" />
             </div>
         </div>
     </div>

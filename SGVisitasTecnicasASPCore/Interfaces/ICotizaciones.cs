@@ -13,12 +13,14 @@ namespace SGVisitasTecnicasASPCore.Interfaces
         cotizaciones GetQuote(int id);
         cotizaciones Create(cotizaciones cotizacion);
         cotizaciones Edit(cotizaciones cotizacion);
-        cotizaciones Delete(int id);
+        bool Delete(int id);
         //cotizaciones Delete(cotizaciones cotizacion);
         public bool IsQuoteExists(string name);
         public bool IsQuoteExists(string name, int id);
 
         public bool IsQuoteCodeExists(int itemCode);
         public bool IsQuoteCodeExists(int itemCode, string name);
+
+        public string GetNewCTNumber();
     }
 }

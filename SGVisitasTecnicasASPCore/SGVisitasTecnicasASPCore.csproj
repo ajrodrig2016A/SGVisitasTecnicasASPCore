@@ -41,6 +41,28 @@
     <Compile Remove="Migrations\20220729014232_IntialDb_FK_Cotizaciones_Clientes.Designer.cs" />
     <Compile Remove="Migrations\20220729015106_IntialDb_FK_Cotizaciones_Clientes.cs" />
     <Compile Remove="Migrations\20220729015106_IntialDb_FK_Cotizaciones_Clientes.Designer.cs" />
+    <Compile Remove="Migrations\20220731011456_Add_moneda_productos.cs" />
+    <Compile Remove="Migrations\20220731011456_Add_moneda_productos.Designer.cs" />
+    <Compile Remove="Migrations\20220731014318_Create_FK_productos.cs" />
+    <Compile Remove="Migrations\20220731014318_Create_FK_productos.Designer.cs" />
+    <Compile Remove="Migrations\20220731014601_Create_FK_productos.cs" />
+    <Compile Remove="Migrations\20220731014601_Create_FK_productos.Designer.cs" />
+    <Compile Remove="Migrations\20220731015514_Fix_FK_productos.cs" />
+    <Compile Remove="Migrations\20220731015514_Fix_FK_productos.Designer.cs" />
+    <Compile Remove="Migrations\20220731015725_Fix02_FK_productos.cs" />
+    <Compile Remove="Migrations\20220731015725_Fix02_FK_productos.Designer.cs" />
+    <Compile Remove="Migrations\20220731015824_Create_FK_productos.cs" />
+    <Compile Remove="Migrations\20220731015824_Create_FK_productos.Designer.cs" />
+    <Compile Remove="Migrations\20220731020219_Create_FK_productos.cs" />
+    <Compile Remove="Migrations\20220731020219_Create_FK_productos.Designer.cs" />
+    <Compile Remove="Migrations\20220731021159_Create_FK_productos.cs" />
+    <Compile Remove="Migrations\20220731021159_Create_FK_productos.Designer.cs" />
+    <Compile Remove="Migrations\20220731022040_Create_FK_productos.cs" />
+    <Compile Remove="Migrations\20220731022040_Create_FK_productos.Designer.cs" />
+    <Compile Remove="Migrations\20220731033155_Update_FK_cotizaciones_categorias.cs" />
+    <Compile Remove="Migrations\20220731033155_Update_FK_cotizaciones_categorias.Designer.cs" />
+    <Compile Remove="Migrations\20220731035126_Update_FK_allTables.cs" />
+    <Compile Remove="Migrations\20220731035126_Update_FK_allTables.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

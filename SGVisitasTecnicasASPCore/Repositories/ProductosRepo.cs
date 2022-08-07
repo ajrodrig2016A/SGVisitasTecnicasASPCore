@@ -80,7 +80,7 @@ namespace SGVisitasTecnicasASPCore.Repositories
                     .ToList();
             }
             else
-                items = _context.productos.ToList();
+                items = _context.productos.Include(m => m.Marca).Include(u => u.Unidad).ToList();
 
             items = DoSort(items, SortProperty, sortOrder);
 

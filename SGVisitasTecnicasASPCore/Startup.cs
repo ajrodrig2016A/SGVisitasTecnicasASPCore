@@ -40,6 +40,7 @@ namespace SGVisitasTecnicasASPCore
             services.AddScoped<IEmpleados, EmpleadosRepo>();
             services.AddScoped<IClientes, ClientesRepo>();
             services.AddScoped<ICotizaciones, CotizacionesRepo>();
+            services.AddScoped<IVisitas, VisitasRepo>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
             {

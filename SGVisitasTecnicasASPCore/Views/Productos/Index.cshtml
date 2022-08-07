@@ -109,10 +109,10 @@
                     Porcentaje
                     @*@Html.DisplayNameFor(model => model.porcentaje)*@
                 </th>
-                <!--<th>
-                    Categoría-->
+                <th>
+                    @*Categoría*@
                     @*@Html.DisplayNameFor(model => model.categoria_id)*@
-                <!--</th>-->
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -126,8 +126,8 @@
                     <td data-title="@Html.DisplayNameFor(model => model.nombre)">
                         @Html.DisplayFor(modelItem => item.nombre)
                     </td>
-                    <td data-title="@Html.DisplayNameFor(model => model.id_marca)">
-                        @Html.DisplayFor(modelItem => item.id_marca)
+                    <td data-title="@Html.DisplayNameFor(model => model.Marca.nombre)">
+                        @Html.DisplayFor(modelItem => item.Marca.nombre)
                     </td>
                     <td data-title="@Html.DisplayNameFor(model => model.descripcion)">
                         @Html.DisplayFor(modelItem => item.descripcion)
@@ -135,8 +135,8 @@
                     <td data-title="@Html.DisplayNameFor(model => model.ImageName)">
                         @Html.DisplayFor(modelItem => item.ImageName)
                     </td>
-                    <td data-title="@Html.DisplayNameFor(model => model.id_unidad)">
-                        @Html.DisplayFor(modelItem => item.id_unidad)
+                    <td data-title="@Html.DisplayNameFor(model => model.Unidad.nombre)">
+                        @Html.DisplayFor(modelItem => item.Unidad.nombre)
                     </td>
                     <td data-title="@Html.DisplayNameFor(model => model.cantidad)">
                         @Html.DisplayFor(modelItem => item.cantidad)
@@ -153,8 +153,8 @@
                     <td data-title="@Html.DisplayNameFor(model => model.porcentaje)">
                         @Html.DisplayFor(modelItem => item.porcentaje)
                     </td>
-                    @*<td data-title="@Html.DisplayNameFor(model => model.categoria_id)">
-                        @Html.DisplayFor(modelItem => item.categoria_id)
+                    @*<td data-title="@Html.DisplayNameFor(model => model.Categoria.nombre)">
+                        @Html.DisplayFor(modelItem => item.Categoria.nombre)
                     </td>*@
                     <td>
                         <div class="btn-group">

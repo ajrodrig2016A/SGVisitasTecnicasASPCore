@@ -1,0 +1,170 @@
+﻿@model IEnumerable<SGVisitasTecnicasASPCore.Models.visitas>
+
+@{
+    ViewData["Title"] = "Gestión de Visitas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    SortModel sortModel = (SortModel)ViewData["sortModel"];
+
+    PagerModel pager = ViewBag.Pager;
+}
+
+<hr />
+<h4 class="text-center text-primary">Gestión de Visitas</h4>
+<hr />
+<div class="container">
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Nueva Visita</a>
+    </p>
+    <div class="row">
+        <div class="col-12">
+            <partial name="_topBar" model="@pager" />
+        </div>
+    </div>
+</div>
+<section id="no-more-tables" style="padding-top: 0;">
+    <table class="table-bordered table-striped table-condensed">
+        <thead class="text-center">
+            <tr>
+                <th>
+                    <i class="@sortModel.GetColumn("Fecha Agendada").SortIcon" arial-hidden="true"></i>
+
+                    <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Fecha Agendada").SortExpression">
+                        Fecha de Agendamiento
+                    </a>
+                </th>
+                <th>
+                    <i class="@sortModel.GetColumn("Fecha Cierre").SortIcon" arial-hidden="true"></i>
+
+                    <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Fecha Cierre").SortExpression">
+                        Fecha de Cierre
+                    </a>
+                </th>
+                <th>
+                    <i class="@sortModel.GetColumn("Descripcion").SortIcon" arial-hidden="true"></i>
+
+                    <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Descripcion").SortExpression">
+                        Descripción
+                    </a>
+                </th>
+                <th>
+                    Problema
+                </th>
+                <th>
+                    Instalación
+                </th>
+                <th>
+                    Mantenimiento
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.ubicacionDispSeguridad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tiempoEntrega)
+                </th>*@
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Cliente
+                    @*@Html.DisplayNameFor(model => model.Empleado.nombres)*@
+                </th>
+                <th>
+                    Empleado
+                    @*@Html.DisplayNameFor(model => model.Cliente.nombres)*@
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                @*<td data-title="@Html.DisplayNameFor(model => model.numero_documento)">
+            @Html.DisplayFor(modelItem => item.id_visita)
+        </td>*@
+                <td data-title="@Html.DisplayNameFor(model => model.fecha_agendada)">
+                    @Html.DisplayFor(modelItem => item.fecha_agendada)
+                </td>
+                <td data-title="@Html.DisplayNameFor(model => model.fecha_cierre)">
+                    @Html.DisplayFor(modelItem => item.fecha_cierre)
+                </td>
+                <td data-title="@Html.DisplayNameFor(model => model.descripcion)">
+                    @Html.DisplayFor(modelItem => item.descripcion)
+                </td>
+                <td data-title="@Html.DisplayNameFor(model => model.esProblema)">
+                    @Html.DisplayFor(modelItem => item.esProblema)
+                </td>
+                <td data-title="@Html.DisplayNameFor(model => model.requiereInstalacion)">
+                    @Html.DisplayFor(modelItem => item.requiereInstalacion)
+                </td>
+                <td data-title="@Html.DisplayNameFor(model => model.requiereMantenimiento)">
+                    @Html.DisplayFor(modelItem => item.requiereMantenimiento)
+                </td>
+                @*<td data-title="@Html.DisplayNameFor(model => model.ubicacionDispSeguridad)">
+            @Html.DisplayFor(modelItem => item.ubicacionDispSeguridad)
+        </td>
+        <td data-title="@Html.DisplayNameFor(model => model.tiempoEntrega)">
+            @Html.DisplayFor(modelItem => item.tiempoEntrega)
+        </td>*@
+                <td data-title="@Html.DisplayNameFor(model => model.estado)">
+                    @Html.DisplayFor(modelItem => item.estado)
+                </td>
+                <td data-title="@Html.DisplayNameFor(model => model.Cliente.nombres)">
+                    @Html.DisplayFor(modelItem => item.Cliente.nombres)
+                </td>
+                <td data-title="@Html.DisplayNameFor(model => model.Empleado.nombres)">
+                    @Html.DisplayFor(modelItem => item.Empleado.nombres)
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <a asp-action="Edit" asp-route-id="@item.id_visita">
+                            <span class="btn btn-sm btn-outline-primary">
+                                <i class="fa fa-edit" aria-hidden="true"></i>
+                            </span>
+                        </a>
+
+                        <a asp-action="Details" asp-route-id="@item.id_visita">
+                            <span class="btn btn-sm btn-outline-dark">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </span>
+                        </a>
+
+                        <a asp-action="Delete" asp-route-id="@item.id_visita">
+                            <span class="btn btn-sm btn-outline-danger">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</section>
+<div class="row">
+    <div class="col-12">
+        <partial name="_bottomBar" model="@pager" />
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function openSuccessModal(strMessage) {
+            var myDiv = document.getElementById("myModalSuccessAlertBody");
+            myDiv.innerHTML = strMessage;
+            $('#myModalSuccess').modal('show');
+
+        }
+
+        $(document).ready(function () {
+            var msg = "@TempData["SuccessMessage"]";
+            if (msg) {
+                openSuccessModal(msg);
+
+            }
+
+        });
+
+    </script>
+}

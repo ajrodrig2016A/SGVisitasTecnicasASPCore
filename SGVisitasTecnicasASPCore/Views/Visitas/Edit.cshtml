@@ -1,0 +1,113 @@
+﻿@model SGVisitasTecnicasASPCore.Models.visitas
+
+@{
+    ViewData["Title"] = "Editar Visita";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<h4 class="text-center text-primary">Editar Visita</h4>
+<hr />
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group" style="display:none;">
+                    <label asp-for="id_visita" class="control-label"></label>
+                    <input asp-for="id_visita" class="form-control" />
+                    <span asp-validation-for="id_visita" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="fecha_agendada" class="control-label">Fecha de Agendamiento</label>
+                    <input asp-for="fecha_agendada" id="datepicker" type="text" class="form-control" value="@Model.fecha_agendada.ToString("yyyy-MM-dd")" readonly />
+                    <span asp-validation-for="fecha_agendada" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="fecha_cierre" class="control-label">Fecha de Cierre</label>
+                    <input asp-for="fecha_cierre" id="dtp" type="text" class="form-control" value="@Model.fecha_cierre.ToString("yyyy-MM-dd")" readonly />
+                    <span asp-validation-for="fecha_cierre" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <div class="col-12">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="esProblema" /> Problema
+                        </label>
+                    </div>
+                    <hr />
+                    <div class="col-12">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="requiereInstalacion" /> Instalación
+                        </label>
+                    </div>
+                    <hr />
+                    <div class="col-12">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="requiereMantenimiento" /> Mantenimiento
+                        </label>
+                    </div>
+                    <hr />
+                </div>
+                <div class="form-group">
+                    <label asp-for="descripcion" class="control-label">Descripción</label>
+                    <input asp-for="descripcion" class="form-control" />
+                    <span asp-validation-for="descripcion" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                    <label asp-for="ubicacionDispSeguridad" class="control-label">Ubicación Dispositivo Seguridad</label>
+                    <input asp-for="ubicacionDispSeguridad" class="form-control" />
+                    <span asp-validation-for="ubicacionDispSeguridad" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="tiempoEntrega" class="control-label">Tiempo de Entrega</label>
+                    <input asp-for="tiempoEntrega" class="form-control" />
+                    <span asp-validation-for="tiempoEntrega" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="estado" class="control-label">Estado</label>
+                    <div style="display: inherit;">
+                        @Html.DropDownListFor(model => model.estado, new SelectList(Enum.GetValues(typeof(SGVisitasTecnicasASPCore.Models.visitas.Status))), "Seleccione un estado")
+                    </div>
+                    <span asp-validation-for="estado" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_cliente" class="control-label">Cliente</label>
+                    <div style="display: inherit;">
+                        <select asp-for="id_cliente" class="form-control" asp-items="ViewBag.Clientes"></select>
+                    </div>
+                    <span asp-validation-for="id_cliente" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_empleado" class="control-label">Empleado</label>
+                    <div style="display: inherit;">
+                        <select asp-for="id_empleado" class="form-control" asp-items="ViewBag.Empleados"></select>
+                    </div>
+                    <span asp-validation-for="id_empleado" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="w-100">
+                <div class="col-sm-12 col-md-12 text-center form-group">
+                    <input type="submit" value="Guardar" class="col-md-5 btn btn-info" />
+                    <a class="col-md-5 btn btn-secondary" asp-action="Index">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <link rel="stylesheet" href="~/lib/jquery/jquery-ui.css">
+    <script src="~/lib/jquery/jquery-1.12.4.js"></script>
+    <script src="~/lib/jquery/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker();
+            $("#dtp").datepicker();
+        });
+    </script>
+}

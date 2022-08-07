@@ -14,10 +14,10 @@
         <div class="row">
             <div class="col-sm-12 col-md-6">
                 @*<div class="form-group">
-                        <label asp-for="id_empleado" class="control-label"></label>
-                        <input asp-for="id_empleado" class="form-control" />
-                        <span asp-validation-for="id_empleado" class="text-danger"></span>
-                    </div>*@
+            <label asp-for="id_empleado" class="control-label"></label>
+            <input asp-for="id_empleado" class="form-control" />
+            <span asp-validation-for="id_empleado" class="text-danger"></span>
+        </div>*@
                 <div class="form-group">
                     <label asp-for="numero_documento" class="control-label">Número de Documento</label>
                     <input asp-for="numero_documento" type="number" min="0" maxlength="13" class="form-control" />
@@ -39,9 +39,11 @@
                     <span asp-validation-for="fecha_registro" class="text-danger"></span>
                 </div>
                 <div class="form-group form-check">
+                    <hr />
                     <label class="form-check-label">
-                        <input class="form-check-input" asp-for="es_activo" /> @Html.DisplayNameFor(model => model.es_activo)
+                        <input class="form-check-input" asp-for="es_activo" /> Activo
                     </label>
+                    <hr />
                 </div>
             </div>
             <div class="col-sm-12 col-md-6">

@@ -11,19 +11,34 @@ namespace SGVisitasTecnicasASPCore.Models
     {
         [Key]
         public int id_visita { get; set; }
-        [Required]
-        public DateTime fecha_agendada { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy - MM - dd}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Seleccione la fecha agendada.")]
+        public DateTime fecha_agendada { get; set; } = DateTime.Now;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy - MM - dd}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Seleccione la fecha de cierre.")]
         public DateTime fecha_cierre { get; set; }
+
+        public bool esProblema { get; set; }
+        public bool requiereInstalacion { get; set; }
+        public bool requiereMantenimiento { get; set; }
+
+        [Required(ErrorMessage = "Ingrese la descripción.")]
+        [StringLength(int.MaxValue)]
+        public string descripcion { get; set; }
+
+        [Required(ErrorMessage = "Ingrese ubicación del dispositivo de seguridad.")]
         [StringLength(120)]
-        public string requerimiento { get; set; }
-        public string descripcion_req { get; set; }
+        public string ubicacionDispSeguridad { get; set; }
+
+        [Required(ErrorMessage = "Ingrese el tiempo de entrega.")]
         [StringLength(90)]
-        public string tiempo_entrega { get; set; }
-        [StringLength(120)]
-        public string ubicacion_disp_seguridad { get; set; }
-        public bool requiere_instalacion { get; set; }
-        public bool requiere_mantenimiento { get; set; }
-        public string descripcion_problema { get; set; }
+        public string tiempoEntrega { get; set; }
+
+        [Required(ErrorMessage = "Seleccione el estado.")]
         [StringLength(50)]
         public string estado { get; set; }
 
@@ -36,5 +51,12 @@ namespace SGVisitasTecnicasASPCore.Models
         [ForeignKey("Cliente")]
         public int id_cliente { get; set; }
         public virtual clientes Cliente { get; set; } //very important
+        public enum Status
+        {
+            Registrada,
+            Actualizada,
+            Aprobada,
+            Cancelada
+        }
     }
 }

@@ -2,7 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-    $(document).ready(function () {
+    $(document).ready(function ($) {
         $('#headerVideoLink').magnificPopup({
             type: 'inline',
             midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
@@ -92,7 +92,7 @@ function reCalcSubtotalCotizacion() {
             }
         }
 
-
+        rebindvalidators();
         var c = document.getElementsByClassName('detCtzCantidad')[lastRowIdx].value;
         var u = document.getElementsByClassName('detCtzValUnit')[lastRowIdx].value;
 
@@ -101,10 +101,6 @@ function reCalcSubtotalCotizacion() {
             calcSubtotalCotizacion();
         }
 
-        //calcTotalDetCotizacion(lastRowIdx);
-
-        rebindvalidators();
-
     }
 
 
@@ -112,8 +108,8 @@ function reCalcSubtotalCotizacion() {
         var $form = $("#CotizacionForm");
         $form.unbind();
         $form.data("validator", null);
-        $.validator.unobstrusive.parse($form);
-        $form.validate($form.data("unobstrusiveValidation").options);
+        $.validator.unobtrusive.parse($form);
+        $form.validate($form.data("unobtrusiveValidation").options);
     }
 
     document.addEventListener('keydown', ShowSearchableList);

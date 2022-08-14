@@ -127,15 +127,15 @@ namespace SGVisitasTecnicasASPCore.Controllers
         // GET: VisitasController/Details/5
         public IActionResult Details(int id)
         {
+            PopulateViewbags();
             visitas item = _visitasRepo.GetItem(id);
             return View(item);
         }
 
         public IActionResult Edit(int id)
         {
+            PopulateViewbags();
             visitas visita = _visitasRepo.GetItem(id);
-            ViewBag.Clientes = GetClientes();
-            ViewBag.Empleados = GetEmpleados();
             TempData.Keep();
             return View(visita);
         }
@@ -157,17 +157,17 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 if (visita.ubicacionDispSeguridad.Length < 4 || visita.ubicacionDispSeguridad == null)
                     errMessage = "Ubicación del dispositivo de seguridad  Debe tener al menos 4 caracteres";
 
-                if (_visitasRepo.IsItemCodeExists(visita.id_visita) == true)
-                    errMessage = errMessage + " " + " El código de visita " + visita.id_visita + " ya existe";
+                //if (_visitasRepo.IsItemCodeExists(visita.id_visita) == true)
+                //    errMessage = errMessage + " " + " El código de visita " + visita.id_visita + " ya existe";
 
-                if (_visitasRepo.IsItemExists(clsCliente.nombres) == true)
-                    errMessage = errMessage + " " + " La visita del cliente " + clsCliente.nombres + " ya existe";
+                //if (_visitasRepo.IsItemExists(clsCliente.nombres) == true)
+                //    errMessage = errMessage + " " + " La visita del cliente " + clsCliente.nombres + " ya existe";
 
 
                 if (errMessage == "")
                 {
                     visita = _visitasRepo.Edit(visita);
-                    TempData["SuccessMessage"] = visita.id_visita + ", visita guardada exitosamente";
+                    TempData["SuccessMessage"] = "Visita " + visita.id_visita + ", guardada exitosamente";
                     bolret = true;
                 }
             }

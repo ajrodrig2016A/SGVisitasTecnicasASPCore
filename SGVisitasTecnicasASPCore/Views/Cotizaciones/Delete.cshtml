@@ -29,6 +29,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label asp-for="servicio" class="control-label">Servicio</label>
+                        <div style="display: inherit;">
+                            <select asp-for="servicio" class="form-control" asp-items="new SelectList(Enum.GetValues(typeof(SGVisitasTecnicasASPCore.Models.cotizaciones.Service)))" disabled="disabled"><option>----Seleccione un servicio----</option></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label asp-for="codigo" class="control-label">Número Cotización</label>
                         <input asp-for="codigo" class="form-control" />
                         <span asp-validation-for="codigo" class="text-danger"></span>
@@ -45,7 +51,11 @@
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
                         <label asp-for="fecha_registro" class="control-label">Fecha de Registro</label>
-                        <input asp-for="fecha_registro" id="datepicker" type="text" class="form-control" value="@Model.fecha_registro.ToString("yyyy-MM-dd")" readonly />
+                        <input asp-for="fecha_registro" type="text" class="form-control" value="@Model.fecha_registro.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="fecha_actualizacion" class="control-label">Fecha de Actualización</label>
+                        <input asp-for="fecha_actualizacion" type="text" class="form-control" value="@Model.fecha_actualizacion.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
                     </div>
                     <div class="form-group">
                         <label asp-for="telefono" class="control-label">Teléfono</label>
@@ -54,7 +64,7 @@
                     <div class="form-group">
                         <label asp-for="id_empleado" class="control-label">Empleado</label>
                         <div style="display: inherit;">
-                            <select asp-for="id_empleado" class="form-group" asp-items="ViewBag.empleados" disabled="disabled"></select>
+                            <select asp-for="id_empleado" class="form-control" asp-items="ViewBag.empleados" disabled="disabled"></select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -72,6 +82,9 @@
                         <table id="DetCtzTable" class="table table-bordered table-striped table-hover table-sm">
                             <thead>
                                 <tr>
+                                    <th>
+                                        Código Producto
+                                    </th>
                                     <th>
                                         Descripción
                                     </th>
@@ -91,6 +104,9 @@
                                         Valor Unitario
                                     </th>
                                     <th>
+                                        Porcentaje Descuento
+                                    </th>
+                                    <th>
                                         Valor Total
                                     </th>
                                     <th></th>
@@ -99,29 +115,35 @@
                             <tbody>
                                 @for (int i = 0; i < Model.DetallesCotizacion.Count; i++)
                                 {
-                                    <tr>
-                                        <td>
-                                            <input asp-for="@Model.DetallesCotizacion[i].descripcion" class="form-control-plaintext" readonly />
-                                        </td>
-                                        <td>
-                                            <input asp-for="@Model.DetallesCotizacion[i].ubicación" class="form-control-plaintext" readonly />
-                                        </td>
-                                        <td>
-                                            <input asp-for="@Model.DetallesCotizacion[i].marca" class="form-control-plaintext" readonly />
-                                        </td>
-                                        <td>
-                                            <input asp-for="@Model.DetallesCotizacion[i].unidad" class="form-control-plaintext" readonly />
-                                        </td>
-                                        <td>
-                                            <input asp-for="@Model.DetallesCotizacion[i].cantidad" class="form-control-plaintext" readonly />
-                                        </td>
-                                        <td>
-                                            <input asp-for="@Model.DetallesCotizacion[i].valorUnitario" class="form-control-plaintext" readonly />
-                                        </td>
-                                        <td>
-                                            <input asp-for="@Model.DetallesCotizacion[i].valorTotal" class="form-control-plaintext" readonly />
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].codigoProducto" class="form-control" readonly />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].descripcion" class="form-control-plaintext" readonly />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].ubicacion" class="form-control-plaintext" readonly />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].marca" class="form-control-plaintext" readonly />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].unidad" class="form-control-plaintext" readonly />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].cantidad" class="form-control-plaintext" readonly />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].valorUnitario" class="form-control-plaintext" readonly />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].descuento" class=" form-control form-control-plaintext" readonly />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].valorTotal" class="form-control-plaintext" readonly />
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
@@ -179,9 +201,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script type="text/javascript">
-        $(function () {
-            $("#datepicker").datepicker();
-        });
-    </script>
+
 }

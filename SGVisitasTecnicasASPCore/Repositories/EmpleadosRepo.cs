@@ -48,10 +48,7 @@ namespace SGVisitasTecnicasASPCore.Repositories
                 user.Rol = empleado.perfil;
                 _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             }
-            /*else
-            {
-                _context.usuarios.Add(new Usuario { Nombre = empleado.nombres, Correo = empleado.email, Clave = empleado.password, token_recovery = null, Rol = empleado.perfil });
-            }*/
+
             _context.SaveChanges();
             return empleado;
         }

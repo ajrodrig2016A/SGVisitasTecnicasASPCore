@@ -50,10 +50,7 @@ namespace SGVisitasTecnicasASPCore.Repositories
                 user.Rol = "CLI";
                 _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             }
-            /*else
-            {
-                _context.usuarios.Add(new Usuario { Nombre = cliente.nombres, Correo = cliente.email, Clave = cliente.password, token_recovery = null, Rol = "CLI" });
-            }*/
+
             _context.SaveChanges();
             return cliente;
         }

@@ -11,7 +11,7 @@
 <hr />
 <h4 class="text-center text-primary">Gestión de Clientes</h4>
 <hr />
-<div class="container">
+<div class="container-fluid">
     <p>
         <a class="btn btn-primary" asp-action="Create">Crear Nuevo Cliente</a>
     </p>
@@ -20,127 +20,118 @@
             <partial name="_topBar" model="@pager" />
         </div>
     </div>
-</div>
+    <section id="no-more-tables" style="padding-top: 0;">
 
-<section id="no-more-tables" style="padding-top: 0;">
-
-    <table class="table-bordered table-striped table-condensed">
-        <thead class="text-center">
-            <tr>
-                <th>
-                    <i class="@sortModel.GetColumn("Número Documento").SortIcon" arial-hidden="true"></i>
-
-                    <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Número Documento").SortExpression">
-                        Número Documento
-                    </a>
-                </th>
-                <th>
-                    <i class="@sortModel.GetColumn("Nombres").SortIcon" arial-hidden="true"></i>
-
-                    <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Nombres").SortExpression">
-                        Nombres
-                    </a>
-                </th>
-                <th>
-                    <i class="@sortModel.GetColumn("Apellidos").SortIcon" arial-hidden="true"></i>
-
-                    <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Apellidos").SortExpression">
-                        Apellidos
-                    </a>
-                </th>
-                <th>
-                    Fecha de Registro
-                    @*@Html.DisplayNameFor(model => model.fecha_registro)*@
-                </th>
-                <th>
-                    Género
-                    @*@Html.DisplayNameFor(model => model.genero)*@
-                </th>
-                <th>
-                    Dirección
-                    @*@Html.DisplayNameFor(model => model.direccion)*@
-                </th>
-                <th>
-                    Email
-                    @*@Html.DisplayNameFor(model => model.email)*@
-                </th>
-                <th>
-                    Password
-                    @*@Html.DisplayNameFor(model => model.password)*@
-                </th>
-                <th>
-                    Número de Contacto
-                    @*@Html.DisplayNameFor(model => model.numero_contacto)*@
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+        <table class="table-bordered table-striped table-condensed" style="width: 100%;">
+            <thead class="text-center">
                 <tr>
-                    <td data-title="@Html.DisplayNameFor(model => model.numero_documento)">
-                        @Html.DisplayFor(modelItem => item.numero_documento)
-                    </td>
-                    <td data-title="@Html.DisplayNameFor(model => model.nombres)">
-                        @Html.DisplayFor(modelItem => item.nombres)
-                    </td>
-                    <td data-title="@Html.DisplayNameFor(model => model.apellidos)">
-                        @Html.DisplayFor(modelItem => item.apellidos)
-                    </td>
-                    <td data-title="@Html.DisplayNameFor(model => model.fecha_registro)">
-                        @Html.DisplayFor(modelItem => item.fecha_registro)
-                    </td>
-                    <td data-title="@Html.DisplayNameFor(model => model.genero)">
-                        @Html.DisplayFor(modelItem => item.genero)
-                    </td>
-                    <td data-title="@Html.DisplayNameFor(model => model.direccion)">
-                        @Html.DisplayFor(modelItem => item.direccion)
-                    </td>
-                    <td data-title="@Html.DisplayNameFor(model => model.email)">
-                        @Html.DisplayFor(modelItem => item.email)
-                    </td>
-                    <td data-title="@Html.DisplayNameFor(model => model.password)">
-                        @Html.DisplayFor(modelItem => item.password)
-                    </td>
-                    <td data-title="@Html.DisplayNameFor(model => model.numero_contacto)">
-                        @Html.DisplayFor(modelItem => item.numero_contacto)
-                    </td>
-                    <td>
-                        <div class="btn-group">
-                            <a asp-action="Edit" asp-route-id="@item.id_cliente">
-                                <span class="btn btn-sm btn-outline-primary">
-                                    <i class="fa fa-edit" aria-hidden="true"></i>
-                                </span>
-                            </a>
+                    <th>
+                        <i class="@sortModel.GetColumn("Número Documento").SortIcon" arial-hidden="true"></i>
 
-                            <a asp-action="Details" asp-route-id="@item.id_cliente">
-                                <span class="btn btn-sm btn-outline-dark">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                </span>
-                            </a>
+                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Número Documento").SortExpression">
+                            Número Documento
+                        </a>
+                    </th>
+                    <th>
+                        <i class="@sortModel.GetColumn("Nombres").SortIcon" arial-hidden="true"></i>
 
-                            <a asp-action="Delete" asp-route-id="@item.id_cliente">
-                                <span class="btn btn-sm btn-outline-danger">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </span>
-                            </a>
+                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Nombres").SortExpression">
+                            Nombres
+                        </a>
+                    </th>
+                    <th>
+                        <i class="@sortModel.GetColumn("Apellidos").SortIcon" arial-hidden="true"></i>
 
-                        </div>
-                        @*@Html.ActionLink("Editar", "Edit", new { id = item.id_cliente }, new { @class = "btn btn-warning" }) |
-                            @Html.ActionLink("Detalles", "Details", new { id = item.id_cliente }, new { @class = "btn btn-info" }) |
-                            @Html.ActionLink("Eliminar", "Delete", new { id = item.id_cliente }, new { @class = "btn btn-danger" })*@
-                    </td>
+                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Apellidos").SortExpression">
+                            Apellidos
+                        </a>
+                    </th>
+                    <th>
+                        Fecha de Registro
+                    </th>
+                    <th>
+                        Género
+                    </th>
+                    <th>
+                        Dirección
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Password
+                    </th>
+                    <th>
+                        Número de Contacto
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</section>
-<div class="row">
-    <div class="col-12">
-        <partial name="_bottomBar" model="@pager" />
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td data-title="Número Documento">
+                            @Html.DisplayFor(modelItem => item.numero_documento)
+                        </td>
+                        <td data-title="Nombres">
+                            @Html.DisplayFor(modelItem => item.nombres)
+                        </td>
+                        <td data-title="Apellidos">
+                            @Html.DisplayFor(modelItem => item.apellidos)
+                        </td>
+                        <td data-title="Fecha de Registro">
+                            @Html.DisplayFor(modelItem => item.fecha_registro)
+                        </td>
+                        <td data-title="Género">
+                            @Html.DisplayFor(modelItem => item.genero)
+                        </td>
+                        <td data-title="Dirección">
+                            @Html.DisplayFor(modelItem => item.direccion)
+                        </td>
+                        <td data-title="Email">
+                            @Html.DisplayFor(modelItem => item.email)
+                        </td>
+                        <td data-title="Password">
+                            @Html.DisplayFor(modelItem => item.password)
+                        </td>
+                        <td data-title="Número de Contacto">
+                            @Html.DisplayFor(modelItem => item.numero_contacto)
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a asp-action="Edit" asp-route-id="@item.id_cliente">
+                                    <span class="btn btn-sm btn-outline-primary">
+                                        <i class="fa fa-edit" aria-hidden="true"></i>
+                                    </span>
+                                </a>
+
+                                <a asp-action="Details" asp-route-id="@item.id_cliente">
+                                    <span class="btn btn-sm btn-outline-dark">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                    </span>
+                                </a>
+
+                                <a asp-action="Delete" asp-route-id="@item.id_cliente">
+                                    <span class="btn btn-sm btn-outline-danger">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </span>
+                                </a>
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+    <div class="row">
+        <div class="col-12">
+            <partial name="_bottomBar" model="@pager" />
+        </div>
     </div>
 </div>
+
 
 @section Scripts {
     <script type="text/javascript">

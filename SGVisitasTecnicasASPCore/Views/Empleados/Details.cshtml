@@ -14,94 +14,77 @@
             <div class="table-responsive">
                 <dl class="d-lg-table">
                     <dt>
-                        Número de Documento
-                        @*@Html.DisplayNameFor(model => model.numero_documento)*@
+                        Código
                     </dt>
-
+                    <dd>
+                        @Html.DisplayFor(model => model.id_empleado)
+                    </dd>
+                    <dt>
+                        Número de Documento
+                    </dt>
                     <dd>
                         @Html.DisplayFor(model => model.numero_documento)
                     </dd>
-
                     <dt>
                         Nombres
-                        @*@Html.DisplayNameFor(model => model.nombres)*@
                     </dt>
-
                     <dd>
                         @Html.DisplayFor(model => model.nombres)
                     </dd>
-
                     <dt>
                         Apellidos
-                        @*@Html.DisplayNameFor(model => model.apellidos)*@
                     </dt>
-
                     <dd>
                         @Html.DisplayFor(model => model.apellidos)
                     </dd>
-
                     <dt>
                         Fecha de Registro
-                        @*@Html.DisplayNameFor(model => model.fecha_registro)*@
                     </dt>
-
                     <dd>
                         @Html.DisplayFor(model => model.fecha_registro)
                     </dd>
-
+                    <dt>
+                        Fecha de Actualización
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.fecha_actualizacion)
+                    </dd>
                     <dt>
                         Activo
                     </dt>
-
                     <dd>
                         @Html.DisplayFor(model => model.es_activo)
                     </dd>
-
                     <dt>
                         Email
-                        @*@Html.DisplayNameFor(model => model.email)*@
                     </dt>
-
                     <dd>
                         @Html.DisplayFor(model => model.email)
                     </dd>
-
                     <dt>
                         Teléfono
-                        @*@Html.DisplayNameFor(model => model.telefono)*@
                     </dt>
-
                     <dd>
                         @Html.DisplayFor(model => model.telefono)
                     </dd>
-
                     <dt>
                         Password
-                        @*@Html.DisplayNameFor(model => model.password)*@
                     </dt>
-
                     <dd>
                         @Html.DisplayFor(model => model.password)
                     </dd>
-
                     <dt>
                         Perfil
-                        @*@Html.DisplayNameFor(model => model.perfil)*@
                     </dt>
-
                     <dd>
                         @Html.DisplayFor(model => model.perfil)
                     </dd>
-
                     <dt>
                         Cargo
-                        @*@Html.DisplayNameFor(model => model.cargo)*@
                     </dt>
-
                     <dd>
                         @Html.DisplayFor(model => model.cargo)
                     </dd>
-
                 </dl>
             </div>
         </div>

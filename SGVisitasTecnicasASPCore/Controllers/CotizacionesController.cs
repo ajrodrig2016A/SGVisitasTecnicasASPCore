@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SGVisitasTecnicasASPCore.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using SGVisitasTecnicasASPCore.Data;
 
 namespace SGVisitasTecnicasASPCore.Controllers
 {
@@ -29,9 +30,10 @@ namespace SGVisitasTecnicasASPCore.Controllers
         public IActionResult Index(string sortExpression = "", string SearchText = "", int pg = 1, int pageSize = 5)
         {
             SortModel sortModel = new SortModel();
-            sortModel.AddColumn("Codigo");
-            sortModel.AddColumn("Sector Inmueble");
-            sortModel.AddColumn("Dirección Inmueble");
+            sortModel.AddColumn("Código");
+            sortModel.AddColumn("Servicio");
+            sortModel.AddColumn("Sector del Inmueble");
+            sortModel.AddColumn("Dirección del Inmueble");
             sortModel.AddColumn("Fecha de Registro");
             //sortModel.AddColumn("Nombre Imagen");
             //sortModel.AddColumn("Unidad");
@@ -83,7 +85,8 @@ namespace SGVisitasTecnicasASPCore.Controllers
         public IActionResult Details(int id)
         {
             PopulateViewbags();
-            cotizaciones cotizacion = _context.cotizaciones.Include(d => d.DetallesCotizacion).Where(c => c.id_cotizacion == id).FirstOrDefault();
+            cotizaciones cotizacion = _cotizacionesRepo.GetQuote(id);
+
             for (int i = 0; i < cotizacion.DetallesCotizacion.Count; i++)
             {
                 cotizacion.DetallesCotizacion[i].codigoProducto = cotizacion.DetallesCotizacion[i].id_producto.ToString();
@@ -113,6 +116,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
         {
             bool bolret = false;
             string errMessage = "";
+
             try
             {
                 cotizacion.DetallesCotizacion.RemoveAll(n => n.cantidad == (decimal)0.00 || n.valorUnitario == (decimal)0.00);
@@ -134,10 +138,12 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                 foreach (var item in cotizacion.DetallesCotizacion.ToList())
                 {
-                    if (String.IsNullOrEmpty(item.descripcion) || String.IsNullOrEmpty(item.ubicación) || String.IsNullOrEmpty(item.marca) || String.IsNullOrEmpty(item.unidad))
+                    if (String.IsNullOrEmpty(item.descripcion) || String.IsNullOrEmpty(item.ubicacion) || String.IsNullOrEmpty(item.marca) || String.IsNullOrEmpty(item.unidad))
                         errMessage = "Campos del detalle están incompletos, favor llenarlos.";
                 }
 
+                if (cotizacion.subtotal < Utils.ZERO_DEC)
+                    errMessage = "El subtotal de la cotización debe ser mayor que cero.";
 
                 if (cotizacion.instalacion.Length <= 0 || cotizacion.instalacion == null ||
                     cotizacion.garantia_equipos.Length <= 0 || cotizacion.garantia_equipos == null ||
@@ -175,7 +181,8 @@ namespace SGVisitasTecnicasASPCore.Controllers
         {
             //cotizaciones cotizacion = _cotizacionesRepo.GetQuote(id);
             PopulateViewbags();
-            cotizaciones cotizacion = _context.cotizaciones.Include(d => d.DetallesCotizacion).Where(c => c.id_cotizacion == id).FirstOrDefault();
+            cotizaciones cotizacion = _cotizacionesRepo.GetQuote(id);
+
             for (int i = 0; i < cotizacion.DetallesCotizacion.Count; i++)
             {
                 cotizacion.DetallesCotizacion[i].codigoProducto = cotizacion.DetallesCotizacion[i].id_producto.ToString();
@@ -215,10 +222,12 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                 foreach (var item in cotizacion.DetallesCotizacion.ToList())
                 {
-                    if (String.IsNullOrEmpty(item.descripcion) || String.IsNullOrEmpty(item.ubicación) || String.IsNullOrEmpty(item.marca) || String.IsNullOrEmpty(item.unidad))
+                    if (String.IsNullOrEmpty(item.descripcion) || String.IsNullOrEmpty(item.ubicacion) || String.IsNullOrEmpty(item.marca) || String.IsNullOrEmpty(item.unidad))
                         errMessage = "Campos del detalle están incompletos, favor llenarlos.";
                 }
 
+                if (cotizacion.subtotal < Utils.ZERO_DEC)
+                    errMessage = "El subtotal de la cotización debe ser mayor que cero.";
 
                 if (cotizacion.instalacion.Length <= 0 || cotizacion.instalacion == null ||
                     cotizacion.garantia_equipos.Length <= 0 || cotizacion.garantia_equipos == null ||
@@ -231,7 +240,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 if (errMessage == "")
                 {
                     cotizacion = _cotizacionesRepo.Edit(cotizacion);
-                    TempData["SuccessMessage"] = cotizacion.id_cotizacion.ToString() + ", cotizacion guardada exitosamente";
+                    TempData["SuccessMessage"] = "Cotización " + cotizacion.id_cotizacion.ToString() + ", guardada exitosamente";
                     bolret = true;
                 }
                 PopulateViewbags();
@@ -261,7 +270,8 @@ namespace SGVisitasTecnicasASPCore.Controllers
         public IActionResult Delete(int id)
         {
             PopulateViewbags();
-            cotizaciones cotizacion = _context.cotizaciones.Include(d => d.DetallesCotizacion).Where(c => c.id_cotizacion == id).FirstOrDefault();            
+            cotizaciones cotizacion = _cotizacionesRepo.GetQuote(id);
+
             for (int i = 0; i < cotizacion.DetallesCotizacion.Count; i++)
             {
                 cotizacion.DetallesCotizacion[i].codigoProducto = cotizacion.DetallesCotizacion[i].id_producto.ToString();
@@ -279,8 +289,8 @@ namespace SGVisitasTecnicasASPCore.Controllers
         {
             bool bolret = false;
             string errMessage = "";
-            //cotizaciones cotizacion = new cotizaciones();
-            cotizaciones cotizacion = _context.cotizaciones.Include(d => d.DetallesCotizacion).Where(c => c.id_cotizacion == id).FirstOrDefault();
+
+            cotizaciones cotizacion = _cotizacionesRepo.GetQuote(id);
             try
             {
                 bolret = _cotizacionesRepo.Delete(id);

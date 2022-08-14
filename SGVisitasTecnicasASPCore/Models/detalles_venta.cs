@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace SGVisitasTecnicasASPCore.Models
 {
-    public class detalles_cotizacion
+    public class detalles_venta
     {
-        public detalles_cotizacion()
+        public detalles_venta()
         {
 
         }
 
         [Key]
-        public int id_detalle_cotización { get; set; }
+        public int id_detalle_venta { get; set; }
 
         [Required]                
-        [ForeignKey("Cotizacion")]//very important
-        public int id_cotizacion { get; set; }
-        public virtual cotizaciones Cotizacion { get; private set; } //very important 
+        [ForeignKey("Venta")]//very important
+        public int id_venta { get; set; }
+        public virtual ventas Venta { get; private set; } //very important 
 
         [Required(ErrorMessage = "Seleccione un producto.")]
         [ForeignKey("Producto")]
@@ -29,26 +29,12 @@ namespace SGVisitasTecnicasASPCore.Models
 
         [NotMapped]
         [StringLength(10)]
-        public string codigoProducto { get; set; }
+        public string codigoProductoVta { get; set; }
 
         [NotMapped]
-        //[Required(ErrorMessage = "Ingrese la descripción.")]
         [StringLength(int.MaxValue)]
         public string descripcion { get; set; }
 
-        [Required(ErrorMessage = "Ingrese la ubicación.")]
-        [StringLength(90)]
-        public string ubicacion { get; set; }
-
-        [NotMapped]
-        //[Required(ErrorMessage = "Ingrese la marca.")]
-        [StringLength(60)]
-        public string marca { get; set; }
-
-        [NotMapped]
-        //[Required(ErrorMessage = "Ingrese la unidad.")]
-        [StringLength(8)]
-        public string unidad { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:0.0000}", ApplyFormatInEditMode =true)]
         [Range(0.01, Double.MaxValue, ErrorMessage = "La cantidad debe ser mayor que cero.")]

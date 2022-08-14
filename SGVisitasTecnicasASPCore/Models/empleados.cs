@@ -26,9 +26,14 @@ namespace SGVisitasTecnicasASPCore.Models
         public string apellidos { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy - MM - dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Seleccione la fecha de registro.")]
-        public DateTime fecha_registro { get; set; } //= DateTime.Now;
+        public DateTime fecha_registro { get; set; } = DateTime.Now;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Seleccione la fecha de actualización.")]
+        public DateTime fecha_actualizacion { get; set; } = DateTime.Now;
 
         public bool es_activo { get; set; }
         

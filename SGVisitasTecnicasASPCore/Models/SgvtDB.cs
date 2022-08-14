@@ -27,6 +27,9 @@ namespace SGVisitasTecnicasASPCore.Models
         public DbSet<cotizaciones> cotizaciones { get; set; }
         public DbSet<detalles_cotizacion> detallesCotizacion { get; set; }
 
+        public DbSet<ventas> ventas { get; set; }
+        public DbSet<detalles_venta> detallesVenta { get; set; }
+
         public DbSet<unidades> unidades { get; set; }
         public DbSet<marcas> marcas { get; set; }
 

@@ -27,7 +27,7 @@
 </head>
 <body>
     <div class="py-1 top">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-sm text-center text-md-left mb-md-0 mb-2 pr-md-4 d-flex topper align-items-center">
                     <p class="mb-0 w-100">
@@ -52,12 +52,16 @@
         </div>
     </div>
     <div class="pt-4 pb-5">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row d-flex align-items-start align-items-center px-3 px-md-0">
                 <div class="col-md-4 d-flex mb-2 mb-md-0">
+                    @if (User.IsInRole("ADM") || User.IsInRole("COM") || User.IsInRole("TEC"))
+                    {
+                        <span class="mr-2">Bienvenido <br /> @User.Identity.Name</span>
+                    }
                     <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
                         <span class="flaticon flaticon-crane"></span>
-                        <span class="ml-2">Saimec <small>Servicios de automatización industrial y mecánica</small></span>
+                        <span class="ml-2">Saimec <small style="white-space:normal; overflow-wrap:break-word;">Servicios de automatización industrial y mecánica</small></span>
                     </a>
                 </div>
                 <div class="col-md-4 d-flex topper mb-md-0 mb-2 align-items-center">
@@ -81,14 +85,14 @@
             </div>
         </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar">
-        <div class="container d-flex align-items-center">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-dark" id="ftco-navbar">
+        <div class="container-fluid d-flex align-items-center">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="fa fa-bars"></span> Menu
             </button>
             <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav mr-auto">
-                    @if (User.IsInRole("ADM") || User.IsInRole("COM") || User.IsInRole("TEC"))
+                <ul class="navbar-nav nav-pestanias">
+                    @if (User.IsInRole("ADM"))
                     {
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Empleados" asp-action="Index">Empleados</a>
@@ -105,8 +109,8 @@
                     @if (User.IsInRole("CLI"))
                     {
                         <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-                        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-                        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+                        <li class="nav-item"><a href=" class=" nav-link">About</a></li>
+                        <li class="nav-item"><a href="sabout.html" ervices.html" class="nav-link">Services</a></li>
                         <li class="nav-item"><a href="project.html" class="nav-link">Projects</a></li>
                         <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
                         <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
@@ -140,7 +144,7 @@
                         </li>
                     }
 
-                    @if (User.IsInRole("ADM") || User.IsInRole("TEC"))
+                    @if (User.IsInRole("ADM") || User.IsInRole("TEC") || User.IsInRole("COM"))
                     {
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Cotizaciones" asp-action="Index">Cotizaciones</a>
@@ -154,18 +158,25 @@
                         </li>
                     }
 
+                    @if (User.IsInRole("ADM") || User.IsInRole("TEC"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Ventas" asp-action="Index">Ventas</a>
+                        </li>
+                    }
+
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Access" asp-action="Salir">Salir</a>
                     </li>
 
                 </ul>
-                <a href="#" class="btn-custom" data-toggle="modal" data-target="#exampleModalCenter">Consultar ahora</a>
+
             </div>
         </div>
     </nav>
     <!-- END nav -->
 
-    <div class="container">
+    <div class="container-fluid">
         <main role="main" class="pb-3">
 
             <!--Success Dialog Start-->
@@ -220,7 +231,7 @@
     </div>
 
     <footer class="ftco-footer">
-        <div class="container mb-5 pb-4">
+        <div class="container-fluid mb-5 pb-4">
             <div class="row">
                 <div class="col-lg col-md-6">
                     <div class="ftco-footer-widget">
@@ -308,16 +319,7 @@
                     </button>
                 </div>
                 <div class="modal-body p-4 p-md-5">
-                    @*<div style="color:green;">
-            @ViewBag.SucessEmailRequestQuote
-        </div>
-        <div style="color:red;">
-            @ViewBag.FailEmailRequestQuote
-        </div>
-        <div style="color:red;">
-            @ViewBag.UserNotFoundRequestQuote
-        </div>*@
-                    <form asp-controller="Home" asp-action="StartRequestQuote" method="post" class="appointment-form ftco-animate">
+                    <form role="form" method="post" class="appointment-form ftco-animate" id="reused_form">
                         <h3>Solicitar cotización</h3>
                         <div class="">
                             <div class="form-group">
@@ -338,16 +340,14 @@
                                 <div class="form-field">
                                     <div class="select-wrap">
                                         <div class="icon"><span class="fa fa-chevron-down"></span></div>
-                                        <select name="servicio" class="form-control">
+                                        <select name="servicio" class="form-control" required>
                                             <option value="">Seleccione sus servicios</option>
-                                            <option value="Proyectos de Ingeniería">Proyectos de Ingeniería</option>
-                                            <option value="Sistemas de Videovigilancia">Sistemas de Videovigilancia</option>
-                                            <option value="Cámara móvil 360">Cámara móvil 360</option>
-                                            <option value="CCTV">CCTV</option>
-                                            <option value="Cámara Domo">Cámara Domo</option>
-                                            <option value="Visión Nocturna">Visión Nocturna</option>
-                                            <option value="Cámaras Exteriores">Cámaras Exteriores</option>
-                                            <option value="Otros servicios">Otros servicios</option>
+                                            <option value="Proyectos de Ingeniería Industrial">Proyectos de Ingeniería Industrial</option>
+                                            <option value="Proyectos Electrónicos">Proyectos Electrónicos</option>
+                                            <option value="Sistema de Videovigilancia">Sistema de Videovigilancia</option>
+                                            <option value="Videoporteros">Videoporteros</option>
+                                            <option value="Alarmas residenciales/comunitarias">Alarmas residenciales/comunitarias</option>
+                                            <option value="Cercos Eléctricos">Cercos Eléctricos</option>
                                         </select>
                                     </div>
                                 </div>
@@ -358,10 +358,18 @@
                                 <textarea name="mensaje" required cols="30" rows="4" class="form-control" placeholder="Mensaje"></textarea>
                             </div>
                             <div class="form-group">
-                                <input type="submit" value="Enviar" class="btn btn-primary py-3 px-4">
+                                <button type="submit" class="btn btn-primary py-3 px-4">Enviar</button>
                             </div>
                         </div>
                     </form>
+                    <div id="success_message" style="color: green; width:100%; height:100%; display:none; ">
+                        <h3>Mensaje enviado exitosamente.</h3>
+                    </div>
+                    <div id="error_message"
+                         style="color:red; width:100%; height:100%; display:none; ">
+                        <h3>Error</h3>
+                        Lo siento, hubo un error al enviar su formulario.
+                    </div>
                 </div>
             </div>
         </div>
@@ -387,6 +395,7 @@
     @*<script src="~/js/google-map.js"></script>*@
 
     <script src="~/js/main.js"></script>
+    <script src="~/js/requestquote.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)

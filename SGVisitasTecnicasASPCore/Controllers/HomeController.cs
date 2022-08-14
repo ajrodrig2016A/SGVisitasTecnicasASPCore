@@ -15,7 +15,6 @@ namespace SGVisitasTecnicasASPCore.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly SgvtDB _context;
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -72,22 +71,10 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                     if (statusEmailSend)
                     {
-                        TempData["SuccessMessage"] = "Email de solicitud para cotizar servicios enviado exitosamente a: " + emailDestino;
-                    }
-                    else
-                    {
-                        TempData["FailMessage"] = "Error al enviar el email de solicitud para cotizar servicios.";
+                        return Json("success");
                     }
                 }
-                else
-                {
-                    ViewBag.UserNotFoundRequestQuote = "Datos del cliente son incorrectos. Favor ingreselos nuevamente.";
-                    //ViewBag.UserNotFoundRequestQuote = "Usuario no registrado en la plataforma SGVT. Por favor enviar email de solicitud para creación de su usuario.";
-                    return RedirectToAction(nameof(Index));
-                    //return View(model);
-                }
-                return RedirectToAction(nameof(Index));
-                //return View("Index");
+                return Json("fail");
             }
             catch (Exception ex)
             {

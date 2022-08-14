@@ -28,8 +28,7 @@ namespace SGVisitasTecnicasASPCore.Models
         public enum Estados
         {
             Activa,
-            Desactiva,
-            No_disponible
+            Inactiva
         }
         [NotMapped]
         public SelectList CategoriasSelectList { get; set; }

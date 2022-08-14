@@ -74,7 +74,6 @@ namespace SGVisitasTecnicasASPCore.Repositories
 
                 _context.SaveChanges();
 
-                //cotizaciones ctz = new cotizaciones();
                 if (cotizacion.DetallesCotizacion.Count == 0)
                 {
                     cotizacion.DetallesCotizacion.Add(new detalles_cotizacion() { id_detalle_cotización = 1 });
@@ -95,14 +94,28 @@ namespace SGVisitasTecnicasASPCore.Repositories
         private List<cotizaciones> DoSort(List<cotizaciones> items, string SortProperty, SortOrder sortOrder)
         {
 
-            if (SortProperty.ToLower() == "codigo")
+            if (SortProperty.ToLower() == "código")
             {
                 if (sortOrder == SortOrder.Ascending)
                     items = items.OrderBy(n => n.codigo).ToList();
                 else
                     items = items.OrderByDescending(n => n.codigo).ToList();
             }
-            else if (SortProperty.ToLower() == "sector inmueble")
+            else if (SortProperty.ToLower() == "servicio")
+            {
+                if (sortOrder == SortOrder.Ascending)
+                    items = items.OrderBy(d => d.servicio).ToList();
+                else
+                    items = items.OrderByDescending(d => d.servicio).ToList();
+            }
+            else if (SortProperty.ToLower() == "sector del inmueble")
+            {
+                if (sortOrder == SortOrder.Ascending)
+                    items = items.OrderBy(d => d.sector_inmueble).ToList();
+                else
+                    items = items.OrderByDescending(d => d.sector_inmueble).ToList();
+            }
+            else if (SortProperty.ToLower() == "dirección del inmueble")
             {
                 if (sortOrder == SortOrder.Ascending)
                     items = items.OrderBy(d => d.direccion_inmueble).ToList();
@@ -126,7 +139,7 @@ namespace SGVisitasTecnicasASPCore.Repositories
 
             if (SearchText != "" && SearchText != null)
             {
-                items = _context.cotizaciones.Where(n => n.codigo.Contains(SearchText) || n.sector_inmueble.Contains(SearchText))
+                items = _context.cotizaciones.Where(n => n.codigo.Contains(SearchText) || n.servicio.Contains(SearchText) || n.sector_inmueble.Contains(SearchText) || n.direccion_inmueble.Contains(SearchText))
                     .Include(c => c.Cliente)
                     .Include(e => e.Empleado)
                     .ToList();

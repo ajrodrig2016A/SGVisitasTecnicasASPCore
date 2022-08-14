@@ -200,7 +200,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 if (errMessage == "")
                 {
                     product = _productosRepo.Edit(product);
-                    TempData["SuccessMessage"] = product.nombre + ", producto guardado exitosamente";
+                    TempData["SuccessMessage"] = "Producto " + product.nombre + ", guardado exitosamente";
                     bolret = true;
                 }
             }
@@ -241,7 +241,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
         [HttpPost]
         public IActionResult Delete(int id, IFormCollection collection)
         {
-            productos producto = new productos();
+            productos producto = _productosRepo.GetItem(id);
             try
             {
                 //delete from wwwroot/image

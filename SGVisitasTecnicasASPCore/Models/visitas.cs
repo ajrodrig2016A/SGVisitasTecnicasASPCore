@@ -13,14 +13,14 @@ namespace SGVisitasTecnicasASPCore.Models
         public int id_visita { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy - MM - dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Seleccione la fecha agendada.")]
         public DateTime fecha_agendada { get; set; } = DateTime.Now;
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy - MM - dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Seleccione la fecha de cierre.")]
-        public DateTime fecha_cierre { get; set; }
+        public DateTime fecha_cierre { get; set; } = DateTime.Now;
 
         public bool esProblema { get; set; }
         public bool requiereInstalacion { get; set; }

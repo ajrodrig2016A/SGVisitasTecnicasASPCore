@@ -12,7 +12,7 @@
 <hr />
 <h4 class="text-center text-primary">Gestión de Categorías</h4>
 <hr />
-<div class="container">
+<div class="container-fluid">
     <p>
         <a class="btn btn-primary" asp-action="Create">Nueva Categoría</a>
     </p>
@@ -22,7 +22,7 @@
         </div>
     </div>
     <section id="no-more-tables" style="padding-top: 0;">
-        <table class="table-bordered table-striped table-condensed">
+        <table class="table-bordered table-striped table-condensed" style="width: 100%;">
             <thead class="text-center">
                 <tr>
                     <th>
@@ -53,13 +53,13 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td data-title="@Html.DisplayNameFor(model => model.nombre)">
+                        <td data-title="Nombre">
                             @Html.DisplayFor(modelItem => item.nombre)
                         </td>
-                        <td data-title="@Html.DisplayNameFor(model => model.descripcion)">
+                        <td data-title="Descripción">
                             @Html.DisplayFor(modelItem => item.descripcion)
                         </td>
-                        <td data-title="@Html.DisplayNameFor(model => model.estado)">
+                        <td data-title="Estado">
                             @Html.DisplayFor(modelItem => item.estado)
                         </td>
                         <td>
@@ -83,9 +83,6 @@
                                 </a>
 
                             </div>
-                            @*@Html.ActionLink("Editar", "Edit", new { id = item.id_categoria }, new { @class = "btn btn-warning" }) |
-                                @Html.ActionLink("Detalles", "Details", new { id = item.id_categoria }, new { @class = "btn btn-info" }) |
-                                @Html.ActionLink("Eliminar", "Delete", new { id = item.id_categoria }, new { @class = "btn btn-danger" })*@
                         </td>
                     </tr>
                 }

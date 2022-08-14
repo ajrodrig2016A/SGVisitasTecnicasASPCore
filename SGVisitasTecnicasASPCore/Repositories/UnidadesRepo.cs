@@ -27,9 +27,6 @@ namespace SGVisitasTecnicasASPCore.Repositories
             unidades unidad = _context.unidades.Where(x => x.id_unidad == id).FirstOrDefault();
             _context.unidades.Remove(unidad);
             _context.SaveChanges();
-            //_context.unidades.Attach(unidad);
-            //_context.Entry(unidad).State = EntityState.Deleted;
-            //_context.SaveChanges();
             return unidad;
         }
 

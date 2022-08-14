@@ -38,15 +38,25 @@
                     <span asp-validation-for="descripcion" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    @*<label asp-for="ImageName" class="control-label"></label>*@
+                    <label asp-for="fecha_registro" class="control-label">Fecha de Registro</label>
+                    <input asp-for="fecha_registro" type="text" class="form-control" value="@Model.fecha_registro.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
+                    <span asp-validation-for="fecha_registro" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="fecha_actualizacion" class="control-label">Fecha de Actualización</label>
+                    <input asp-for="fecha_actualizacion" type="text" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
+                    <span asp-validation-for="fecha_actualizacion" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group">
                     <input asp-for="ImageName" class="form-control" readonly="readonly" type="hidden" />
-                    @*<span asp-validation-for="ImageName" class="text-danger"></span>*@
                 </div>
                 <div class="form-group">
                     <label asp-for="ImageFile" class="control-label">Foto</label>
                     <div style="display: inherit;">
                         <input asp-for="ImageFile" accept="image/*" />
-                    </div>                        
+                    </div>
                     <span asp-validation-for="ImageFile" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -61,34 +71,16 @@
                     <input asp-for="cantidad" class="form-control" />
                     <span asp-validation-for="cantidad" class="text-danger"></span>
                 </div>
-            </div>
-            <div class="col-sm-12 col-md-6">
                 <div class="form-group">
                     <label asp-for="precioUnitario" class="control-label">Precio Unitario</label>
                     <input asp-for="precioUnitario" class="form-control" />
                     <span asp-validation-for="precioUnitario" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="stock" class="control-label">Stock</label>
-                    <input asp-for="stock" class="form-control" />
-                    <span asp-validation-for="stock" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="descuento" class="control-label">Descuento</label>
-                    <input asp-for="descuento" class="form-control" />
-                    <span asp-validation-for="descuento" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="porcentaje" class="control-label">Porcentaje</label>
-                    <input asp-for="porcentaje" class="form-control" />
-                    <span asp-validation-for="porcentaje" class="text-danger"></span>
-                </div>
-                <div class="form-group">
                     <label asp-for="id_categoria" class="control-label">Categoría</label>
                     <div style="display: inherit;">
                         <select asp-for="id_categoria" asp-items="ViewBag.Categorias" class="form-control"></select>
                     </div>
-                    @*<input asp-for="id_categoria" class="form-control" />*@
                     <span asp-validation-for="id_categoria" class="text-danger"></span>
                 </div>
             </div>

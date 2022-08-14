@@ -4,18 +4,6 @@
     ViewData["Title"] = "Editar Cotización";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-    .CodesTable table {
-        width: 100%
-    }
-
-    .CodesTable thead {
-        width: calc(100%-1em);
-    }
-    /*    .CodesTable tbody {display:block; height:140px; overflow-y:auto; overflow-x:hidden;}
-    .CodesTable thead, .CodesTable tbody tr{display:table; width:97%; table-layout:fixed;}
-    .CodesTable thead, .CodesTable tbody, .CodesTable td{border:none !important;}*/
-</style>
 
 <hr />
 <h4 class="text-center text-primary">Editar Cotización</h4>
@@ -35,8 +23,15 @@
                     <span asp-validation-for="id_cliente" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                    <label asp-for="servicio" class="control-label">Servicio</label>
+                    <div style="display: inherit;">
+                        <select asp-for="servicio" class="form-control" asp-items="new SelectList(Enum.GetValues(typeof(SGVisitasTecnicasASPCore.Models.cotizaciones.Service)))"><option>----Seleccione un servicio----</option></select>
+                    </div>
+                    <span asp-validation-for="servicio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <label asp-for="codigo" class="control-label">Número Cotización</label>
-                    <input asp-for="codigo" class="form-control" />
+                    <input asp-for="codigo" class="form-control" readonly />
                     <span asp-validation-for="codigo" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -49,13 +44,18 @@
                     <input asp-for="direccion_inmueble" class="form-control" />
                     <span asp-validation-for="direccion_inmueble" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="fecha_registro" class="control-label">Fecha de Registro</label>
-                    <input asp-for="fecha_registro" id="datepicker" type="text" class="form-control" value="@Model.fecha_registro.ToString("yyyy-MM-dd")" readonly />
-                    <span asp-validation-for="fecha_registro" class="text-danger"></span>
-                </div>
             </div>
             <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                    <label asp-for="fecha_registro" class="control-label">Fecha de Registro</label>
+                    <input asp-for="fecha_registro" type="text" class="form-control" value="@Model.fecha_registro.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
+                    <span asp-validation-for="fecha_registro" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="fecha_actualizacion" class="control-label">Fecha de Actualización</label>
+                    <input asp-for="fecha_actualizacion" type="text" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
+                    <span asp-validation-for="fecha_actualizacion" class="text-danger"></span>
+                </div>
                 <div class="form-group">
                     <label asp-for="telefono" class="control-label">Teléfono</label>
                     <input asp-for="telefono" class="form-control" />
@@ -106,6 +106,9 @@
                                     Valor Unitario
                                 </th>
                                 <th>
+                                    Porcentaje Descuento
+                                </th>
+                                <th>
                                     Valor Total
                                 </th>
                                 <th>
@@ -116,44 +119,46 @@
                         <tbody>
                             @for (int i = 0; i < Model.DetallesCotizacion.Count; i++)
                             {
-                                <tr>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].codigoProducto" class="form-control" onchange="fillFieldsProductDetails(this)" />
-                                        @*<br /><span asp-validation-for="@Model.DetallesCotizacion[i].id_producto" class="text-danger"></span>*@
-                                    </td>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].descripcion" class="form-control form-control-plaintext" readonly />
-                                        <br /><span asp-validation-for="@Model.DetallesCotizacion[i].descripcion" class="text-danger"></span>
-                                    </td>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].ubicación" class="form-control" />
-                                        <br /><span asp-validation-for="@Model.DetallesCotizacion[i].ubicación" class="text-danger"></span>
-                                    </td>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].marca" class="form-control form-control-plaintext detCtzNameBrand" readonly />
-                                        <br /><span asp-validation-for="@Model.DetallesCotizacion[i].marca" class="text-danger"></span>
-                                    </td>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].unidad" class="form-control form-control-plaintext detCtzNameUnit" readonly />
-                                        <br /><span asp-validation-for="@Model.DetallesCotizacion[i].unidad" class="text-danger"></span>
-                                    </td>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].cantidad" class="form-control detCtzCantidad" />
-                                        <br /><span asp-validation-for="@Model.DetallesCotizacion[i].cantidad" class="text-danger"></span>
-                                    </td>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].valorUnitario" class=" form-control form-control-plaintext detCtzValUnit" readonly />
-                                        <br /><span asp-validation-for="@Model.DetallesCotizacion[i].valorUnitario" class="text-danger"></span>
-                                    </td>
-                                    <td>
-                                        @*<input type="hidden" asp-for="@Model.DetallesCotizacion[i].IsDeleted" />*@
-                                        <input asp-for="@Model.DetallesCotizacion[i].valorTotal" class="form-control form-control-plaintext detCtzValTotal" readonly />
-                                        <br /><span asp-validation-for="@Model.DetallesCotizacion[i].valorTotal" class="text-danger"></span>
-                                    </td>
-                                    <td>
-                                        <button id='btnRemove-@i' type="button" class="btn btn-sm btn-danger visible" onclick="DeleteItem(this)">Eliminar</button>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    <input asp-for="@Model.DetallesCotizacion[i].codigoProducto" class="form-control" />
+                                </td>
+                                <td>
+                                    <input asp-for="@Model.DetallesCotizacion[i].descripcion" class="form-control form-control-plaintext" readonly />
+                                    <br /><span asp-validation-for="@Model.DetallesCotizacion[i].descripcion" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model.DetallesCotizacion[i].ubicacion" class="form-control" />
+                                    <br /><span asp-validation-for="@Model.DetallesCotizacion[i].ubicacion" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model.DetallesCotizacion[i].marca" class="form-control form-control-plaintext detCtzNameBrand" readonly />
+                                    <br /><span asp-validation-for="@Model.DetallesCotizacion[i].marca" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model.DetallesCotizacion[i].unidad" class="form-control form-control-plaintext detCtzNameUnit" readonly />
+                                    <br /><span asp-validation-for="@Model.DetallesCotizacion[i].unidad" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model.DetallesCotizacion[i].cantidad" class="form-control detCtzCantidad" />
+                                    <br /><span asp-validation-for="@Model.DetallesCotizacion[i].cantidad" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model.DetallesCotizacion[i].valorUnitario" class=" form-control form-control-plaintext detCtzValUnit" readonly />
+                                    <br /><span asp-validation-for="@Model.DetallesCotizacion[i].valorUnitario" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model.DetallesCotizacion[i].descuento" type="number" step="0.01" min="0" lang="en" max="1" class=" form-control detCtzDcto" />
+                                    <br /><span asp-validation-for="@Model.DetallesCotizacion[i].descuento" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    @*<input type="hidden" asp-for="@Model.DetallesCotizacion[i].IsDeleted" />*@
+                                    <input asp-for="@Model.DetallesCotizacion[i].valorTotal" class="form-control form-control-plaintext detCtzValTotal" readonly />
+                                </td>
+                                <td>
+                                    <button id='btnRemove-@i' type="button" class="btn btn-sm btn-danger visible" onclick="DeleteItem(this)">Eliminar</button>
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -205,7 +210,7 @@
                 </div>
             </div>
             <div class="form-group invisible">
-                <select id="mySelect" class="form-control" size="15" style="visibility:hidden;" asp-items="ViewBag.productos"></select>
+                <select id="mySelect" class="form-control" size="5" style="visibility:hidden; height: auto !important;" asp-items="ViewBag.productos"></select>
                 <input id="txtValue" class="form-control col-2 invisible" />
             </div>
             <div id="HiddenDiv" style="visibility:hidden;">
@@ -225,17 +230,7 @@
 </form>
 
 
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-    <link rel="stylesheet" href="~/lib/jquery/jquery-ui.css">
-    <script src="~/lib/jquery/jquery-1.12.4.js"></script>
-    <script src="~/lib/jquery/jquery-ui.js"></script>
-    <script>
-        $(function () {
-            $("#datepicker").datepicker();
-        });
-    </script>
 
 }

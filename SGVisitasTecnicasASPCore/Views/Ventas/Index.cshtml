@@ -1,7 +1,7 @@
-﻿@model IEnumerable<SGVisitasTecnicasASPCore.Models.cotizaciones>
+﻿@model IEnumerable<SGVisitasTecnicasASPCore.Models.ventas>
 
 @{
-    ViewData["Title"] = "Gestión de Cotizaciones";
+    ViewData["Title"] = "Gestión de Ventas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     SortModel sortModel = (SortModel)ViewData["sortModel"];
@@ -10,11 +10,11 @@
 }
 
 <hr />
-<h4 class="text-center text-primary">Gestión de Cotizaciones</h4>
+<h4 class="text-center text-primary">Gestión de Ventas</h4>
 <hr />
 <div class="container-fluid">
     <p>
-        <a class="btn btn-primary" asp-action="Create">Crear Nueva Cotizacion</a>
+        <a class="btn btn-primary" asp-action="Create">Crear Nueva Venta</a>
     </p>
     <div class="row">
         <div class="col-12">
@@ -26,54 +26,47 @@
             <thead>
                 <tr>
                     <th>
-                        <i class="@sortModel.GetColumn("Código").SortIcon" arial-hidden="true"></i>
+                        <i class="@sortModel.GetColumn("Código de Venta").SortIcon" arial-hidden="true"></i>
 
-                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Código").SortExpression">
+                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Código de Venta").SortExpression">
                             Código
                         </a>
                     </th>
                     <th>
-                        <i class="@sortModel.GetColumn("Servicio").SortIcon" arial-hidden="true"></i>
+                        <i class="@sortModel.GetColumn("Número de Factura").SortIcon" arial-hidden="true"></i>
 
-                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Servicio").SortExpression">
-                            Servicio
+                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Número de Factura").SortExpression">
+                            Número de Factura
                         </a>
                     </th>
                     <th>
-                        <i class="@sortModel.GetColumn("Sector del Inmueble").SortIcon" arial-hidden="true"></i>
+                        <i class="@sortModel.GetColumn("Fecha de Creación").SortIcon" arial-hidden="true"></i>
 
-                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Sector del Inmueble").SortExpression">
-                            Sector del Inmueble
+                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Fecha de Creación").SortExpression">
+                            Fecha de Creación
                         </a>
                     </th>
                     <th>
-                        <i class="@sortModel.GetColumn("Dirección del Inmueble").SortIcon" arial-hidden="true"></i>
+                        <i class="@sortModel.GetColumn("Fecha de Cierre").SortIcon" arial-hidden="true"></i>
 
-                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Dirección del Inmueble").SortExpression">
-                            Dirección del Inmueble
+                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Fecha de Cierre").SortExpression">
+                            Fecha de Cierre
                         </a>
-                    </th>
-                    <th>
-                        <i class="@sortModel.GetColumn("Fecha de Registro").SortIcon" arial-hidden="true"></i>
-
-                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Fecha de Registro").SortExpression">
-                            Fecha de Registro
-                        </a>
-                    </th>
-                    <th>
-                        Cliente
-                    </th>
-                    <th>
-                        Empleado
-                    </th>
-                    <th>
-                        Teléfono
                     </th>
                     <th>
                         Estado
                     </th>
                     <th>
-                        Tiempo de Entrega
+                        Cliente
+                    </th>
+                    <th>
+                        Subtotal
+                    </th>
+                    <th>
+                        Iva
+                    </th>
+                    <th>
+                        Total
                     </th>
                     <th></th>
                 </tr>
@@ -82,51 +75,51 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.id_venta)
+                            </td>*@
                         <td data-title="Código">
-                            @Html.DisplayFor(modelItem => item.codigo)
+                            @Html.DisplayFor(modelItem => item.codigo_venta)
                         </td>
-                        <td data-title="Servicio">
-                            @Html.DisplayFor(modelItem => item.servicio)
+                        <td data-title="Número Factura">
+                            @Html.DisplayFor(modelItem => item.numero_factura)
                         </td>
-                        <td data-title="Sector del Inmueble">
-                            @Html.DisplayFor(modelItem => item.sector_inmueble)
+                        <td data-title="Fecha de Creación">
+                            @Html.DisplayFor(modelItem => item.fecha_creacion)
                         </td>
-                        <td data-title="Dirección del Inmueble">
-                            @Html.DisplayFor(modelItem => item.direccion_inmueble)
-                        </td>
-                        <td data-title="Fecha de Registro">
-                            @Html.DisplayFor(modelItem => item.fecha_registro)
-                        </td>
-                        <td data-title="Cliente">
-                            @Html.DisplayFor(modelItem => item.Cliente.nombres)
-                        </td>
-                        <td data-title="Empleado">
-                            @Html.DisplayFor(modelItem => item.Empleado.nombres)
-                        </td>
-                        <td data-title="Teléfono">
-                            @Html.DisplayFor(modelItem => item.telefono)
+                        <td data-title="Fecha de Cierre">
+                            @Html.DisplayFor(modelItem => item.fecha_cierre)
                         </td>
                         <td data-title="Estado">
                             @Html.DisplayFor(modelItem => item.estado)
                         </td>
-                        <td data-title="Tiempo de entrega">
-                            @Html.DisplayFor(modelItem => item.tiempo_entrega)
+                        <td data-title="Cliente">
+                            @Html.DisplayFor(modelItem => item.Cliente.nombres)
+                        </td>
+                        <td data-title="Subtotal">
+                            @Html.DisplayFor(modelItem => item.subtotal)
+                        </td>
+                        <td data-title="Iva">
+                            @Html.DisplayFor(modelItem => item.Iva)
+                        </td>
+                        <td data-title="Total">
+                            @Html.DisplayFor(modelItem => item.total)
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a asp-action="Edit" asp-route-id="@item.id_cotizacion">
+                                <a asp-action="Edit" asp-route-id="@item.id_venta">
                                     <span class="btn btn-sm btn-outline-primary">
                                         <i class="fa fa-edit" aria-hidden="true"></i>
                                     </span>
                                 </a>
 
-                                <a asp-action="Details" asp-route-id="@item.id_cotizacion">
+                                <a asp-action="Details" asp-route-id="@item.id_venta">
                                     <span class="btn btn-sm btn-outline-dark">
                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                     </span>
                                 </a>
 
-                                <a asp-action="Delete" asp-route-id="@item.id_cotizacion">
+                                <a asp-action="Delete" asp-route-id="@item.id_venta">
                                     <span class="btn btn-sm btn-outline-danger">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                     </span>

@@ -85,7 +85,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
             }
             else
             {
-                TempData["SuccessMessage"] = "" + item.nombre + " creado exitosamente";
+                TempData["SuccessMessage"] = "Categoría " + item.nombre + " creada exitosamente";
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -121,7 +121,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 if (errMessage == "")
                 {
                     item = _Repo.Edit(item);
-                    TempData["SuccessMessage"] = item.nombre + ", guardado exitosamente";
+                    TempData["SuccessMessage"] = "Categoría " + item.nombre + ", guardada exitosamente";
                     bolret = true;
                 }
             }
@@ -177,7 +177,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
             if (TempData["CurrentPage"] != null)
                 currentPage = (int)TempData["CurrentPage"];
 
-            TempData["SuccessMessage"] = item.nombre + " borrado exitosamente";
+            TempData["SuccessMessage"] = "Categoría " + item.nombre + " borrada exitosamente";
             return RedirectToAction(nameof(Index), new { pg = currentPage });
 
         }

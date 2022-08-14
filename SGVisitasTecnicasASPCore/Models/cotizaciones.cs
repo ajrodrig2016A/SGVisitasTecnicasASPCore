@@ -16,6 +16,10 @@ namespace SGVisitasTecnicasASPCore.Models
         [StringLength(10)]
         public string codigo { get; set; }
 
+        [Required(ErrorMessage = "Seleccione el tipo de servicio.")]
+        [StringLength(100)]
+        public string servicio { get; set; }
+
         [Required(ErrorMessage = "Ingrese sector del inmueble.")]
         [StringLength(60)]
         public string sector_inmueble { get; set; }
@@ -25,9 +29,14 @@ namespace SGVisitasTecnicasASPCore.Models
         public string direccion_inmueble { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy - MM - dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Seleccione la fecha de registro.")]
         public DateTime fecha_registro { get; set; } = DateTime.Now;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Seleccione la fecha de actualización.")]
+        public DateTime fecha_actualizacion { get; set; } = DateTime.Now;
 
         [Required(ErrorMessage = "Ingrese el teléfono.")]
         [StringLength(20)]
@@ -76,6 +85,12 @@ namespace SGVisitasTecnicasASPCore.Models
         public int id_cliente { get; set; }
         public virtual clientes Cliente { get; set; } //very important 
 
+        public enum Service
+        {
+            Proyectos_de_Ingeniería,
+            Venta_de_dispositivos_de_seguridad,
+            Instalación_y_mantenimiento_de_dispositivos_de_seguridad
+        }
 
         public enum Status
         {

@@ -12,6 +12,7 @@ namespace SGVisitasTecnicasASPCore.Data
 {
     public class Utils
     {
+        public const decimal ZERO_DEC = (decimal)0.00;
         internal static bool IsAnyNullOrEmpty(object myObject)
         {
             foreach (PropertyInfo pi in myObject.GetType().GetProperties())

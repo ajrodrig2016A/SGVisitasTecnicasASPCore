@@ -30,6 +30,16 @@ namespace SGVisitasTecnicasASPCore.Models
         [StringLength(int.MaxValue)]
         public string descripcion { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Seleccione la fecha de registro.")]
+        public DateTime fecha_registro { get; set; } = DateTime.Now;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Seleccione la fecha de actualización.")]
+        public DateTime fecha_actualizacion { get; set; } = DateTime.Now;
+
         [DisplayName("Image Name")]
         public string ImageName { get; set; }
 
@@ -46,11 +56,6 @@ namespace SGVisitasTecnicasASPCore.Models
 
         public decimal precioUnitario { get; set; }
 
-        public decimal stock { get; set; }
-
-        public decimal descuento { get; set; }
-
-        public decimal porcentaje { get; set; }
         [Required(ErrorMessage = "Seleccione la categoría.")]
         [ForeignKey("Categoria")]
         public int id_categoria { get; set; }

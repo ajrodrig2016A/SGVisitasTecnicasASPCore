@@ -63,6 +63,22 @@
     <Compile Remove="Migrations\20220731033155_Update_FK_cotizaciones_categorias.Designer.cs" />
     <Compile Remove="Migrations\20220731035126_Update_FK_allTables.cs" />
     <Compile Remove="Migrations\20220731035126_Update_FK_allTables.Designer.cs" />
+    <Compile Remove="Migrations\20220813153857_AlterTable_cotizaciones_productos_clientes_empleados.cs" />
+    <Compile Remove="Migrations\20220813153857_AlterTable_cotizaciones_productos_clientes_empleados.Designer.cs" />
+    <Compile Remove="Migrations\20220813222649_AlterTable_detalles_cotizacion.cs" />
+    <Compile Remove="Migrations\20220813222649_AlterTable_detalles_cotizacion.Designer.cs" />
+    <Compile Remove="Migrations\20220814031216_AlterTable_detalles_venta.cs" />
+    <Compile Remove="Migrations\20220814031216_AlterTable_detalles_venta.Designer.cs" />
+    <Compile Remove="Migrations\20220814173023_AlterTbl_detalles_venta.cs" />
+    <Compile Remove="Migrations\20220814173023_AlterTbl_detalles_venta.Designer.cs" />
+    <Compile Remove="Migrations\20220814173116_Tbl_detalles_venta.cs" />
+    <Compile Remove="Migrations\20220814173116_Tbl_detalles_venta.Designer.cs" />
+    <Compile Remove="Migrations\20220814174519_createTables_detalles_venta_ventas.cs" />
+    <Compile Remove="Migrations\20220814174519_createTables_detalles_venta_ventas.Designer.cs" />
+    <Compile Remove="Migrations\20220814174747_createTables_detalles_venta_ventas.cs" />
+    <Compile Remove="Migrations\20220814174747_createTables_detalles_venta_ventas.Designer.cs" />
+    <Compile Remove="Migrations\20220814175113_createTables_detalles_venta_ventas.cs" />
+    <Compile Remove="Migrations\20220814175113_createTables_detalles_venta_ventas.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

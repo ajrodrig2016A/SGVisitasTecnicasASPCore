@@ -91,7 +91,7 @@ namespace SGVisitasTecnicasASPCore.Repositories
 
         public visitas GetItem(int id)
         {
-            visitas item = _context.visitas.Where(u => u.id_visita == id).FirstOrDefault();
+            visitas item = _context.visitas.Where(u => u.id_visita == id).Include(c => c.Cliente).Include(e => e.Empleado).FirstOrDefault();
             return item;
         }
         public bool IsItemExists(string name)

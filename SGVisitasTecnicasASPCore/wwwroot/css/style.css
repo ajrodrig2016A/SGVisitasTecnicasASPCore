@@ -3555,26 +3555,28 @@ input[type="button"].btn-block {
     pointer-events: none;
     cursor: default; }
 
-.nav-tabs {
-  border-bottom: 1px solid #dee2e6; }
-  .nav-tabs .nav-item {
-    margin-bottom: -1px; }
-  .nav-tabs .nav-link {
+.nav-pestanias {
+  border-bottom: 0px solid #dee2e6; margin:auto; }
+    .nav-pestanias .nav-item {
+        margin-bottom: -1px;
+        /*padding-right: 10%;*/
+    }
+  .nav-pestanias .nav-link {
     border: 1px solid transparent;
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem; }
-    .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
+    .nav-pestanias .nav-link:hover, .nav-pestanias .nav-link:focus {
       border-color: #e9ecef #e9ecef #dee2e6; }
-    .nav-tabs .nav-link.disabled {
+    .nav-pestanias .nav-link.disabled {
       color: #6c757d;
       background-color: transparent;
       border-color: transparent; }
-  .nav-tabs .nav-link.active,
-  .nav-tabs .nav-item.show .nav-link {
+  .nav-pestanias .nav-link.active,
+  .nav-pestanias .nav-item.show .nav-link {
     color: #495057;
     background-color: #fff;
     border-color: #dee2e6 #dee2e6 #fff; }
-  .nav-tabs .dropdown-menu {
+  .nav-pestanias .dropdown-menu {
     margin-top: -1px;
     border-top-left-radius: 0;
     border-top-right-radius: 0; }
@@ -10262,9 +10264,16 @@ textarea.form-control {
         margin: 0 auto;
     }
 
+    .CodesTable table {
+        width:100%;
+    }
+    .CodesTable thead {
+        width:calc(100%-1em) !important;
+    }
+
 /*    .CodesTable tbody {
         display:block; 
-        height:250px; 
+        height:130px; 
         overflow-y:scroll; 
         overflow-x:hidden;
     }
@@ -10275,7 +10284,7 @@ textarea.form-control {
     }
     .CodesTable thead, .CodesTable tbody, .CodesTable td {
         border:none !important;
-    }   */ 
+    } */   
 
 /*    .detCtzValUnit{
         background-image:none;

@@ -64,14 +64,14 @@ namespace SGVisitasTecnicasASPCore.Models
                 {
                     this.SortedOrder = SortOrder.Ascending;
                     this.SortedProperty = sortableColumn.ColumnName;
-                    sortableColumn.SortIcon = DownIcon;
+                    sortableColumn.SortIcon = UpIcon;
                     sortableColumn.SortExpression = sortableColumn.ColumnName + "_desc";
                 }
                 if (sortExpression == sortableColumn.ColumnName.ToLower() + "_desc")
                 {
                     this.SortedOrder = SortOrder.Descending;
                     this.SortedProperty = sortableColumn.ColumnName;
-                    sortableColumn.SortIcon = UpIcon;
+                    sortableColumn.SortIcon = DownIcon;
                     sortableColumn.SortExpression = sortableColumn.ColumnName;
                 }
             }

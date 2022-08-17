@@ -1,0 +1,162 @@
+﻿@model SGVisitasTecnicasASPCore.Models.ventas
+
+@{
+    ViewData["Title"] = "Detalles de la Venta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+    <h4 class="text-center text-primary">Detalles de la Venta</h4>
+<hr />
+
+<form asp-action="Details">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                    <label asp-for="id_venta" class="control-label">Código de Venta</label>
+                    <input asp-for="id_venta" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="codigo_venta" class="control-label">Número de Venta</label>
+                    <input asp-for="codigo_venta" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="numero_factura" class="control-label">Número de Factura</label>
+                    <input asp-for="numero_factura" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="fecha_creacion" class="control-label">Fecha de Registro</label>
+                    <input asp-for="fecha_creacion" type="text" class="form-control" value="@Model.fecha_creacion.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                    <label asp-for="fecha_cierre" class="control-label">Fecha de Actualización</label>
+                    <input asp-for="fecha_cierre" type="text" class="form-control" value="@Model.fecha_cierre.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="estado" class="control-label">Estado</label>
+                    <div style="display: inherit;">
+                        <select asp-for="estado" class="form-control" asp-items="new SelectList(Enum.GetValues(typeof(SGVisitasTecnicasASPCore.Models.ventas.Status)))"><option>----Seleccione un estado----</option></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_cliente" class="control-label">Cliente</label>
+                    <div style="display: inherit;">
+                        <select asp-for="id_cliente" class="form-control" asp-items="ViewBag.clientes"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12">
+                <p class="text-center text-secondary">Detalles de la Venta:</p>
+                <br />
+                <div class="table-responsive bg-light">
+                    <table class="table table-borderless table-sm mb-0 pb-0 border CodesTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Código Producto
+                                </th>
+                                <th>
+                                    Descripción
+                                </th>
+                                @*<th>
+                                Ubicación
+                            </th>
+                            <th>
+                                Marca
+                            </th>
+                            <th>
+                                Unidad
+                            </th>*@
+                                <th>
+                                    Cantidad
+                                </th>
+                                <th>
+                                    Valor Unitario
+                                </th>
+                                <th>
+                                    Porcentaje Descuento
+                                </th>
+                                <th>
+                                    Valor Total
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.DetallesVenta.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <input asp-for="@Model.DetallesVenta[i].codigoProductoVta" class="form-control" />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesVenta[i].descripcion" class="form-control form-control-plaintext" readonly />
+                                    </td>
+                                    @*<td>
+                                    <input asp-for="@Model.DetallesVenta[i].ubicacion" class="form-control" />
+                                    <br /><span asp-validation-for="@Model.DetallesVenta[i].ubicacion" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model.DetallesVenta[i].marca" class="form-control form-control-plaintext detVtaNameBrand" readonly />
+                                    <br /><span asp-validation-for="@Model.DetallesVenta[i].marca" class="text-danger"></span>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model.DetallesVenta[i].unidad" class="form-control form-control-plaintext detVtaNameUnit" readonly />
+                                    <br /><span asp-validation-for="@Model.DetallesVenta[i].unidad" class="text-danger"></span>
+                                </td>*@
+                                    <td>
+                                        <input asp-for="@Model.DetallesVenta[i].cantidad" class="form-control" />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesVenta[i].valorUnitario" class=" form-control form-control-plaintext" readonly />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesVenta[i].descuento" type="number" step="0.01" min="0" lang="en" max="1" class=" form-control" />
+                                    </td>
+                                    <td>
+                                        @*<input type="hidden" asp-for="@Model.DetallesVenta[i].IsDeleted" />*@
+                                        <input asp-for="@Model.DetallesVenta[i].valorTotal" class="form-control form-control-plaintext" readonly />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    <label asp-for="subtotal" class="control-label">Subtotal</label>
+                    <input asp-for="subtotal" class="form-control" id="subtotalVta" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Iva" class="control-label">Iva</label>
+                    <input asp-for="Iva" class="form-control" id="IvaVta" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="total" class="control-label">Total</label>
+                    <input asp-for="total" class="form-control" id="totalVta" readonly />
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <div class="row">
+                    <div class="col text-center">
+                        @Html.ActionLink("Editar", "Edit", new { id = Model.id_venta }, new { @class = "btn btn-primary" })
+                    </div>
+                    <div class="col text-center">
+                        <a class="btn btn-secondary" asp-action="Index">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}

@@ -1,18 +1,19 @@
 ﻿@model SGVisitasTecnicasASPCore.Models.ventas
 
 @{
-    ViewData["Title"] = "Crear nueva Venta";
+    ViewData["Title"] = "Editar Venta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <hr />
-    <h4 class="text-center text-primary">Crear nueva Venta</h4>
+    <h4 class="text-center text-primary">Editar Venta</h4>
 <hr />
 
-<form id="VentaForm" asp-action="Create">
+<form id="VentaForm" asp-action="Edit">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="container-fluid">
         <div class="row">
+            <input asp-for="id_venta" type="hidden" />
             <div class="col-sm-12 col-md-6">
                 <div class="form-group">
                     <label asp-for="codigo_venta" class="control-label">Número de Venta</label>
@@ -33,7 +34,7 @@
             <div class="col-sm-12 col-md-6">
                 <div class="form-group">
                     <label asp-for="fecha_cierre" class="control-label">Fecha de Actualización</label>
-                    <input asp-for="fecha_cierre" type="text" class="form-control" value="@Model.fecha_cierre.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
+                    <input asp-for="fecha_cierre" type="text" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
                     <span asp-validation-for="fecha_cierre" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -66,14 +67,14 @@
                                     Descripción
                                 </th>
                                 @*<th>
-                                    Ubicación
-                                </th>
-                                <th>
-                                    Marca
-                                </th>
-                                <th>
-                                    Unidad
-                                </th>*@
+                                Ubicación
+                            </th>
+                            <th>
+                                Marca
+                            </th>
+                            <th>
+                                Unidad
+                            </th>*@
                                 <th>
                                     Cantidad
                                 </th>
@@ -94,15 +95,15 @@
                         <tbody>
                             @for (int i = 0; i < Model.DetallesVenta.Count; i++)
                             {
-                            <tr>
-                                <td>
-                                    <input asp-for="@Model.DetallesVenta[i].codigoProductoVta" class="form-control" onchange="fillFieldsSaleDetails(this)" />
-                                </td>
-                                <td>
-                                    <input asp-for="@Model.DetallesVenta[i].descripcion" class="form-control form-control-plaintext" readonly />
-                                    <br /><span asp-validation-for="@Model.DetallesVenta[i].descripcion" class="text-danger"></span>
-                                </td>
-                                @*<td>
+                                <tr>
+                                    <td>
+                                        <input asp-for="@Model.DetallesVenta[i].codigoProductoVta" class="form-control" onchange="fillFieldsSaleDetails(this)" />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesVenta[i].descripcion" class="form-control form-control-plaintext" readonly />
+                                        <br /><span asp-validation-for="@Model.DetallesVenta[i].descripcion" class="text-danger"></span>
+                                    </td>
+                                    @*<td>
                                     <input asp-for="@Model.DetallesVenta[i].ubicacion" class="form-control" />
                                     <br /><span asp-validation-for="@Model.DetallesVenta[i].ubicacion" class="text-danger"></span>
                                 </td>
@@ -114,26 +115,26 @@
                                     <input asp-for="@Model.DetallesVenta[i].unidad" class="form-control form-control-plaintext detVtaNameUnit" readonly />
                                     <br /><span asp-validation-for="@Model.DetallesVenta[i].unidad" class="text-danger"></span>
                                 </td>*@
-                                <td>
-                                    <input asp-for="@Model.DetallesVenta[i].cantidad" class="form-control detVtaCantidad" />
-                                    <br /><span asp-validation-for="@Model.DetallesVenta[i].cantidad" class="text-danger"></span>
-                                </td>
-                                <td>
-                                    <input asp-for="@Model.DetallesVenta[i].valorUnitario" class=" form-control form-control-plaintext detVtaValUnit" readonly />
-                                    <br /><span asp-validation-for="@Model.DetallesVenta[i].valorUnitario" class="text-danger"></span>
-                                </td>
-                                <td>
-                                    <input asp-for="@Model.DetallesVenta[i].descuento" type="number" step="0.01" min="0" lang="en" max="1" class=" form-control detVtaDcto" />
-                                    <br /><span asp-validation-for="@Model.DetallesVenta[i].descuento" class="text-danger"></span>
-                                </td>
-                                <td>
-                                    @*<input type="hidden" asp-for="@Model.DetallesVenta[i].IsDeleted" />*@
-                                    <input asp-for="@Model.DetallesVenta[i].valorTotal" class="form-control form-control-plaintext detVtaValTotal" readonly />
-                                </td>
-                                <td>
-                                    <button id='btnRemove-@i' type="button" class="btn btn-sm btn-danger visible" onclick="DeleteItemVta(this)">Eliminar</button>
-                                </td>
-                            </tr>
+                                    <td>
+                                        <input asp-for="@Model.DetallesVenta[i].cantidad" class="form-control detVtaCantidad" />
+                                        <br /><span asp-validation-for="@Model.DetallesVenta[i].cantidad" class="text-danger"></span>
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesVenta[i].valorUnitario" class=" form-control form-control-plaintext detVtaValUnit" readonly />
+                                        <br /><span asp-validation-for="@Model.DetallesVenta[i].valorUnitario" class="text-danger"></span>
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesVenta[i].descuento" type="number" step="0.01" min="0" lang="en" max="1" class=" form-control detVtaDcto" />
+                                        <br /><span asp-validation-for="@Model.DetallesVenta[i].descuento" class="text-danger"></span>
+                                    </td>
+                                    <td>
+                                        @*<input type="hidden" asp-for="@Model.DetallesVenta[i].IsDeleted" />*@
+                                        <input asp-for="@Model.DetallesVenta[i].valorTotal" class="form-control form-control-plaintext detVtaValTotal" readonly />
+                                    </td>
+                                    <td>
+                                        <button id='btnRemove-@i' type="button" class="btn btn-sm btn-danger visible" onclick="DeleteItemVta(this)">Eliminar</button>
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -168,14 +169,14 @@
             </div>
             <div id="HiddenDiv" style="visibility:hidden;">
                 @*<select id="ddlBrandsIdAllProducts" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.IdMarcasAllProducts"></select>
-                <select id="ddlBrandNames" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.nombresMarca"></select>
-                <select id="ddlUnitsIdAllProducts" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.IdUnidadesAllProducts"></select>
-                <select id="ddlUnitNames" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.nombresUnidad"></select>*@
+            <select id="ddlBrandNames" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.nombresMarca"></select>
+            <select id="ddlUnitsIdAllProducts" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.IdUnidadesAllProducts"></select>
+            <select id="ddlUnitNames" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.nombresUnidad"></select>*@
                 <select id="ddlUnitPrAllProducts" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.PrUnitariosAllProducts"></select>
                 @*<input id="txtIdMarca" class="form-control col-2 invisible" />
-                <input id="txtNombreMarca" class="form-control col-2 invisible" />
-                <input id="txtIdUnidad" class="form-control col-2 invisible" />
-                <input id="txtNombreUnidad" class="form-control col-2 invisible" />*@
+            <input id="txtNombreMarca" class="form-control col-2 invisible" />
+            <input id="txtIdUnidad" class="form-control col-2 invisible" />
+            <input id="txtNombreUnidad" class="form-control col-2 invisible" />*@
                 <input id="txtvalorUnitario" class="form-control col-2 invisible" />
             </div>
         </div>

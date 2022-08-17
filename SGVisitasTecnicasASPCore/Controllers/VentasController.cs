@@ -184,8 +184,8 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 if (venta.numero_factura.Length < 6 || venta.numero_factura == null)
                     errMessage = "La longitud del número de la factura debe ser al menos de 6 caracteres";
 
-                if (_ventasRepo.IsQuoteCodeExists(venta.id_venta) == true)
-                    errMessage = errMessage + " " + " El código de la venta " + venta.id_venta + " ya existe";
+                //if (_ventasRepo.IsQuoteCodeExists(venta.id_venta) == true)
+                //    errMessage = errMessage + " " + " El código de la venta " + venta.id_venta + " ya existe";
 
                 for (int i = 0; i < venta.DetallesVenta.Count; i++)
                 {

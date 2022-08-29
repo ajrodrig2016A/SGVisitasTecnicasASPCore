@@ -10,17 +10,22 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 //using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace SGVisitasTecnicasASPCore.Controllers
 {
     public class AccessController : Controller
     {
         private readonly SgvtDB _context;
-        private string urlDomain = "http://localhost:50741";
+        private readonly IWebHostEnvironment _webHost;
+        private List<Claim> claims = null;
+        private ClaimsIdentity claimsIdentity = null;
 
-        public AccessController(SgvtDB context)
+        public AccessController(SgvtDB context, IWebHostEnvironment webHost)
         {
             _context = context;
+            _webHost = webHost;
         }
         public IActionResult Index()
         {
@@ -40,13 +45,13 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
             if (usuario != null)
             {
-                var claims = new List<Claim> {
+                claims = new List<Claim> {
                     new Claim(ClaimTypes.Name, usuario.Nombre),
                     new Claim("Correo", usuario.Correo),
                     new Claim(ClaimTypes.Role, usuario.Rol)
                 };
 
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
@@ -79,6 +84,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
         {
             try
             {
+                string htmlFilePath = Path.Combine(_webHost.WebRootPath, "EmailRecuperacionClave.html");
                 if (!ModelState.IsValid)
                 {
                     return View(model);
@@ -95,13 +101,14 @@ namespace SGVisitasTecnicasASPCore.Controllers
                     _context.SaveChanges();
 
                     //enviar email
-                    string url = urlDomain + "/Access/Recovery?token=" + oUser.token_recovery;
+                    string user = oUser.Nombre;
+                    string url = "http://" + HttpContext.Request.Host.Value + "/Access/Recovery?token=" + oUser.token_recovery;
                     string emailOrigen = "from@example.com";
                     string emailDestino = oUser.Correo;
-                    string asunto = "SGVT - Recuperación de Contraseña";
-                    string cuerpo = "<p>Correo para recuperación de contraseña</p><br>" + "<a href='"+url+"'>Click para recuperar</a>";
-                    Utils objSendMail = new Utils();
-                    bool statusEmailSend = objSendMail.SendEmail(emailOrigen, emailDestino, asunto, cuerpo);
+                    string asunto = "SAIMEC - Recuperación de Contraseña";
+                    string urlRecovery = "<a href='"+url+"'>Click para recuperar</a>";
+                    bool statusEmailSend = Utils.SendEmailRecuperarClave(emailOrigen, emailDestino, asunto, htmlFilePath, user, urlRecovery);
+                    //bool statusEmailSend = objSendMail.SendEmail(emailOrigen, emailDestino, asunto, cuerpo);
 
                     if (statusEmailSend)
                     {

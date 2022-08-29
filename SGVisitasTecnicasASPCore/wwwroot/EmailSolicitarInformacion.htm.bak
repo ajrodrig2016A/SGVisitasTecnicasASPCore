@@ -1,0 +1,307 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:3 0 0 0 1 0;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-469750017 -1073732485 9 0 511 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-priority:99;
+	mso-style-link:"Encabezado Car";
+	margin:0in;
+	mso-pagination:widow-orphan;
+	tab-stops:center 212.6pt right 425.2pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-priority:99;
+	mso-style-link:"Pie de página Car";
+	margin:0in;
+	mso-pagination:widow-orphan;
+	tab-stops:center 212.6pt right 425.2pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}
+span.EncabezadoCar
+	{mso-style-name:"Encabezado Car";
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:Encabezado;}
+span.PiedepginaCar
+	{mso-style-name:"Pie de página Car";
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Pie de página";}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}
+.MsoPapDefault
+	{mso-style-type:export-only;
+	margin-bottom:8.0pt;
+	line-height:107%;}
+ /* Page Definitions */
+ @page
+	{mso-footnote-separator:url("CORREO%20SOLICITUD%20INFORMACION_archivos/header.htm") fs;
+	mso-footnote-continuation-separator:url("CORREO%20SOLICITUD%20INFORMACION_archivos/header.htm") fcs;
+	mso-endnote-separator:url("CORREO%20SOLICITUD%20INFORMACION_archivos/header.htm") es;
+	mso-endnote-continuation-separator:url("CORREO%20SOLICITUD%20INFORMACION_archivos/header.htm") ecs;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:70.85pt 85.05pt 70.85pt 85.05pt;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-paper-source:0;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Tabla normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin-top:0in;
+	mso-para-margin-right:0in;
+	mso-para-margin-bottom:8.0pt;
+	mso-para-margin-left:0in;
+	line-height:107%;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}
+table.MsoTableGrid
+	{mso-style-name:"Tabla con cuadrícula";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-priority:39;
+	mso-style-unhide:no;
+	border:solid windowtext 1.0pt;
+	mso-border-alt:solid windowtext .5pt;
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-border-insideh:.5pt solid windowtext;
+	mso-border-insidev:.5pt solid windowtext;
+	mso-para-margin:0in;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}
+table.MsoTableGridLight
+	{mso-style-name:"Tabla con cuadrícula clara";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-priority:40;
+	mso-style-unhide:no;
+	border:solid #BFBFBF 1.0pt;
+	mso-border-themecolor:background1;
+	mso-border-themeshade:191;
+	mso-border-alt:solid #BFBFBF .5pt;
+	mso-border-themecolor:background1;
+	mso-border-themeshade:191;
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-border-insideh:.5pt solid #BFBFBF;
+	mso-border-insideh-themecolor:background1;
+	mso-border-insideh-themeshade:191;
+	mso-border-insidev:.5pt solid #BFBFBF;
+	mso-border-insidev-themecolor:background1;
+	mso-border-insidev-themeshade:191;
+	mso-para-margin:0in;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1027"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body style='word-wrap:break-word;'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal style='text-align:justify;'><![if !vml]><span style='position: absolute; z-index: 251659264; left: 0px; margin-left: 10%; margin-top: 1%; width: 18%; height: 3%;'>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width="770" height=73 style='vertical-align:top;'><![endif]><![if !mso]><span
+  style='position:absolute;left:0pt;z-index:251659264;'>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div style='padding:3.6pt 7.2pt 3.6pt 7.2pt;'
+    class=shape>
+    <p class=MsoNormal align=center style='text-align:center;'><b><span
+    style='font-size:14.0pt;line-height:107%;color:#0D4332;'>Solicitud de Recuperaci&oacute;n de Contrase&ntilde;a</span></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  </span><![endif]><![if !mso & !vml]>&nbsp;<![endif]><![if !vml]></td>
+ </tr>
+</table>
+
+</span><![endif]><span><![if !vml]><img width=567 height=89
+src="./images/ENCABEZADO CORREOS.png"><![endif]></span><span
+style='font-size:12.0pt;line-height:107%;'><o:p></o:p></span></p>
+
+<table class=MsoTableGridLight border=0 cellspacing=0 cellpadding=0 width=567
+ style='width:425.2pt;border-collapse:collapse;border:none;mso-yfti-tbllook:
+ 1184;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:none;mso-border-insidev:
+ none'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td width=567 valign=top style='width:425.2pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style='font-size:12.0pt;'><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style=''>(HORA Y FECHA)<o:p></o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style=''><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style=''>Estimado/a: (NOMBRE USUARIO)<o:p></o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style=''><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style=''>Reciba un cordial saludo
+  del equipo SAIMEC.<o:p></o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style='font-size:12.0pt;'><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal align=center style='margin-bottom:0in;text-align:center;
+  line-height:normal'><b><span style='font-size:14.0pt;mso-ansi-language:
+  ES'>¿Necesita m&aacute;s informaci&oacute;n? ¡Enseguida le contactamos!<o:p></o:p></span></b></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style=''><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style=''>¡Muchas gracias por su
+  solicitud! A continuaci&oacute;n, se muestran los datos ingresados:<o:p></o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style=''><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal align=center style='margin-bottom:0in;text-align:center;
+  line-height:normal'><span style=''>(DATOS DEL CLIENTE)<o:p></o:p></span></p>
+  <p class=MsoNormal align=center style='margin-bottom:0in;text-align:center;
+  line-height:normal'><span style=''><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style=''>En las pr&oacute;ximas <b>24
+  horas, </b>un asesor se contactar&aacute; con usted para brindarle mayor informaci&oacute;n
+  sobre nuestros servicios.<o:p></o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;line-height:normal'><span
+  style=''><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style=''>Si usted no ha ejecutado
+  la operaci&oacute;n, ignore este correo.<o:p></o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style=''><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style=''>Gracias por utilizar
+  nuestro servicio<o:p></o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style=''>Estamos gustosos de
+  atenderle.<o:p></o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><b><span style=''>SAIMEC<o:p></o:p></span></b></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><b><span style=''><o:p>&nbsp;</o:p></span></b></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style=''><o:p>&nbsp;</o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style='font-size:10.0pt;'>Notas:<o:p></o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style='font-size:10.0pt;'>* Este es
+  un correo enviado autom&aacute;ticamente, favor no responder al mismo.<o:p></o:p></span></p>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;line-height:
+  normal'><span style='font-size:10.0pt;'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-align:justify'><span><![if !vml]><img width=567 height=88
+src="./images/PIE DE CORREOS.png"><![endif]></span><span
+style='font-size:12.0pt;line-height:107%;'><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+</html>

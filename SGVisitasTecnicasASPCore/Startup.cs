@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.Features;
 using SGVisitasTecnicasASPCore.Interfaces;
 using SGVisitasTecnicasASPCore.Repositories;
+using SGVisitasTecnicasASPCore.Data;
 
 namespace SGVisitasTecnicasASPCore
 {
@@ -30,7 +31,7 @@ namespace SGVisitasTecnicasASPCore
         {
             var connString = Configuration.GetConnectionString("SgvtDB");
             services.AddDbContext<SgvtDB>(options => options.UseMySQL(connString));
-
+            FastReport.Utils.RegisteredObjects.AddConnection(typeof(MySqlDataConnection));
             services.AddControllersWithViews();
 
             services.AddScoped<ICategorias, CategoriasRepo>();

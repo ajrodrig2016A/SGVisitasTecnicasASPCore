@@ -8,16 +8,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using SGVisitasTecnicasASPCore.Data;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace SGVisitasTecnicasASPCore.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
+        private readonly IWebHostEnvironment _webHost;
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        
+        public HomeController(IWebHostEnvironment webHost, ILogger<HomeController> logger)
         {
+            _webHost = webHost;
             _logger = logger;
         }
 
@@ -59,15 +63,18 @@ namespace SGVisitasTecnicasASPCore.Controllers
         {
             try
             {
+                string htmlFilePath = Path.Combine(_webHost.WebRootPath, "EmailSolicitarInformacion.html");
+
                 if (ModelState.IsValid)
                 {
                     //enviar email
-                    string emailOrigen = model.email;
-                    string emailDestino = "from@example.com";
-                    string asunto = "SGVT - Solicitud de Cotización: " + model.servicio + ".";
-                    string cuerpo = "<p>" + model.mensaje + "</p><br/>" + "<p>Remitente: " + model.nombres + " " + model.apellidos + "</p><br/>" + "<p>Número de contacto: " + model.telefono + "</p><br/>";
+                    string user = model.nombres + " " + model.apellidos;
+                    string emailOrigen = "from@example.com";
+                    string emailDestino = model.email;
+                    string asunto = "SAIMEC - Solicitud de Información: " + model.servicio + ".";
+                    string datosCliente = "<p>" + model.mensaje + "</p><br/>" + "<p>Número de contacto: " + model.telefono + "</p><br/>";
                     Utils objSendMail = new Utils();
-                    bool statusEmailSend = objSendMail.SendEmail(emailOrigen, emailDestino, asunto, cuerpo);
+                    bool statusEmailSend = objSendMail.SendEmailSolicitarInformacion(emailOrigen, emailDestino, asunto, htmlFilePath, user,  datosCliente);
 
                     if (statusEmailSend)
                     {

@@ -165,6 +165,29 @@
                         </li>
                     }
 
+                    @if (User.IsInRole("ADM") || User.IsInRole("TEC"))
+                    {
+                        <li>
+                            <a class="popout nav-item nav-link" href="#">Reportes</a><ul class="level2 dropdown-menu">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Reportes" asp-action="VisitasReporte">Reporte de Visitas</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="CotizacionReporte" asp-action="CotizacionReporte">Reporte de Cotización</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="VentasReporte" asp-action="VentasReporte">Reporte de Ventas</a></li>
+                            </ul>
+                        </li>
+
+                        @*<li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle menu-item" data-toggle="dropdown">Reportes</a>
+                            <ul class="navbar-nav nav-pestanias">
+                                <li class="nav-item">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Reportes" asp-action="VisitasReporte">Reporte de Visitas</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="CotizacionReporte" asp-action="CotizacionReporte">Reporte de Cotizacion</a>
+                                </li>
+                            </ul>
+                        </li>*@
+
+                    }
+
+
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Access" asp-action="Salir">Salir</a>
                     </li>
@@ -208,11 +231,11 @@
                     <div class="modal-content">
 
                         <div class="modal-header">
-                            <h2 class="text-center">Error</h2>
+                            <h2 class="w-100 text-center">Error</h2>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
 
-                        <div id="MyModalErrorAlertBody" class="modal-body alert alert-danger">
+                        <div id="MyModalErrorAlertBody" class="modal-body alert alert-danger w-100 text-center">
                             this is a modal body. our message will appear here.
                         </div>
 

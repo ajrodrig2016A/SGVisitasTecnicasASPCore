@@ -1,0 +1,67 @@
+﻿@model SGVisitasTecnicasASPCore.Models.visitasReporte
+
+@{
+    ViewData["Title"] = "Reporte de Visitas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<hr />
+<h4 class="text-center text-primary">Reporte de Visitas</h4>
+<hr />
+
+<form asp-controller="Reportes" asp-action="GenerateVisitasReporte">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    <label asp-for="fecha_agendada" class="control-label">Fecha de Agendamiento</label>
+                    <input asp-for="fecha_agendada" id="datepicker" type="text" class="form-control" value="@Model.fecha_agendada" readonly />
+                    @*<span asp-validation-for="fecha_agendada" class="text-danger"></span>*@
+                </div>
+                <div class="form-group">
+                    <label asp-for="fecha_cierre" class="control-label">Fecha de Cierre</label>
+                    <input asp-for="fecha_cierre" id="dtp" type="text" class="form-control" value="@Model.fecha_cierre" readonly />
+                    @*<span asp-validation-for="fecha_cierre" class="text-danger"></span>*@
+                </div>
+                <div class="form-group">
+                    <label asp-for="cliente" class="control-label">Cliente</label>
+                    <div style="display: inherit;">
+                        <select asp-for="cliente" class="form-control" asp-items="ViewBag.Clientes"></select>
+                    </div>
+                    @*<span asp-validation-for="cliente" class="text-danger"></span>*@
+                </div>
+            </div>
+
+            <div class="w-100">
+                <div class="col-sm-12 col-md-12 text-center form-group">
+                    <input type="submit" value="Generar PDF" class="col-md-5 btn btn-info" />
+                    <a class="col-md-5 btn btn-secondary" asp-action="RedirectToIndex">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        function openErrorModal(strMessage) {
+            var myDiv = document.getElementById("MyModalErrorAlertBody");
+            myDiv.innerHTML = strMessage;
+            $('#myModalError').modal('show');
+
+        }
+        $(function () {
+            $("#datepicker").datepicker();
+            $("#dtp").datepicker();
+        });
+    </script>
+}
+@*<p>
+        <a class="btn btn-primary" asp-controller="Reportes" asp-action="GenerateVisitasReporte">Generar Reporte de Visitas</a>
+    </p>*@
+
+
+

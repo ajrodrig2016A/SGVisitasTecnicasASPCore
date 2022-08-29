@@ -10,6 +10,7 @@ namespace SGVisitasTecnicasASPCore.Models
     public class cotizaciones
     {
         [Key]
+        [Required(ErrorMessage = "Seleccione una cotización.")]
         public int id_cotizacion { get; set; }
 
         [Required]

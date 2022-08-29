@@ -2702,7 +2702,7 @@ input[type="button"].btn-block {
   position: relative; }
 
 .dropdown-toggle {
-  white-space: nowrap; }
+  white-space: nowrap; display:inline-grid;}
   .dropdown-toggle::after {
     display: inline-block;
     margin-left: 0.255em;
@@ -2718,7 +2718,7 @@ input[type="button"].btn-block {
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  left: 0;
+  left: auto;
   z-index: 1000;
   display: none;
   float: left;
@@ -3796,8 +3796,8 @@ input[type="button"].btn-block {
       -webkit-box-direction: normal;
       -ms-flex-direction: row;
       flex-direction: row; }
-      .navbar-expand-lg .navbar-nav .dropdown-menu {
-        position: absolute; }
+/*      .navbar-expand-lg .navbar-nav .dropdown-menu {
+        position: absolute; }*/
       .navbar-expand-lg .navbar-nav .nav-link {
         padding-right: 0.5rem;
         padding-left: 0.5rem; }

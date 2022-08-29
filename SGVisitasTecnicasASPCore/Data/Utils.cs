@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Mail;
 using System.Reflection;
+using System.IO;
+using Microsoft.AspNetCore.Identity;
 
 namespace SGVisitasTecnicasASPCore.Data
 {
@@ -192,6 +194,79 @@ namespace SGVisitasTecnicasASPCore.Data
             for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
             return sb.ToString();
         }
+
+        public static bool SendEmailRecuperarClave(string recipient, string sender, string subject, string htmlFilePath, string user, string urlRecovery)
+        {
+            try
+            {
+                MailMessage message = null;
+
+                using (StreamReader reader = File.OpenText(htmlFilePath)) // Path to your 
+                {                                                         // HTML file
+                    MailAddress addressFrom = new MailAddress(recipient, "SAIMEC Admin.");
+                    MailAddress addressTo = new MailAddress(sender);
+                    message = new MailMessage(addressFrom, addressTo);
+                    message.Subject = subject;
+                    string bodyEmailRecuperarClave = reader.ReadToEnd();  // Load the content from your file...
+                                                                          //...
+                    message.Body = bodyEmailRecuperarClave.Replace("(HORA Y FECHA)", DateTime.Now.ToString("F")).Replace("(NOMBRE USUARIO)", user).Replace("(LINK DE  RESETEO DE CONTRASE&Ntilde;A)", urlRecovery);
+                    message.IsBodyHtml = true;
+                }
+
+                SmtpClient client = new SmtpClient("smtp.mailtrap.io", 2525)
+                {
+                    Credentials = new NetworkCredential("c5caf274a330ff", "d4489958dcdc18"),
+                    EnableSsl = true
+                };
+                // code in brackets above needed if authentication required
+                client.Send(message);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+        }
+
+        public bool SendEmailSolicitarInformacion(string sender, string recipient, string subject, string htmlFilePath, string user, string datosCliente)
+        {
+            try
+            {
+                MailAddress to = new MailAddress(recipient);
+                MailAddress from = new MailAddress(sender);
+
+                MailMessage message = null;
+
+                using (StreamReader reader = File.OpenText(htmlFilePath)) // Path to your 
+                {                                                         // HTML file
+                    MailAddress addressFrom = new MailAddress(sender, "SAIMEC Admin.");
+                    MailAddress addressTo = new MailAddress(recipient);
+                    message = new MailMessage(addressFrom, addressTo);
+                    message.Subject = subject;
+                    string bodyEmailRecuperarClave = reader.ReadToEnd();  // Load the content from your file...
+                                                                          //...
+                    message.Body = bodyEmailRecuperarClave.Replace("(HORA Y FECHA)", DateTime.Now.ToString("F")).Replace("(NOMBRE USUARIO)", user).Replace("(DATOS DEL CLIENTE)", datosCliente);
+                    message.IsBodyHtml = true;
+                }
+
+                SmtpClient client = new SmtpClient("smtp.mailtrap.io", 2525)
+                {
+                    Credentials = new NetworkCredential("c5caf274a330ff", "d4489958dcdc18"),
+                    EnableSsl = true
+                };
+                // code in brackets above needed if authentication required
+                client.Send(message);
+                return true;
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+
+        }
+
         public bool SendEmail(string sender, string recipient, string subject, string bodyText)
         {
             try

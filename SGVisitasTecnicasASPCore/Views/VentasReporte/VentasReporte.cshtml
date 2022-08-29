@@ -1,0 +1,73 @@
+﻿@model SGVisitasTecnicasASPCore.Models.ventas
+
+@{
+    ViewData["Title"] = "Reporte de Ventas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<hr />
+<h4 class="text-center text-primary">Reporte de Ventas</h4>
+<hr />
+
+<form asp-controller="VentasReporte" asp-action="GenerateVentasReporte">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    <label asp-for="id_cliente" class="control-label">Cliente</label>
+                    <div style="display: inherit;">
+                        <select asp-for="id_cliente" class="form-control" asp-items="ViewBag.Clientes"></select>
+                    </div>
+                    @*<span asp-validation-for="id_cliente" class="text-danger"></span>*@
+                </div>
+                <div class="form-group">
+                    <label asp-for="id_venta" class="control-label">Cotizaciones</label>
+                    <div style="display: inherit;">
+                        <select asp-for="id_venta" class="form-control">
+                            <option value="">----Seleccione un cliente que tenga ventas----</option>
+                        </select>
+                    </div>
+                    @*<span asp-validation-for="id_cotizacion" class="text-danger"></span>*@
+                </div>
+            </div>
+
+            <div class="w-100">
+                <div class="col-sm-12 col-md-12 text-center form-group">
+                    <input type="submit" value="Generar PDF" class="col-md-5 btn btn-info" />
+                    <a class="col-md-5 btn btn-secondary" asp-action="RedirectToIndex">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(function () {
+            $("select#id_cliente").change(function () {
+                var cid = $(this).val();
+
+                $("select#id_venta").empty();
+
+                $.getJSON(`/VentasReporte/GetVta?cid=${cid}`, function (data) {
+                    //console.log(data);
+                    $.each(data, function (i, item) {
+                        $("select#id_venta").append(`<option value="${item.id}">${item.name}</option>`);
+                    });
+                });
+            })
+        });
+
+            //function openErrorModal(strMessage) {
+            //    var myDiv = document.getElementById("MyModalErrorAlertBody");
+            //    myDiv.innerHTML = strMessage;
+            //    $('#myModalError').modal('show');
+            //}
+    </script>
+}
+@*<p>
+        <a class="btn btn-primary" asp-controller="Reportes" asp-action="GenerateVisitasReporte">Generar Reporte de Visitas</a>
+    </p>*@

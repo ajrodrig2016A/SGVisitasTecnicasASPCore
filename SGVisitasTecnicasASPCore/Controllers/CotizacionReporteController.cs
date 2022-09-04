@@ -3,6 +3,7 @@ using FastReport.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using SGVisitasTecnicasASPCore.Data;
 using SGVisitasTecnicasASPCore.Interfaces;
@@ -21,15 +22,17 @@ namespace SGVisitasTecnicasASPCore.Controllers
         private readonly IWebHostEnvironment _webHost;
         private readonly SgvtDB _context; // for connecting to efcore.
         private readonly IClientes _clientesRepo;
+        private readonly IConfiguration _configuration;
         private List<detalles_cotizacion> lstDetCotizacion = null;
         string path = "";
         string errMessage = "";
 
-        public CotizacionReporteController(IWebHostEnvironment webHost, SgvtDB context, IClientes clientesRepo)
+        public CotizacionReporteController(IWebHostEnvironment webHost, SgvtDB context, IClientes clientesRepo, IConfiguration configuration)
         {
             _webHost = webHost;
             _context = context;
             _clientesRepo = clientesRepo;
+            _configuration = configuration;
         }  
 
         [HttpGet]
@@ -66,7 +69,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 FastReport.Utils.Config.WebMode = true;
                 Report rep = new Report();
                 MySqlDataConnection conn = new MySqlDataConnection();
-                conn.ConnectionString = "server=localhost;database=sgvt_db;User ID=root;password=UIsrael2022A;";
+                conn.ConnectionString = _configuration.GetConnectionString("SgvtDB");
                 TableDataSource table = new TableDataSource();
                 table.Alias = "CotizacionTable";
                 table.Name = "Table";
@@ -75,11 +78,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 table1.Alias = "DetallesCotizacionTable";
                 table1.Name = "Table1";
                 conn.Tables.Add(table1);
-                //rep.Dictionary.Connections.Add(conn);
-                //conn.CreateAllTables();
 
                 string webRootPath = _webHost.WebRootPath;
-                path = Path.Combine(webRootPath, "CotizacionReporte.frx");
+                path = Path.Combine(webRootPath, "ReporteCotizacion.frx");
                 rep.Load(path);
 
                 StringBuilder queryCtz = new StringBuilder();

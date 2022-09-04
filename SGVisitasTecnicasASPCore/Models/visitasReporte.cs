@@ -16,6 +16,7 @@ namespace SGVisitasTecnicasASPCore.Models
         public string ubicacionDispSeguridad { get; set; }
         public string tiempoEntrega { get; set; }
         public string estado { get; set; }
-        
+        public string observaciones { get; set; }
+
     }
 }

@@ -21,15 +21,6 @@
                     </div>
                     @*<span asp-validation-for="id_cliente" class="text-danger"></span>*@
                 </div>
-                <div class="form-group">
-                    <label asp-for="id_venta" class="control-label">Cotizaciones</label>
-                    <div style="display: inherit;">
-                        <select asp-for="id_venta" class="form-control">
-                            <option value="">----Seleccione un cliente que tenga ventas----</option>
-                        </select>
-                    </div>
-                    @*<span asp-validation-for="id_cotizacion" class="text-danger"></span>*@
-                </div>
             </div>
 
             <div class="w-100">
@@ -46,26 +37,26 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script type="text/javascript">
-        $(function () {
-            $("select#id_cliente").change(function () {
-                var cid = $(this).val();
+        //$(function () {
+        //    $("select#id_cliente").change(function () {
+        //        var cid = $(this).val();
 
-                $("select#id_venta").empty();
+        //        $("select#id_venta").empty();
 
-                $.getJSON(`/VentasReporte/GetVta?cid=${cid}`, function (data) {
-                    //console.log(data);
-                    $.each(data, function (i, item) {
-                        $("select#id_venta").append(`<option value="${item.id}">${item.name}</option>`);
-                    });
-                });
-            })
-        });
+        //        $.getJSON(`/VentasReporte/GetVta?cid=${cid}`, function (data) {
+        //            //console.log(data);
+        //            $.each(data, function (i, item) {
+        //                $("select#id_venta").append(`<option value="${item.id}">${item.name}</option>`);
+        //            });
+        //        });
+        //    })
+        //});
 
-            //function openErrorModal(strMessage) {
-            //    var myDiv = document.getElementById("MyModalErrorAlertBody");
-            //    myDiv.innerHTML = strMessage;
-            //    $('#myModalError').modal('show');
-            //}
+        //function openErrorModal(strMessage) {
+        //    var myDiv = document.getElementById("MyModalErrorAlertBody");
+        //    myDiv.innerHTML = strMessage;
+        //    $('#myModalError').modal('show');
+        //}
     </script>
 }
 @*<p>

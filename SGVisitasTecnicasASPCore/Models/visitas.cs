@@ -26,6 +26,9 @@ namespace SGVisitasTecnicasASPCore.Models
         public bool requiereInstalacion { get; set; }
         public bool requiereMantenimiento { get; set; }
 
+        [StringLength(int.MaxValue)]
+        public string observaciones { get; set; }
+
         [Required(ErrorMessage = "Ingrese la descripción.")]
         [StringLength(int.MaxValue)]
         public string descripcion { get; set; }

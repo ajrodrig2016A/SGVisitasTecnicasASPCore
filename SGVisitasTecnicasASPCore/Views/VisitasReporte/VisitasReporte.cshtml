@@ -10,7 +10,7 @@
 <h4 class="text-center text-primary">Reporte de Visitas</h4>
 <hr />
 
-<form asp-controller="Reportes" asp-action="GenerateVisitasReporte">
+<form asp-controller="VisitasReporte" asp-action="GenerateVisitasReporte">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12 col-md-12">
@@ -30,6 +30,9 @@
                         <select asp-for="cliente" class="form-control" asp-items="ViewBag.Clientes"></select>
                     </div>
                     @*<span asp-validation-for="cliente" class="text-danger"></span>*@
+                </div>
+                <div class="col-sm-12 col-md-12 text-center form-group">
+                    <a class="col-md-4 btn btn-primary" asp-action="RefreshPage">Limpiar</a>
                 </div>
             </div>
 

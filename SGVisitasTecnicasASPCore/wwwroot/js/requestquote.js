@@ -3,32 +3,23 @@
     {
         function after_form_submitted(data) {
             if (data === "success") {
-                $('form#reused_form').hide();
-                $('#success_message').show();
-                $('#error_message').hide();
+                var strMessage = "Mensaje enviado exitosamente.";
+                var myDiv = document.getElementById("myModalSuccessAlertBody");
+                myDiv.innerHTML = strMessage;
+                $('#myModalSuccess').modal('show');
+                $('#exampleModalCenter').modal('hide');
             }
             else {
-                $('#error_message').append('<ul></ul>');
+                var strMessage = "Lo siento, hubo un error al enviar su formulario.";
+                var myDiv = document.getElementById("MyModalErrorAlertBody");
+                myDiv.innerHTML = strMessage;
+                $('#myModalError').modal('show');
+                $('#exampleModalCenter').modal('hide');
+                $form = $('form#reused_form');
 
-                jQuery.each(data.errors, function (key, val) {
-                    $('#error_message ul').append('<li>' + key + ':' + val + '</li>');
-                });
-                $('#success_message').hide();
-                $('#error_message').show();
-
-                //reverse the response on the button
-                $('button[type="button"]', $form).each(function () {
-                    $btn = $(this);
-                    label = $btn.prop('orig_label');
-                    if (label) {
-                        $btn.prop('type', 'submit');
-                        $btn.text(label);
-                        $btn.prop('orig_label', '');
-                    }
-                });
-
-            }//else
+            }
         }
+
 
 	$('#reused_form').submit(function(e)
     {
@@ -38,20 +29,25 @@
     //show some response on the button
     $('button[type="submit"]', $form).each(function()
     {
-        $btn = $(this);
-    $btn.prop('type','button' );
-    $btn.prop('orig_label',$btn.text());
-    $btn.text('Sending ...');
+        $btn = $('#send_email');
+        $btn.prop('orig_label',$btn.text());
+        $btn.text('Sending ...');
         });
 
 
     $.ajax({
         type: "POST",
         url: '/Home/StartRequestQuote',
-    data: $form.serialize(),
-    success: after_form_submitted,
-    dataType: 'json'
+        data: $form.serialize(),
+        success: after_form_submitted,
+        dataType: 'json'
             });
 
       });
-});
+    });
+
+function prepareEmail() {  
+    $form = $('form#reused_form').show();
+    $('#send_email').text("Enviar");
+    $form.trigger("reset");
+}

@@ -30,25 +30,30 @@
                         <label asp-for="fecha_cierre" class="control-label">Fecha de Cierre</label>
                         <input asp-for="fecha_cierre" type="text" class="form-control" value="@Model.fecha_cierre.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
                     </div>
+                    <hr />
                     <div class="form-group form-check">
-                        <div class="col-12">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="esProblema" readonly /> Problema
-                            </label>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="esProblema" readonly /> Problema
+                                </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="requiereInstalacion" readonly /> Instalación
+                                </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="requiereMantenimiento" readonly /> Mantenimiento
+                                </label>
+                            </div>
                         </div>
-                        <hr />
-                        <div class="col-12">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="requiereInstalacion" readonly /> Instalación
-                            </label>
-                        </div>
-                        <hr />
-                        <div class="col-12">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="requiereMantenimiento" readonly /> Mantenimiento
-                            </label>
-                        </div>
-                        <hr />
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label asp-for="observaciones" class="control-label">Observaciones</label>
+                        <textarea asp-for="observaciones" class="form-control" readonly></textarea>
                     </div>
                     <div class="form-group">
                         <label asp-for="descripcion" class="control-label">Descripción</label>

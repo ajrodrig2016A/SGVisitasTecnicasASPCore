@@ -34,6 +34,9 @@ namespace SGVisitasTecnicasASPCore.Models
         [StringLength(20)]
         public string estado { get; set; }
 
+        [StringLength(int.MaxValue)]
+        public string observaciones { get; set; }
+
         public virtual List<detalles_venta> DetallesVenta { get; set; } = new List<detalles_venta>();//detail very important
 
         public decimal subtotal { get; set; }

@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-7 d-flex topper align-items-center text-lg-right justify-content-end">
-                    <p class="mb-0 register-link"><a class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Consultar ahora</a></p>
+                    <p class="mb-0 register-link"><a class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="prepareEmail()">Consultar ahora</a></p>
                 </div>
             </div>
         </div>
@@ -169,7 +169,7 @@
                     {
                         <li>
                             <a class="popout nav-item nav-link" href="#">Reportes</a><ul class="level2 dropdown-menu">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Reportes" asp-action="VisitasReporte">Reporte de Visitas</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="VisitasReporte" asp-action="VisitasReporte">Reporte de Visitas</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="CotizacionReporte" asp-action="CotizacionReporte">Reporte de Cotización</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="VentasReporte" asp-action="VentasReporte">Reporte de Ventas</a></li>
                             </ul>
@@ -381,18 +381,18 @@
                                 <textarea name="mensaje" required cols="30" rows="4" class="form-control" placeholder="Mensaje"></textarea>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary py-3 px-4">Enviar</button>
+                                <button id="send_email" type="submit" class="btn btn-primary py-3 px-4">Enviar</button>
                             </div>
                         </div>
                     </form>
-                    <div id="success_message" style="color: green; width:100%; height:100%; display:none; ">
+                    @*<div id="success_message" style="color: green; width:100%; height:100%; display:none; ">
                         <h3>Mensaje enviado exitosamente.</h3>
                     </div>
                     <div id="error_message"
                          style="color:red; width:100%; height:100%; display:none; ">
                         <h3>Error</h3>
                         Lo siento, hubo un error al enviar su formulario.
-                    </div>
+                    </div>*@
                 </div>
             </div>
         </div>

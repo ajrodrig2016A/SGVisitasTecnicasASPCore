@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SGVisitasTecnicasASPCore.Controllers
 {
-    public class ReportesController : Controller
+    public class VisitasReporteController : Controller
     {
         private readonly IWebHostEnvironment _webHost;
         private readonly SgvtDB _context; // for connecting to efcore.
@@ -23,7 +23,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
         string path = "";
         string errMessage = "";
 
-        public ReportesController(IWebHostEnvironment webHost, SgvtDB context, IClientes clientesRepo)
+        public VisitasReporteController(IWebHostEnvironment webHost, SgvtDB context, IClientes clientesRepo)
         {
             _webHost = webHost;
             _context = context;
@@ -45,12 +45,12 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 FastReport.Utils.Config.WebMode = true;
                 Report rep = new Report();
                 string webRootPath = _webHost.WebRootPath;
-                path = Path.Combine(webRootPath, "VisitasReporte.frx");
+                path = Path.Combine(webRootPath, "ReporteVisitas.frx");
                 rep.Load(path);
 
                 if (!String.IsNullOrEmpty(model.fecha_agendada) && !String.IsNullOrEmpty(model.fecha_cierre))
                 {
-                    lstVisitas = _context.visitas.Include(c => c.Cliente).Where(d => d.fecha_agendada >= DateTime.Parse(model.fecha_agendada) && d.fecha_agendada <= DateTime.Parse(model.fecha_cierre)).OrderBy(v => v.id_visita).ToList();
+                    lstVisitas = _context.visitas.Include(c => c.Cliente).Where(d => d.fecha_agendada.Date >= DateTime.Parse(model.fecha_agendada) && d.fecha_cierre.Date <= DateTime.Parse(model.fecha_cierre)).OrderBy(v => v.id_visita).ToList();
 
                     if (lstVisitas.Count == 0)
                     {
@@ -60,7 +60,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                     foreach (var item in lstVisitas)
                     {
-                        visitasReporte.Add(new visitasReporte() { fecha_agendada = item.fecha_agendada.ToString("yyyy-MM-dd"), fecha_cierre = item.fecha_cierre.ToString("yyyy-MM-dd"), cliente = item.Cliente.nombres + " " + item.Cliente.apellidos, descripcion = item.descripcion, ubicacionDispSeguridad = item.ubicacionDispSeguridad, tiempoEntrega = item.tiempoEntrega, estado = item.estado });
+                        visitasReporte.Add(new visitasReporte() { fecha_agendada = item.fecha_agendada.ToString("yyyy-MM-dd"), fecha_cierre = item.fecha_cierre.ToString("yyyy-MM-dd"), cliente = item.Cliente.nombres + " " + item.Cliente.apellidos, descripcion = item.descripcion, ubicacionDispSeguridad = item.ubicacionDispSeguridad, tiempoEntrega = item.tiempoEntrega, estado = item.estado, observaciones = item.observaciones });
                     }
                     rep.SetParameterValue("prmCliente", @User.Identity.Name);
                     rep.SetParameterValue("prmFechaAgendamiento", model.fecha_agendada);
@@ -69,9 +69,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
                     nameReport = "Reporte de Visitas por rango de Fechas.pdf";
                 }
 
-                if (!String.IsNullOrEmpty(model.fecha_agendada))
+                if (!String.IsNullOrEmpty(model.fecha_agendada) && String.IsNullOrEmpty(model.fecha_cierre))
                 {
-                    lstVisitas = _context.visitas.Include(c => c.Cliente).Where(v => v.fecha_agendada == DateTime.Parse(model.fecha_agendada)).OrderBy(v => v.fecha_agendada).ToList();
+                    lstVisitas = _context.visitas.Include(c => c.Cliente).Where(v => v.fecha_agendada.Date == DateTime.Parse(model.fecha_agendada)).OrderBy(v => v.fecha_agendada).ToList();
 
                     if (lstVisitas.Count == 0)
                     {
@@ -81,7 +81,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                     foreach (var item in lstVisitas)
                     {
-                        visitasReporte.Add(new visitasReporte() { fecha_agendada = item.fecha_agendada.ToString("yyyy-MM-dd"), fecha_cierre = item.fecha_cierre.ToString("yyyy-MM-dd"), cliente = item.Cliente.nombres + " " + item.Cliente.apellidos, descripcion = item.descripcion, ubicacionDispSeguridad = item.ubicacionDispSeguridad, tiempoEntrega = item.tiempoEntrega, estado = item.estado });
+                        visitasReporte.Add(new visitasReporte() { fecha_agendada = item.fecha_agendada.ToString("yyyy-MM-dd"), fecha_cierre = item.fecha_cierre.ToString("yyyy-MM-dd"), cliente = item.Cliente.nombres + " " + item.Cliente.apellidos, descripcion = item.descripcion, ubicacionDispSeguridad = item.ubicacionDispSeguridad, tiempoEntrega = item.tiempoEntrega, estado = item.estado, observaciones = item.observaciones });
                     }
                     rep.SetParameterValue("prmCliente", @User.Identity.Name);
                     rep.SetParameterValue("prmFechaAgendamiento", model.fecha_agendada);
@@ -89,9 +89,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
                     nameReport = "Reporte de Visitas por Fecha de Agendamiento.pdf";
                 }
 
-                if (!String.IsNullOrEmpty(model.fecha_cierre))
+                if (String.IsNullOrEmpty(model.fecha_agendada) && !String.IsNullOrEmpty(model.fecha_cierre))
                 {
-                    lstVisitas = _context.visitas.Include(c => c.Cliente).Where(v => v.fecha_cierre == DateTime.Parse(model.fecha_cierre)).OrderBy(v => v.fecha_cierre).ToList();
+                    lstVisitas = _context.visitas.Include(c => c.Cliente).Where(v => v.fecha_cierre.Date == DateTime.Parse(model.fecha_cierre)).OrderBy(v => v.fecha_cierre).ToList();
 
                     if (lstVisitas.Count == 0)
                     {
@@ -101,7 +101,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                     foreach (var item in lstVisitas)
                     {
-                        visitasReporte.Add(new visitasReporte() { fecha_agendada = item.fecha_agendada.ToString("yyyy-MM-dd"), fecha_cierre = item.fecha_cierre.ToString("yyyy-MM-dd"), cliente = item.Cliente.nombres + " " + item.Cliente.apellidos, descripcion = item.descripcion, ubicacionDispSeguridad = item.ubicacionDispSeguridad, tiempoEntrega = item.tiempoEntrega, estado = item.estado });
+                        visitasReporte.Add(new visitasReporte() { fecha_agendada = item.fecha_agendada.ToString("yyyy-MM-dd"), fecha_cierre = item.fecha_cierre.ToString("yyyy-MM-dd"), cliente = item.Cliente.nombres + " " + item.Cliente.apellidos, descripcion = item.descripcion, ubicacionDispSeguridad = item.ubicacionDispSeguridad, tiempoEntrega = item.tiempoEntrega, estado = item.estado, observaciones = item.observaciones });
                     }
                     rep.SetParameterValue("prmCliente", @User.Identity.Name);
                     rep.SetParameterValue("prmFechaCierre", model.fecha_cierre);
@@ -109,7 +109,27 @@ namespace SGVisitasTecnicasASPCore.Controllers
                     nameReport = "Reporte de Visitas por Fecha de Cierre.pdf";
                 }
 
-                if (!String.IsNullOrEmpty(model.cliente))
+                if (model.cliente == "0" && String.IsNullOrEmpty(model.fecha_agendada) && String.IsNullOrEmpty(model.fecha_cierre))
+                {
+                    lstVisitas = _context.visitas.Include(c => c.Cliente).OrderBy(v => v.Cliente).ToList();
+
+                    if (lstVisitas.Count == 0)
+                    {
+                        model = LimpiarCampos();
+                        return EmptyGetDataFromDB(model);
+                    }
+
+                    foreach (var item in lstVisitas)
+                    {
+                        visitasReporte.Add(new visitasReporte() { fecha_agendada = item.fecha_agendada.ToString("yyyy-MM-dd"), fecha_cierre = item.fecha_cierre.ToString("yyyy-MM-dd"), cliente = item.Cliente.nombres + " " + item.Cliente.apellidos, descripcion = item.descripcion, ubicacionDispSeguridad = item.ubicacionDispSeguridad, tiempoEntrega = item.tiempoEntrega, estado = item.estado, observaciones = item.observaciones });
+                    }
+                    rep.SetParameterValue("prmCliente", @User.Identity.Name);
+                    rep.RegisterData(visitasReporte, "VisitasRef");
+                    nameReport = "Reporte General de Visitas.pdf";
+
+                }
+
+                if (!String.IsNullOrEmpty(model.cliente) && int.Parse(model.cliente) > 0)
                 {
                     lstVisitas = _context.visitas.Include(c => c.Cliente).Where(vt => vt.id_cliente == Int32.Parse(model.cliente)).OrderBy(v => v.Cliente).ToList();
 
@@ -121,7 +141,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                     foreach (var item in lstVisitas)
                     {
-                        visitasReporte.Add(new visitasReporte() { fecha_agendada = item.fecha_agendada.ToString("yyyy-MM-dd"), fecha_cierre = item.fecha_cierre.ToString("yyyy-MM-dd"), cliente = item.Cliente.nombres + " " + item.Cliente.apellidos, descripcion = item.descripcion, ubicacionDispSeguridad = item.ubicacionDispSeguridad, tiempoEntrega = item.tiempoEntrega, estado = item.estado });
+                        visitasReporte.Add(new visitasReporte() { fecha_agendada = item.fecha_agendada.ToString("yyyy-MM-dd"), fecha_cierre = item.fecha_cierre.ToString("yyyy-MM-dd"), cliente = item.Cliente.nombres + " " + item.Cliente.apellidos, descripcion = item.descripcion, ubicacionDispSeguridad = item.ubicacionDispSeguridad, tiempoEntrega = item.tiempoEntrega, estado = item.estado, observaciones = item.observaciones });
                     }
                     rep.SetParameterValue("prmCliente", @User.Identity.Name);
                     rep.RegisterData(visitasReporte, "VisitasRef");
@@ -163,94 +183,8 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 TempData["ErrorMessage"] = errMessage;
                 //ModelState.AddModelError("", errMessage);
             }
-
+            //Response.Redirect(String.Concat(Request.Host.ToUriComponent(), Request.Path).Replace("GenerateVisitasReporte", "VisitasReporte"));
             return File(ms, "application/pdf", nameReport);            
-        }
-
-        public IActionResult VentasReporte()
-        {
-            return View();
-        }
-        [HttpGet]
-        public IActionResult CotizacìonReporte()
-        {
-            ViewBag.Clientes = GetClientes();
-            return View();
-        }
-        [HttpPost]
-        public IActionResult GenerateCotizacionReporte(cotizaciones model)
-        {
-            MemoryStream ms = new MemoryStream();
-            string nameReport = "";
-
-            try
-            {
-                FastReport.Utils.Config.WebMode = true;
-                Report rep = new Report();
-                string webRootPath = _webHost.WebRootPath;
-                path = Path.Combine(webRootPath, "Cotizacion.frx");
-                rep.Load(path);
-                rep.SetParameterValue("prmIdCotizacion", 50);
-                // rep.RegisterData(visitasReporte, "VisitasRef");
-                nameReport = "CotizacionFinal.pdf";
-                // if (!String.IsNullOrEmpty(model.fecha_agendada) && !String.IsNullOrEmpty(model.fecha_cierre))
-                // {
-                // lstVisitas = _context.visitas.Include(c => c.Cliente).Where(d => d.fecha_agendada >= DateTime.Parse(model.fecha_agendada) && d.fecha_agendada <= DateTime.Parse(model.fecha_cierre)).OrderBy(v => v.id_visita).ToList();
-
-                // if (lstVisitas.Count == 0)
-                // {
-                // model = LimpiarCampos();
-                // return EmptyGetDataFromDB(model);
-                // }
-
-                // foreach (var item in lstVisitas)
-                // {
-                // visitasReporte.Add(new visitasReporte() { fecha_agendada = item.fecha_agendada.ToString("yyyy-MM-dd"), fecha_cierre = item.fecha_cierre.ToString("yyyy-MM-dd"), cliente = item.Cliente.nombres + " " + item.Cliente.apellidos, descripcion = item.descripcion, ubicacionDispSeguridad = item.ubicacionDispSeguridad, tiempoEntrega = item.tiempoEntrega, estado = item.estado });
-                // }
-                // rep.SetParameterValue("prmCliente", @User.Identity.Name);
-                // rep.SetParameterValue("prmFechaAgendamiento", model.fecha_agendada);
-                // rep.SetParameterValue("prmFechaCierre", model.fecha_cierre);
-                // rep.RegisterData(visitasReporte, "VisitasRef");
-                // nameReport = "Reporte de Visitas por rango de Fechas.pdf";
-                // }
-
-
-                // if (String.IsNullOrEmpty(model.cliente) && String.IsNullOrEmpty(model.fecha_agendada) && String.IsNullOrEmpty(model.fecha_cierre))
-                // {
-                // errMessage = "Favor seleccione un criterio de búsqueda para generar el reporte.";
-                // TempData["ErrorMessage"] = errMessage;
-                // ViewBag.Clientes = GetClientes();
-                // return View("VisitasReporte",model);
-                // }
-
-                if (rep.Report.Prepare())
-                {
-                    FastReport.Export.PdfSimple.PDFSimpleExport pdfExport = new FastReport.Export.PdfSimple.PDFSimpleExport();
-                    pdfExport.ShowProgress = false;
-                    pdfExport.Subject = "Cotizacion por Servicios";
-                    pdfExport.Title = "Cotizacion por Servicios";
-
-                    rep.Report.Export(pdfExport, ms);
-                    rep.Dispose();
-                    pdfExport.Dispose();
-                    ms.Position = 0;
-                    //model = LimpiarCampos();
-                }
-                else
-                {
-                    errMessage = "No se pudo generar el reporte.";
-                    TempData["ErrorMessage"] = errMessage;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                errMessage = errMessage + " " + ex.Message;
-                TempData["ErrorMessage"] = errMessage;
-                //ModelState.AddModelError("", errMessage);
-            }
-
-            return File(ms, "application/pdf", nameReport);
         }
 
         private ViewResult EmptyGetDataFromDB(visitasReporte model)
@@ -260,6 +194,11 @@ namespace SGVisitasTecnicasASPCore.Controllers
             ViewBag.Clientes = GetClientes();
             ModelState.Clear();
             return View("VisitasReporte", model);
+        }
+
+        public IActionResult RefreshPage()
+        {
+            return RedirectToRoute(new { controller = "VisitasReporte", action = "VisitasReporte" });
         }
 
         public IActionResult RedirectToIndex()
@@ -289,10 +228,17 @@ namespace SGVisitasTecnicasASPCore.Controllers
             var defItem = new SelectListItem()
             {
                 Value = "",
-                Text = "----Seleccione el Cliente----"
+                Text = "----Seleccione el cliente----"
+            };
+
+            var defFirstItem = new SelectListItem()
+            {
+                Value = "0",
+                Text = "----Todos los clientes----"
             };
 
             lstItems.Insert(0, defItem);
+            lstItems.Insert(1, defFirstItem);
 
             return lstItems;
         }

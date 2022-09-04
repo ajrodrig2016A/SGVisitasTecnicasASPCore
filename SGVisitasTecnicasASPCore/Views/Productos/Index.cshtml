@@ -11,7 +11,14 @@
 }
 
 <hr />
-<h4 class="text-center text-primary">Gestión de Productos</h4>
+@if (User.IsInRole("ADM") || User.IsInRole("TEC") || User.IsInRole("COM"))
+{
+    <h4 class="text-center text-primary">Gestión de Productos</h4>
+}
+else
+{
+    <h4 class="text-center text-primary">Catálogo de Productos</h4>
+}
 <hr />
 <div class="container-fluid">
     <center>
@@ -45,9 +52,12 @@
         </div>
     </center>
     <div>
-        <p>
-            <a class="btn btn-primary" asp-action="Create">Nuevo Producto</a>
-        </p>
+        @if (!User.IsInRole("CLI"))
+        {
+            <p>
+                <a class="btn btn-primary" asp-action="Create">Nuevo Producto</a>
+            </p>
+        }
         <div class="row">
             <div class="col-12">
                 <partial name="_topBar" model="@pager" />
@@ -58,9 +68,6 @@
         <table class="table-bordered table-striped table-condensed" style="width: 100%;">
             <thead class="text-center">
                 <tr>
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.id_producto)
-                        </th>*@
                     <th>
                         <i class="@sortModel.GetColumn("Nombre").SortIcon" arial-hidden="true"></i>
 
@@ -83,7 +90,7 @@
                         </a>
                     </th>
                     <th>
-                        Nombre Foto
+                        Nombre de la Foto
                     </th>
                     <th>
                         Unidad
@@ -94,19 +101,21 @@
                     <th>
                         Precio Unitario
                     </th>
-                    <th>
-                        @*Categoría*@
-                    </th>
+                    @if (User.IsInRole("CLI"))
+                    {
+                        <th>
+                            Categoría
+                        </th>
+                    }
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        @*<td>
-                                @Html.DisplayFor(modelItem => item.id_producto)
-                            </td>*@
+                <tr>
+                    @if (!User.IsInRole("CLI"))
+                    {
                         <td data-title="Nombre">
                             @Html.DisplayFor(modelItem => item.nombre)
                         </td>
@@ -126,11 +135,40 @@
                             @Html.DisplayFor(modelItem => item.cantidad)
                         </td>
                         <td data-title="Precio Unitario">
-                            @Html.DisplayFor(modelItem => item.precioUnitario)
+                            USD$ &nbsp; @Html.DisplayFor(modelItem => item.precioUnitario)
                         </td>
-                        @*<td data-title="@Html.DisplayNameFor(model => model.Categoria.nombre)">
-                                @Html.DisplayFor(modelItem => item.Categoria.nombre)
-                            </td>*@
+                    }
+                    else
+                    {
+                        <td data-title="Nombre" class="text-center">
+                            @Html.DisplayFor(modelItem => item.nombre)
+                        </td>
+                        <td data-title="Marca" class="text-center">
+                            @Html.DisplayFor(modelItem => item.Marca.nombre)
+                        </td>
+                        <td data-title="Descripción" class="text-center">
+                            @Html.DisplayFor(modelItem => item.descripcion)
+                        </td>
+                        <td data-title="Nombre Foto" class="text-center">
+                            @Html.DisplayFor(modelItem => item.ImageName)
+                        </td>
+                        <td data-title="Unidad" class="text-center">
+                            @Html.DisplayFor(modelItem => item.Unidad.nombre)
+                        </td>
+                        <td data-title="Cantidad" class="text-center">
+                            @Html.DisplayFor(modelItem => item.cantidad)
+                        </td>
+                        <td data-title="Precio Unitario" class="text-center">
+                            USD$ &nbsp; @Html.DisplayFor(modelItem => item.precioUnitario)
+                        </td>
+                        <td data-title="Categoria" class="text-center">
+                            @Html.DisplayFor(modelItem => item.Categoria.nombre)
+                        </td>
+                    }
+
+
+                    @if (!User.IsInRole("CLI"))
+                    {
                         <td>
                             <div class="btn-group">
                                 <a asp-action="Edit" asp-route-id="@item.id_producto">
@@ -147,7 +185,9 @@
 
                             </div>
                         </td>
-                    </tr>
+                    }
+
+                </tr>
                 }
             </tbody>
         </table>

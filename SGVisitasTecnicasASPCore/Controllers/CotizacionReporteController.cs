@@ -14,9 +14,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SGVisitasTecnicasASPCore.Controllers
 {
+    [Authorize]
     public class CotizacionReporteController : Controller
     {
         private readonly IWebHostEnvironment _webHost;
@@ -38,6 +40,13 @@ namespace SGVisitasTecnicasASPCore.Controllers
         [HttpGet]
         public IActionResult CotizacionReporte(cotizaciones model)
         {
+            if(User.IsInRole("CLI"))
+            {
+                int idCliente = _context.clientes.Where(c => c.nombres == User.Identity.Name).FirstOrDefault().id_cliente;
+                ViewBag.Clientes = GetClientes(idCliente);
+                ViewBag.Cotizaciones = GetCotizaciones(idCliente);
+                return View(model);
+            }
             PopulateViewbags();
             return View(model);
         }
@@ -158,13 +167,26 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
         private void PopulateViewbags()
         {
-            ViewBag.Clientes = GetClientes();
-
-            //ViewBag.Cotizaciones = GetCotizaciones();
+            int idCliente = 0;
+            ViewBag.Clientes = GetClientes(idCliente);
         }
 
-        private List<SelectListItem> GetClientes()
+        private List<SelectListItem> GetClientes(int idCliente)
         {
+            if (idCliente > 0)
+            {
+                List<SelectListItem> lstItem = new List<SelectListItem>();
+                clientes item = _clientesRepo.GetItem(idCliente);
+                SelectListItem oneItem = new SelectListItem()
+                {
+                    Value = item.id_cliente.ToString(),
+                    Text = item.nombres
+                };
+
+                lstItem.Insert(0, oneItem);
+                return lstItem;
+            }
+
             var lstItems = new List<SelectListItem>();
 
             PaginatedList<clientes> items = _clientesRepo.GetItems("nombres", Models.SortOrder.Ascending, "", 1, 1000);
@@ -185,10 +207,10 @@ namespace SGVisitasTecnicasASPCore.Controllers
             return lstItems;
         }
 
-        private List<SelectListItem> GetCotizaciones()
+        private List<SelectListItem> GetCotizaciones(int idCliente)
         {
             var lstQuotes = new List<SelectListItem>();
-            List<cotizaciones> items = _context.cotizaciones.Include(cl => cl.Cliente).ToList();
+            List<cotizaciones> items = _context.cotizaciones.Include(cl => cl.Cliente).Where(ct => ct.id_cliente == idCliente).ToList();
 
             lstQuotes = items.Select(ctz => new SelectListItem()
             {

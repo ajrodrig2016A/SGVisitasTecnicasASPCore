@@ -76,11 +76,11 @@ namespace SGVisitasTecnicasASPCore.Repositories
 
             if (SearchText != "" && SearchText != null)
             {
-                items = _context.productos.Where(n => n.nombre.Contains(SearchText) || n.descripcion.Contains(SearchText))
+                items = _context.productos.Include(m => m.Marca).Include(u => u.Unidad).Include(c => c.Categoria).Where(n => n.nombre.Contains(SearchText) || n.descripcion.Contains(SearchText) || n.Marca.nombre.Contains(SearchText) || n.Unidad.nombre.Contains(SearchText) || n.Categoria.nombre.Contains(SearchText))
                     .ToList();
             }
             else
-                items = _context.productos.Include(m => m.Marca).Include(u => u.Unidad).ToList();
+                items = _context.productos.Include(m => m.Marca).Include(u => u.Unidad).Include(c => c.Categoria).ToList();
 
             items = DoSort(items, SortProperty, sortOrder);
 

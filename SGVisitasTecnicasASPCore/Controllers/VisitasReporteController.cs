@@ -1,4 +1,5 @@
 ﻿using FastReport;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace SGVisitasTecnicasASPCore.Controllers
 {
+    [Authorize]
     public class VisitasReporteController : Controller
     {
         private readonly IWebHostEnvironment _webHost;

@@ -13,7 +13,6 @@ using System.IO;
 
 namespace SGVisitasTecnicasASPCore.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly IWebHostEnvironment _webHost;

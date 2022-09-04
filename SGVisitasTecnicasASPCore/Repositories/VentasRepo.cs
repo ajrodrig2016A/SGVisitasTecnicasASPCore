@@ -133,8 +133,7 @@ namespace SGVisitasTecnicasASPCore.Repositories
 
             if (SearchText != "" && SearchText != null)
             {
-                items = _context.ventas.Where(n => n.codigo_venta.Contains(SearchText) || n.numero_factura.Contains(SearchText))
-                .Include(c => c.Cliente)
+                items = _context.ventas.Include(c => c.Cliente).Where(n => n.codigo_venta.Contains(SearchText) || n.numero_factura.Contains(SearchText) || n.estado.Contains(SearchText) || n.Cliente.nombres.Contains(SearchText))
                 .ToList();
 
             }

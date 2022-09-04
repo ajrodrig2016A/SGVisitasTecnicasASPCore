@@ -46,8 +46,13 @@
                             Apellidos
                         </a>
                     </th>
+
                     <th>
-                        Fecha de Registro
+                        <i class="@sortModel.GetColumn("Fecha de Registro").SortIcon" arial-hidden="true"></i>
+
+                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Fecha de Registro").SortExpression">
+                            Fecha de Registro
+                        </a>
                     </th>
                     <th>
                         Género

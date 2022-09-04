@@ -22,9 +22,7 @@
                 <div class="form-group">
                     <label asp-for="id_cotizacion" class="control-label">Cotizaciones</label>
                     <div style="display: inherit;">
-                        <select asp-for="id_cotizacion" class="form-control">
-                            <option value="">----Seleccione un cliente que tenga cotizaciones----</option>
-                        </select>
+                        <select asp-for="id_cotizacion" class="form-control" asp-items="ViewBag.Cotizaciones"></select>
                     </div>
                     @*<span asp-validation-for="id_cotizacion" class="text-danger"></span>*@
                 </div>

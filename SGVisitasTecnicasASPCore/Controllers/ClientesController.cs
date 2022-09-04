@@ -28,7 +28,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
             sortModel.AddColumn("Número Documento");
             sortModel.AddColumn("Nombres");
             sortModel.AddColumn("Apellidos");
-            //sortModel.AddColumn("Fecha Registro");
+            sortModel.AddColumn("Fecha de Registro");
             //sortModel.AddColumn("Es Activo");
             //sortModel.AddColumn("Email");
             //sortModel.AddColumn("Teléfono");

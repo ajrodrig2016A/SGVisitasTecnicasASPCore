@@ -139,10 +139,7 @@ namespace SGVisitasTecnicasASPCore.Repositories
 
             if (SearchText != "" && SearchText != null)
             {
-                items = _context.cotizaciones.Where(n => n.codigo.Contains(SearchText) || n.servicio.Contains(SearchText) || n.sector_inmueble.Contains(SearchText) || n.direccion_inmueble.Contains(SearchText))
-                    .Include(c => c.Cliente)
-                    .Include(e => e.Empleado)
-                    .ToList();
+                items = _context.cotizaciones.Include(c => c.Cliente).Include(e => e.Empleado).Where(n => n.codigo.Contains(SearchText) || n.servicio.Contains(SearchText) || n.sector_inmueble.Contains(SearchText) || n.direccion_inmueble.Contains(SearchText) || n.Cliente.nombres.Contains(SearchText) || n.Empleado.nombres.Contains(SearchText) || n.telefono.Contains(SearchText) || n.estado.Contains(SearchText) || n.tiempo_entrega.Contains(SearchText)).ToList();
             }
             else
                 items = _context.cotizaciones

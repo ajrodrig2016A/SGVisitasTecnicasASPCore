@@ -80,7 +80,7 @@ namespace SGVisitasTecnicasASPCore
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Access}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

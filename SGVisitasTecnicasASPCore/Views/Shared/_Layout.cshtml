@@ -31,6 +31,10 @@
             <div class="row">
                 <div class="col-sm text-center text-md-left mb-md-0 mb-2 pr-md-4 d-flex topper align-items-center">
                     <p class="mb-0 w-100">
+                        @if (User.IsInRole("ADM") || User.IsInRole("COM") || User.IsInRole("TEC") || User.IsInRole("CLI"))
+                        {
+                            <span class="mr-2 text-uppercase">Bienvenido: @User.Identity.Name</span>
+                        }
                         <span class="fa fa-paper-plane"></span>
                         <span class="text">ventas.saimec@gmail.com</span>
                     </p>
@@ -46,6 +50,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-7 d-flex topper align-items-center text-lg-right justify-content-end">
+                    <a class="btn btn-primary" asp-controller="Access" asp-action="Index">Iniciar Sesión</a> &nbsp;
                     <p class="mb-0 register-link"><a class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="prepareEmail()">Consultar ahora</a></p>
                 </div>
             </div>
@@ -55,10 +60,6 @@
         <div class="container-fluid">
             <div class="row d-flex align-items-start align-items-center px-3 px-md-0">
                 <div class="col-md-4 d-flex mb-2 mb-md-0">
-                    @if (User.IsInRole("ADM") || User.IsInRole("COM") || User.IsInRole("TEC"))
-                    {
-                        <span class="mr-2">Bienvenido <br /> @User.Identity.Name</span>
-                    }
                     <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
                         <span class="flaticon flaticon-crane"></span>
                         <span class="ml-2">Saimec <small style="white-space:normal; overflow-wrap:break-word;">Servicios de automatización industrial y mecánica</small></span>
@@ -108,12 +109,20 @@
 
                     @if (User.IsInRole("CLI"))
                     {
-                        <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-                        <li class="nav-item"><a href=" class=" nav-link">About</a></li>
-                        <li class="nav-item"><a href="sabout.html" ervices.html" class="nav-link">Services</a></li>
-                        <li class="nav-item"><a href="project.html" class="nav-link">Projects</a></li>
-                        <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-                        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Productos" asp-action="Index">Catálogo de Productos</a>
+                        </li>
+                        <li>
+                            <a class="popout nav-item nav-link" href="#">Reportes</a><ul class="level2 dropdown-menu">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="CotizacionReporte" asp-action="CotizacionReporte">Reporte de Cotización</a></li>
+                            </ul>
+                        </li>
+                        @*<li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href=" class=" nav-link">About</a></li>
+            <li class="nav-item"><a href="sabout.html" ervices.html" class="nav-link">Services</a></li>
+            <li class="nav-item"><a href="project.html" class="nav-link">Projects</a></li>
+            <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>*@
                     }
 
                     @if (User.IsInRole("ADM"))
@@ -144,28 +153,28 @@
                         </li>
                     }
 
-                    @if (User.IsInRole("ADM") || User.IsInRole("TEC") || User.IsInRole("COM"))
+                    @if (User.IsInRole("ADM") || User.IsInRole("COM"))
                     {
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Cotizaciones" asp-action="Index">Cotizaciones</a>
                         </li>
                     }
 
-                    @if (User.IsInRole("ADM") || User.IsInRole("TEC"))
+                    @if (User.IsInRole("ADM"))
                     {
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Visitas" asp-action="Index">Visitas</a>
                         </li>
                     }
 
-                    @if (User.IsInRole("ADM") || User.IsInRole("TEC"))
+                    @if (User.IsInRole("ADM") || User.IsInRole("COM"))
                     {
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Ventas" asp-action="Index">Ventas</a>
                         </li>
                     }
 
-                    @if (User.IsInRole("ADM") || User.IsInRole("TEC"))
+                    @if (User.IsInRole("ADM"))
                     {
                         <li>
                             <a class="popout nav-item nav-link" href="#">Reportes</a><ul class="level2 dropdown-menu">
@@ -174,24 +183,29 @@
                                 <li><a class="dropdown-item" asp-area="" asp-controller="VentasReporte" asp-action="VentasReporte">Reporte de Ventas</a></li>
                             </ul>
                         </li>
-
-                        @*<li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle menu-item" data-toggle="dropdown">Reportes</a>
-                            <ul class="navbar-nav nav-pestanias">
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-area="" asp-controller="Reportes" asp-action="VisitasReporte">Reporte de Visitas</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="CotizacionReporte" asp-action="CotizacionReporte">Reporte de Cotizacion</a>
-                                </li>
-                            </ul>
-                        </li>*@
-
                     }
 
-
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Access" asp-action="Salir">Salir</a>
-                    </li>
-
+                    @if (User.IsInRole("TEC"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Cotizaciones" asp-action="Index">Cotizaciones</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Visitas" asp-action="Index">Visitas</a>
+                        </li>
+                        <li>
+                            <a class="popout nav-item nav-link" href="#">Reportes</a><ul class="level2 dropdown-menu">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="VisitasReporte" asp-action="VisitasReporte">Reporte de Visitas</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="CotizacionReporte" asp-action="CotizacionReporte">Reporte de Cotización</a></li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole("ADM") || User.IsInRole("TEC") || User.IsInRole("COM") || User.IsInRole("CLI"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Access" asp-action="Salir">Salir</a>
+                        </li>
+                    }
                 </ul>
 
             </div>
@@ -273,17 +287,17 @@
                         <h2 class="ftco-heading-2">Links</h2>
                         <div class="d-flex">
                             <ul class="list-unstyled mr-md-4">
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Proyecto</a></li>
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Sobre nosotros</a></li>
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Servicios</a></li>
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Entradas de blog</a></li>
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Industrias</a></li>
+                                <li><a href="#" style="pointer-events: none;"><span class="fa fa-chevron-right mr-2"></span>Proyecto</a></li>
+                                <li><a href="#" style="pointer-events: none;"><span class="fa fa-chevron-right mr-2"></span>Sobre nosotros</a></li>
+                                <li><a href="#" style="pointer-events: none;"><span class="fa fa-chevron-right mr-2"></span>Servicios</a></li>
+                                <li><a href="#" style="pointer-events: none;"><span class="fa fa-chevron-right mr-2"></span>Entradas de blog</a></li>
+                                <li><a href="#" style="pointer-events: none;"><span class="fa fa-chevron-right mr-2"></span>Industrias</a></li>
                             </ul>
                             <ul class="list-unstyled ml-md-5">
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Contacte con</a></li>
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Ayuda</a></li>
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Política de privacidad</a></li>
-                                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Condiciones de uso</a></li>
+                                <li><a href="#" style="pointer-events: none;"><span class="fa fa-chevron-right mr-2"></span>Contacte con</a></li>
+                                <li><a href="#" style="pointer-events: none;"><span class="fa fa-chevron-right mr-2"></span>Ayuda</a></li>
+                                <li><a href="#" style="pointer-events: none;"><span class="fa fa-chevron-right mr-2"></span>Política de privacidad</a></li>
+                                <li><a href="#" style="pointer-events: none;"><span class="fa fa-chevron-right mr-2"></span>Condiciones de uso</a></li>
                             </ul>
                         </div>
                     </div>
@@ -293,10 +307,10 @@
                     <div class="ftco-footer-widget">
                         <h2 class="ftco-heading-2">Servicios</h2>
                         <ul class="list-unstyled">
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Proyectos de Ingeniería</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Alarmas para Hogar</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Cámaras</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Sistemas de Videovigilancia</a></li>
+                            <li><a href="#" style="pointer-events: none;"><span class="fa fa-chevron-right mr-2"></span>Proyectos de Ingeniería</a></li>
+                            <li><a href="#" style="pointer-events: none;"><span class="fa fa-chevron-right mr-2"></span>Alarmas para Hogar</a></li>
+                            <li><a href="#" style="pointer-events: none;"><span class="fa fa-chevron-right mr-2"></span>Cámaras</a></li>
+                            <li><a href="#" style="pointer-events: none;"><span class="fa fa-chevron-right mr-2"></span>Sistemas de Videovigilancia</a></li>
                         </ul>
                     </div>
                 </div>

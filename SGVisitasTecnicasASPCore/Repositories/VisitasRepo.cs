@@ -76,7 +76,7 @@ namespace SGVisitasTecnicasASPCore.Repositories
 
             if (SearchText != "" && SearchText != null)
             {
-                items = _context.visitas.Where(n => n.descripcion.Contains(SearchText) || n.ubicacionDispSeguridad.Contains(SearchText))
+                items = _context.visitas.Include(c => c.Cliente).Include(e => e.Empleado).Where(n => n.descripcion.Contains(SearchText) || n.ubicacionDispSeguridad.Contains(SearchText) || n.estado.Contains(SearchText) || n.Cliente.nombres.Contains(SearchText) || n.Empleado.nombres.Contains(SearchText))
                     .ToList();
             }
             else

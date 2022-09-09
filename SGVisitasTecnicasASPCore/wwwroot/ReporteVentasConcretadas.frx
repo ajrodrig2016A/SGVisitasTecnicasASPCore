@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="08/28/2022 12:28:50" ReportInfo.Modified="09/03/2022 20:17:08" ReportInfo.CreatorVersion="2022.2.0.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/28/2022 12:28:50" ReportInfo.Modified="09/08/2022 21:55:22" ReportInfo.CreatorVersion="2022.2.0.0">
   <Dictionary>
-    <MySqlDataConnection Name="Connection" ConnectionString="rijcmlqomabmqtwD7y3BaVO988Xrns8n0+Fpps4V7SdlS+EOKQoYjNHXNhSUb7EVZOYRIoaWg10FkdaaR/ksBR/jxWLFtp2SWOKghqLfovWH2MIzkc=">
+    <MySqlDataConnection Name="Connection" ConnectionString="rijcmlqfO676v1IWzs2frIWzLKxr/b7cp1j0ezMM7v4OjSGbLgHle0V6qFZwPwq4OqxrylaFxphKZCX5YdLan6R1r57XfdChosqmPk8tezNSuhpd1kbz2Ka3sGBpXKltksO1sQ5KVwJK9Lc4mqTijM5LhtlLQ==">
       <TableDataSource Name="marcas" DataType="System.Int32" Enabled="true" TableName="marcas">
         <Column Name="id_marca" DataType="System.Int32"/>
         <Column Name="nombre" DataType="System.String"/>

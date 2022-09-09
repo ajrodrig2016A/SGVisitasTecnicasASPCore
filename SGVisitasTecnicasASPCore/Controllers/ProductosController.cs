@@ -39,7 +39,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
             if (producto.ImageFile != null)
             {
                 string uploadsFolder = Path.Combine(_webHost.WebRootPath, "image");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + producto.ImageFile.FileName;
+                uniqueFileName = producto.ImageFile.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {

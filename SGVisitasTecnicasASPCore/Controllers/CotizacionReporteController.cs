@@ -139,7 +139,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 errMessage = errMessage + " " + ex.Message;
                 TempData["ErrorMessage"] = errMessage;
             }
-
+            
             return File(ms, "application/pdf", nameReport.ToString());
         }
 
@@ -149,7 +149,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
             TempData["ErrorMessage"] = errMessage;
             PopulateViewbags();
             ModelState.Clear();
-            return View("CotizacionesReporte", model);
+            return View("CotizacionReporte", model);
         }
 
         public IActionResult RedirectToIndex()
@@ -233,6 +233,11 @@ namespace SGVisitasTecnicasASPCore.Controllers
         public IActionResult GetCtz(int cid)
         {
             var lstCotizaciones = _context.cotizaciones.Include(cl => cl.Cliente).Where(s => s.id_cliente == cid).Select(c => new { Id = c.id_cotizacion, Name = c.codigo }).ToList();
+
+            if (lstCotizaciones.Count == 0)
+            {
+                lstCotizaciones.Add(new { Id = 0, Name = "Cliente no registra cotizaciones" });
+            }
 
             return Json(lstCotizaciones);
         }

@@ -111,7 +111,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                 string codigoCtz = _context.cotizaciones.Where(ctz => ctz.id_cotizacion == model.id_cotizacion).Select(c => c.codigo).FirstOrDefault();
                 nameReport.Append("CotizacionFinal_");
-                nameReport.Append(codigoCtz);
+                nameReport.Append(codigoCtz + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss"));
                 nameReport.Append(".pdf");
 
 

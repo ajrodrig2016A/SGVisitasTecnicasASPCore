@@ -60,7 +60,7 @@
                         <thead>
                             <tr>
                                 <th>
-                                    Código Producto
+                                    Ítem
                                 </th>
                                 <th>
                                     Descripción
@@ -96,11 +96,11 @@
                             {
                             <tr>
                                 <td>
-                                    <input asp-for="@Model.DetallesVenta[i].codigoProductoVta" class="form-control" onchange="fillFieldsSaleDetails(this)" />
+                                    <input asp-for="@Model.DetallesVenta[i].codigoProductoVta" class="form-control form-control-plaintext detVtaCodeProduct" readonly />
                                 </td>
                                 <td>
-                                    <input asp-for="@Model.DetallesVenta[i].descripcion" class="form-control form-control-plaintext" readonly />
-                                    <br /><span asp-validation-for="@Model.DetallesVenta[i].descripcion" class="text-danger"></span>
+                                    <select id='cmbVtasProductos-@i' asp-for="@Model.DetallesVenta[i].descripcion" class="form-control" asp-items="ViewBag.productos"></select>
+                                    <input type="hidden" asp-for="@Model.DetallesVenta[i].IsSelected" />
                                 </td>
                                 @*<td>
                                     <input asp-for="@Model.DetallesVenta[i].ubicacion" class="form-control" />
@@ -129,6 +129,7 @@
                                 <td>
                                     @*<input type="hidden" asp-for="@Model.DetallesVenta[i].IsDeleted" />*@
                                     <input asp-for="@Model.DetallesVenta[i].valorTotal" class="form-control form-control-plaintext detVtaValTotal" readonly />
+                                    <input type="hidden" asp-for="@Model.DetallesVenta[i].IsDeleted" />
                                 </td>
                                 <td>
                                     <button id='btnRemove-@i' type="button" class="btn btn-sm btn-danger visible" onclick="DeleteItemVta(this)">Eliminar</button>
@@ -187,6 +188,6 @@
 </form>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
 }

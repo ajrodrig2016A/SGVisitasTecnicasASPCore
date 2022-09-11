@@ -63,7 +63,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                         path = Path.Combine(webRootPath, "ReporteVentasConcretadas.frx");
                         repGen.Load(path);
                         repGen.SetParameterValue("prmUsuario", @User.Identity.Name);
-                        nameReport.Append("Reporte General de Ventas Concretadas");
+                        nameReport.Append("Reporte General de Ventas Concretadas" + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss"));
                         nameReport.Append(".pdf");
 
                         if (repGen.Report.Prepare())
@@ -134,7 +134,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                     string clienteVta = _context.clientes.Where(ctz => ctz.id_cliente == model.id_cliente).Select(c => c.numero_documento).FirstOrDefault();
                     nameReport.Append("Reporte de Ventas por Cliente_");
-                    nameReport.Append(clienteVta);
+                    nameReport.Append(clienteVta + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss"));
                     nameReport.Append(".pdf");
 
 

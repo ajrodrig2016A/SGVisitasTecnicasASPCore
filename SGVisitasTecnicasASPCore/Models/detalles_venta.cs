@@ -54,5 +54,8 @@ namespace SGVisitasTecnicasASPCore.Models
 
         [NotMapped]
         public bool IsDeleted { get; set; } = false;
+
+        [NotMapped]
+        public bool IsSelected { get; set; } = false;
     }
 }

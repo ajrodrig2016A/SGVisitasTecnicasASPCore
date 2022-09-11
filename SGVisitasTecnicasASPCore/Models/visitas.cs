@@ -33,7 +33,6 @@ namespace SGVisitasTecnicasASPCore.Models
         [StringLength(int.MaxValue)]
         public string descripcion { get; set; }
 
-        [Required(ErrorMessage = "Ingrese ubicación del dispositivo de seguridad.")]
         [StringLength(120)]
         public string ubicacionDispSeguridad { get; set; }
 

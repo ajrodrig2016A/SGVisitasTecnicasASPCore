@@ -72,7 +72,6 @@ namespace SGVisitasTecnicasASPCore.Models
         [StringLength(160)]
         public string validez { get; set; }
 
-        [Required(ErrorMessage = "Ingrese observaciones.")]
         [StringLength(int.MaxValue)]
         public string observaciones { get; set; }
 

@@ -205,7 +205,9 @@ namespace SGVisitasTecnicasASPCore.Data
                 {                                                         // HTML file
                     MailAddress addressFrom = new MailAddress(recipient, "SAIMEC Admin.");
                     MailAddress addressTo = new MailAddress(sender);
+                    MailAddress addressBCC = new MailAddress("ventas.saimec@gmail.com");
                     message = new MailMessage(addressFrom, addressTo);
+                    message.Bcc.Add(addressBCC);
                     message.Subject = subject;
                     string bodyEmailRecuperarClave = reader.ReadToEnd();  // Load the content from your file...
                                                                           //...
@@ -213,10 +215,11 @@ namespace SGVisitasTecnicasASPCore.Data
                     message.IsBodyHtml = true;
                 }
 
-                SmtpClient client = new SmtpClient("smtp.mailtrap.io", 2525)
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
                 {
-                    Credentials = new NetworkCredential("c5caf274a330ff", "d4489958dcdc18"),
-                    EnableSsl = true
+                    EnableSsl = true,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("rodandrews90210@gmail.com", "oztzvowdqdiegemp")
                 };
                 // code in brackets above needed if authentication required
                 client.Send(message);
@@ -242,18 +245,21 @@ namespace SGVisitasTecnicasASPCore.Data
                 {                                                         // HTML file
                     MailAddress addressFrom = new MailAddress(sender, "SAIMEC Admin.");
                     MailAddress addressTo = new MailAddress(recipient);
+                    MailAddress addressBCC = new MailAddress("ventas.saimec@gmail.com");
                     message = new MailMessage(addressFrom, addressTo);
+                    message.Bcc.Add(addressBCC);
                     message.Subject = subject;
-                    string bodyEmailRecuperarClave = reader.ReadToEnd();  // Load the content from your file...
+                    string bodyEmailSolicitarInformacion = reader.ReadToEnd();  // Load the content from your file...
                                                                           //...
-                    message.Body = bodyEmailRecuperarClave.Replace("(HORA Y FECHA)", DateTime.Now.ToString("F")).Replace("(NOMBRE USUARIO)", user).Replace("(DATOS DEL CLIENTE)", datosCliente);
+                    message.Body = bodyEmailSolicitarInformacion.Replace("(HORA Y FECHA)", DateTime.Now.ToString("F")).Replace("(NOMBRE USUARIO)", user).Replace("(DATOS DEL CLIENTE)", datosCliente);
                     message.IsBodyHtml = true;
                 }
 
-                SmtpClient client = new SmtpClient("smtp.mailtrap.io", 2525)
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
                 {
-                    Credentials = new NetworkCredential("c5caf274a330ff", "d4489958dcdc18"),
-                    EnableSsl = true
+                    EnableSsl = true,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("rodandrews90210@gmail.com", "oztzvowdqdiegemp")                    
                 };
                 // code in brackets above needed if authentication required
                 client.Send(message);

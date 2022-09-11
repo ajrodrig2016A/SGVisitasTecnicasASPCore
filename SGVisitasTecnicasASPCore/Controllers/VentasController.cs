@@ -113,6 +113,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 for (int i = 0; i < venta.DetallesVenta.Count; i++)
                 {
                     venta.DetallesVenta[i].id_producto = int.Parse(venta.DetallesVenta[i].codigoProductoVta.Trim());
+                    venta.DetallesVenta[i].descripcion = _context.productos.Where(p => p.id_producto == venta.DetallesVenta[i].id_producto).Select(c => c.nombre).FirstOrDefault();
                 }
 
                 //if (_ventasRepo.IsQuoteExists(venta.nombre_cliente) == true)
@@ -178,6 +179,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
             try
             {
+                venta.DetallesVenta.RemoveAll(d => d.IsDeleted == true);
                 venta.DetallesVenta.RemoveAll(n => n.cantidad == (decimal)0.00 || n.valorUnitario == (decimal)0.00);
                 venta.DetallesVenta.RemoveAll(t => t.valorTotal == (decimal)0.00);
 
@@ -190,6 +192,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 for (int i = 0; i < venta.DetallesVenta.Count; i++)
                 {
                     venta.DetallesVenta[i].id_producto = int.Parse(venta.DetallesVenta[i].codigoProductoVta.Trim());
+                    venta.DetallesVenta[i].descripcion = _context.productos.Where(p => p.id_producto == venta.DetallesVenta[i].id_producto).Select(c => c.nombre).FirstOrDefault();
                 }
 
                 //if (_ventasRepo.IsQuoteExists(venta.nombre_cliente) == true)

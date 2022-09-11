@@ -95,8 +95,8 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 if (_visitasRepo.IsItemCodeExists(visita.id_visita) == true)
                     errMessage = errMessage + " " + " El código de visita " + visita.id_visita + " ya existe";
 
-                if (_visitasRepo.IsItemExists(clsCliente.nombres) == true)
-                    errMessage = errMessage + " " + " La visita del cliente " + clsCliente.nombres + " ya existe";
+                //if (_visitasRepo.IsItemExists(clsCliente.nombres) == true)
+                //    errMessage = errMessage + " " + " La visita del cliente " + clsCliente.nombres + " ya existe";
 
                 if (errMessage == "")
                 {

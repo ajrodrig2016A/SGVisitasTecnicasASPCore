@@ -44,7 +44,16 @@ function DeleteItem(btn) {
     var table = document.getElementById('DetCtzTable');
     var rows = table.getElementsByTagName('tr');
 
-    if (rows.length == 2) {
+    var VisibleRowsCount = 0;
+
+    var x = document.querySelectorAll("[id*='valorTotal']");
+    for (i = 0; i < x.length; i++) {
+        if (x[i].value > 0) {
+            VisibleRowsCount++;
+        }
+    }
+
+    if (VisibleRowsCount <= 1) {
         alert("Esta fila no puede ser eliminada");
         return;
 
@@ -57,6 +66,11 @@ function DeleteItem(btn) {
     var txtValorTotal = document.querySelector("[id$='" + idOfValorTotal + "']");
 
     txtValorTotal.value = 0.00;
+
+
+    var idOfIsDeleted = btnIdx + "__IsDeleted";
+    var txtIsDeleted = document.querySelector("[id$='" + idOfIsDeleted + "']");
+    txtIsDeleted.value = "true";
 
     $(btn).closest('tr').hide();
     reCalcSubtotalCotizacion();
@@ -121,168 +135,33 @@ function rebindvalidatorsCotizacionForm() {
 function bloquearCamposDetCtz(lastRowIdx) {
     var detCtzCodigo = 'DetallesCotizacion_' + lastRowIdx + '__codigoProducto';
     document.getElementById(detCtzCodigo).readOnly = true;
+    var detCtzDescripcion = 'cmbProductos-' + lastRowIdx;
+    document.getElementById(detCtzDescripcion).setAttribute("disabled", "disabled");
     var detCtzUbicacion = 'DetallesCotizacion_' + lastRowIdx + '__ubicacion';
     document.getElementById(detCtzUbicacion).readOnly = true;
     document.getElementsByClassName('detCtzCantidad')[lastRowIdx].readOnly = true;
     document.getElementsByClassName('detCtzDcto')[lastRowIdx].readOnly = true;
 }
 
-document.addEventListener('keydown', ShowSearchableList);
-
-function setSameWidth(srcElement, desElement) {
-    desElement.style.width = "250px";
-}
-
-function ShowSearchableList(event) {
-    if (event.target.id.indexOf('codigoProducto') < 0) {
-        return;
-    }
-
-    if (document.getElementById('DetCtzTable') !== null) {
-        table = document.getElementById('DetCtzTable');
-        var rows = table.getElementsByTagName('tr');
-        var lastRowIdx = rows.length - 2;
-
-        var detCtzUbicacion = 'DetallesCotizacion_' + lastRowIdx + '__ubicacion';
-        document.getElementById(detCtzUbicacion).value = "";
-        document.getElementsByClassName('detCtzCantidad')[lastRowIdx].value = "";
-        document.getElementsByClassName('detCtzValUnit')[lastRowIdx].value = "";
-        document.getElementsByClassName('detCtzDcto')[lastRowIdx].value = "0.00";
-        document.getElementsByClassName('detCtzValTotal')[lastRowIdx].value = "";
-
-        var IdCodigoProducto = 'DetallesCotizacion_' + lastRowIdx + '__codigoProducto'
-        if (document.getElementById(IdCodigoProducto).value === "") {
-            document.getElementById('subtotalCtz').value = "0.00";
-        }
-
-        var tid = event.target.id;
-        var txtDescId = tid.replaceAll('codigoProducto', 'descripcion');
-        var txtValue = document.getElementById('txtValue');
-        var txtText = document.getElementById(txtDescId);
-        var txtSearch = event.target;
-
-        var lstBox = document.getElementById("mySelect");
-        $(txtSearch).after($(lstBox).show('slow'));
-
-        if (event.keyCode === 13 || event.keyCode == 9) {
-            txtSearch.value = txtValue.value;
-            lstBox.style.visibility = "hidden";
-
-            var divLst = document.getElementById("HiddenDiv");
-            $(divLst).after($(lstBox).show('slow'));
-
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                txtSearch.focus();
-                return;
-            }
-            else {
-                return;
-            }
-        }
-
-
-        setSameWidth(txtSearch, lstBox);
-        lstBox.style.visibility = "visible";
-
-        txtValue.value = "";
-        txtText.value = "";
-
-        var items = lstBox.options;
-        for (var i = items.length - 1; i >= 0; i--) {
-            if (items[i].text.toLowerCase().indexOf(txtSearch.value.toLowerCase()) > -1) {
-                items[i].style.display = 'block';
-                items[i].selected = true;
-                txtValue.value = items[i].value;
-                txtText.value = items[i].text;
-            }
-            else {
-                items[i].style.display = 'none';
-                items[i].selected = false;
-            }
-        }
-    }
-    else {
-        table = document.getElementById('DetVtaTable');
-        var rows = table.getElementsByTagName('tr');
-        var lastRowIdx = rows.length - 2;
-
-        document.getElementsByClassName('detVtaCantidad')[lastRowIdx].value = "";
-        document.getElementsByClassName('detVtaValUnit')[lastRowIdx].value = "";
-        document.getElementsByClassName('detVtaDcto')[lastRowIdx].value = "0.00";
-        document.getElementsByClassName('detVtaValTotal')[lastRowIdx].value = "";
-
-        var IdCodigoProductoVta = 'DetallesVenta_' + lastRowIdx + '__codigoProductoVta'
-        if (document.getElementById(IdCodigoProductoVta).value === "") {
-            document.getElementById('subtotalVta').value = "0.00";
-            document.getElementById('IvaVta').value = "0.00";
-            document.getElementById('totalVta').value = "0.00";
-        }
-
-        var tid = event.target.id;
-        var txtDescId = tid.replaceAll('codigoProductoVta', 'descripcion');
-        var txtValue = document.getElementById('txtValue');
-        var txtText = document.getElementById(txtDescId);
-        var txtSearch = event.target;
-
-        var lstBox = document.getElementById("mySelect");
-        $(txtSearch).after($(lstBox).show('slow'));
-
-        if (event.keyCode === 13 || event.keyCode == 9) {
-            txtSearch.value = txtValue.value;
-            lstBox.style.visibility = "hidden";
-
-            var divLst = document.getElementById("HiddenDiv");
-            $(divLst).after($(lstBox).show('slow'));
-
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                txtSearch.focus();
-                return;
-            }
-            else {
-                return;
-            }
-        }
-
-
-        setSameWidth(txtSearch, lstBox);
-        lstBox.style.visibility = "visible";
-
-        txtValue.value = "";
-        txtText.value = "";
-
-        var items = lstBox.options;
-        for (var i = items.length - 1; i >= 0; i--) {
-            if (items[i].text.toLowerCase().indexOf(txtSearch.value.toLowerCase()) > -1) {
-                items[i].style.display = 'block';
-                items[i].selected = true;
-                txtValue.value = items[i].value;
-                txtText.value = items[i].text;
-            }
-            else {
-                items[i].style.display = 'none';
-                items[i].selected = false;
-            }
-        }
-    }
-}
-
 document.addEventListener('change', function (e) {
-    if (e.target.id.indexOf('codigoProducto') >= 0) {
-        fillFieldsProductDetails(this);
+    if (e.target.id.indexOf('cmbProductos') >= 0) {
+        var cmbProductosIdx = e.target.id;
+        var idOfIsSelected = cmbProductosIdx.replaceAll('cmbProductos-', '') + "__IsSelected";
+        var txtIsSelected = document.querySelector("[id$='" + idOfIsSelected + "']");
+        txtIsSelected.value = "true";
+        fillFieldsProductDetails(cmbProductosIdx);
     }
 }, false);
 
 
-function fillFieldsProductDetails(doc) {
+function fillFieldsProductDetails(cmbProductosIdx) {
     var table = document.getElementById('DetCtzTable');
 
     if (table !== null) {
-        var rows = table.getElementsByTagName('tr');
-        var lastRowIdx = rows.length - 2;
-        var IdCodeProduct = 'DetallesCotizacion_' + lastRowIdx + '__codigoProducto';
-        var idProducto = doc.getElementById(IdCodeProduct).value;
+        var cmbIdx = cmbProductosIdx.replaceAll('cmbProductos-', '')
+        var IdNameProduct = cmbProductosIdx;
+        var idProducto = document.getElementById(IdNameProduct).value;
+        document.getElementsByClassName('detCtzCodeProduct')[cmbIdx].value = idProducto;
 
         var lstBoxBrands = document.getElementById("ddlBrandsIdAllProducts");
         var txtIdMarca = document.getElementById("txtIdMarca");
@@ -292,7 +171,7 @@ function fillFieldsProductDetails(doc) {
         for (var i = itemsB.length - 1; i >= 0; i--) {
             if (itemsB[i].value === idProducto) {
                 txtIdMarca.value = itemsB[i].text;
-                SetBrandName(txtIdMarca.value);
+                SetBrandName(txtIdMarca.value, cmbIdx);
                 //return;
                 var lstBoxUnits = document.getElementById("ddlUnitsIdAllProducts");
                 var txtIdUnidad = document.getElementById("txtIdUnidad");
@@ -302,7 +181,7 @@ function fillFieldsProductDetails(doc) {
                 for (var i = itemsU.length - 1; i >= 0; i--) {
                     if (itemsU[i].value === idProducto) {
                         txtIdUnidad.value = itemsU[i].text;
-                        SetUnitName(txtIdUnidad.value);
+                        SetUnitName(txtIdUnidad.value, cmbIdx);
                         //return;
                         var lstBoxPrices = document.getElementById("ddlUnitPrAllProducts");
 
@@ -310,7 +189,7 @@ function fillFieldsProductDetails(doc) {
 
                         for (var i = itemsU.length - 1; i >= 0; i--) {
                             if (itemsP[i].value === idProducto) {
-                                document.getElementsByClassName('detCtzValUnit')[lastRowIdx].value = eval(itemsP[i].text);
+                                document.getElementsByClassName('detCtzValUnit')[cmbIdx].value = eval(itemsP[i].text);
                                 return;
                             }
                         }
@@ -323,7 +202,7 @@ function fillFieldsProductDetails(doc) {
 }
 
 
-function SetBrandName(txtIdMarca) {
+function SetBrandName(txtIdMarca, cmbIdx) {
     var txtBrandName = document.getElementById("txtNombreMarca");
 
     var lstbox = document.getElementById('ddlBrandNames');
@@ -332,10 +211,7 @@ function SetBrandName(txtIdMarca) {
     for (var i = items.length - 1; i >= 0; i--) {
         if (items[i].value === txtIdMarca) {
             txtBrandName.value = items[i].text;
-            table = document.getElementById('DetCtzTable');
-            var rows = table.getElementsByTagName('tr');
-            var lastRowIdx = rows.length - 2;
-            document.getElementsByClassName('detCtzNameBrand')[lastRowIdx].value = txtBrandName.value;
+            document.getElementsByClassName('detCtzNameBrand')[cmbIdx].value = txtBrandName.value;
             return;
         }
     }
@@ -343,7 +219,7 @@ function SetBrandName(txtIdMarca) {
 }
 
 
-function SetUnitName(txtIdUnidad) {
+function SetUnitName(txtIdUnidad, cmbIdx) {
     var txtUnitName = document.getElementById("txtNombreUnidad");
 
     var lstbox = document.getElementById('ddlUnitNames');
@@ -352,10 +228,7 @@ function SetUnitName(txtIdUnidad) {
     for (var i = items.length - 1; i >= 0; i--) {
         if (items[i].value === txtIdUnidad) {
             txtUnitName.value = items[i].text;
-            table = document.getElementById('DetCtzTable');
-            var rows = table.getElementsByTagName('tr');
-            var lastRowIdx = rows.length - 2; 
-            document.getElementsByClassName('detCtzNameUnit')[lastRowIdx].value = txtUnitName.value;
+            document.getElementsByClassName('detCtzNameUnit')[cmbIdx].value = txtUnitName.value;
             return;
         }
     }
@@ -493,7 +366,16 @@ function DeleteItemVta(btn) {
     var table = document.getElementById('DetVtaTable');
     var rows = table.getElementsByTagName('tr');
 
-    if (rows.length == 2) {
+    var VisibleRowsCount = 0;
+
+    var x = document.querySelectorAll("[id*='valorTotal']");
+    for (i = 0; i < x.length; i++) {
+        if (x[i].value > 0) {
+            VisibleRowsCount++;
+        }
+    }
+
+    if (VisibleRowsCount <= 1) {
         alert("Esta fila no puede ser eliminada");
         return;
 
@@ -506,6 +388,10 @@ function DeleteItemVta(btn) {
     var txtValorTotal = document.querySelector("[id$='" + idOfValorTotal + "']");
 
     txtValorTotal.value = 0.00;
+
+    var idOfIsDeleted = btnIdx + "__IsDeleted";
+    var txtIsDeleted = document.querySelector("[id$='" + idOfIsDeleted + "']");
+    txtIsDeleted.value = "true";
 
     $(btn).closest('tr').hide();
     reCalcSubtotalVenta();
@@ -574,25 +460,34 @@ function rebindvalidatorsVentaForm() {
 function bloquearCamposDetVta(lastRowIdx) {
     var detVtaCodigo = 'DetallesVenta_' + lastRowIdx + '__codigoProductoVta';
     document.getElementById(detVtaCodigo).readOnly = true;
+    var detCtzDescripcion = 'cmbVtasProductos-' + lastRowIdx;
+    document.getElementById(detCtzDescripcion).setAttribute("disabled", "disabled");
     document.getElementsByClassName('detVtaCantidad')[lastRowIdx].readOnly = true;
     document.getElementsByClassName('detVtaDcto')[lastRowIdx].readOnly = true;
 }
 
+document.addEventListener('change', function (e) {
+    if (e.target.id.indexOf('cmbVtasProductos') >= 0) {
+        var cmbVtasProductosIdx = e.target.id;
+        var idOfIsSelected = cmbVtasProductosIdx.replaceAll('cmbVtasProductos-', '') + "__IsSelected";
+        var txtIsSelected = document.querySelector("[id$='" + idOfIsSelected + "']");
+        txtIsSelected.value = "true";
+        fillFieldsSaleDetails(cmbVtasProductosIdx);
+    }
+}, false);
 
-
-function fillFieldsSaleDetails(idProducto) {
-    var table = document.getElementById('DetVtaTable');
-    var rows = table.getElementsByTagName('tr');
-    var lastRowIdx = rows.length - 2;
-    //var IdCodeProduct = 'DetallesVenta_' + lastRowIdx + '__codigoProductoVta';
-    //var idProducto = doc.getElementById(IdCodeProduct).value;
+function fillFieldsSaleDetails(cmbProductosIdx) {
+    var cmbIdx = cmbProductosIdx.replaceAll('cmbVtasProductos-', '')
+    var IdNameProduct = cmbProductosIdx;
+    var idProducto = document.getElementById(IdNameProduct).value;
+    document.getElementsByClassName('detVtaCodeProduct')[cmbIdx].value = idProducto;
 
     var lstBoxPrices = document.getElementById("ddlUnitPrAllProducts");
     var itemsP = lstBoxPrices.options;
 
     for (var i = itemsP.length - 1; i >= 0; i--) {
-        if (itemsP[i].value === idProducto.value) {
-            document.getElementsByClassName('detVtaValUnit')[lastRowIdx].value = eval(itemsP[i].text);
+        if (itemsP[i].value === idProducto) {
+            document.getElementsByClassName('detVtaValUnit')[cmbIdx].value = eval(itemsP[i].text);
             return;
         }
     }

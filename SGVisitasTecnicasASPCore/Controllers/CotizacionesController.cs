@@ -131,6 +131,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 for (int i = 0; i < cotizacion.DetallesCotizacion.Count; i++)
                 {
                     cotizacion.DetallesCotizacion[i].id_producto = int.Parse(cotizacion.DetallesCotizacion[i].codigoProducto.Trim());
+                    cotizacion.DetallesCotizacion[i].descripcion = _context.productos.Where(p => p.id_producto == cotizacion.DetallesCotizacion[i].id_producto).Select(c => c.nombre).FirstOrDefault();
                 }
 
                 //if (_cotizacionesRepo.IsQuoteExists(cotizacion.nombre_cliente) == true)
@@ -138,7 +139,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                 foreach (var item in cotizacion.DetallesCotizacion.ToList())
                 {
-                    if (String.IsNullOrEmpty(item.descripcion) || String.IsNullOrEmpty(item.ubicacion) || String.IsNullOrEmpty(item.marca) || String.IsNullOrEmpty(item.unidad))
+                    if (String.IsNullOrEmpty(item.descripcion) || String.IsNullOrEmpty(item.marca) || String.IsNullOrEmpty(item.unidad))
                         errMessage = "Campos del detalle están incompletos, favor llenarlos.";
                 }
 
@@ -148,8 +149,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 if (cotizacion.instalacion.Length <= 0 || cotizacion.instalacion == null ||
                     cotizacion.garantia_equipos.Length <= 0 || cotizacion.garantia_equipos == null ||
                     cotizacion.forma_pago.Length <= 0 || cotizacion.forma_pago == null ||
-                    cotizacion.validez.Length <= 0 || cotizacion.validez == null ||
-                    cotizacion.observaciones.Length <= 0 || cotizacion.observaciones == null )
+                    cotizacion.validez.Length <= 0 || cotizacion.validez == null)
                     errMessage = "Campos de la cotización están incompletos, favor llenarlos.";
 
                 if (errMessage == "")
@@ -203,6 +203,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
             try
             {
+                cotizacion.DetallesCotizacion.RemoveAll(d => d.IsDeleted == true);
                 cotizacion.DetallesCotizacion.RemoveAll(n => n.cantidad == (decimal)0.00 || n.valorUnitario == (decimal)0.00);
                 cotizacion.DetallesCotizacion.RemoveAll(t => t.valorTotal == (decimal)0.00);
 
@@ -215,6 +216,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 for (int i = 0; i < cotizacion.DetallesCotizacion.Count; i++)
                 {
                     cotizacion.DetallesCotizacion[i].id_producto = int.Parse(cotizacion.DetallesCotizacion[i].codigoProducto.Trim());
+                    cotizacion.DetallesCotizacion[i].descripcion = _context.productos.Where(p => p.id_producto == cotizacion.DetallesCotizacion[i].id_producto).Select(c => c.nombre).FirstOrDefault();
                 }
 
                 //if (_cotizacionesRepo.IsQuoteExists(cotizacion.nombre_cliente) == true)
@@ -222,7 +224,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                 foreach (var item in cotizacion.DetallesCotizacion.ToList())
                 {
-                    if (String.IsNullOrEmpty(item.descripcion) || String.IsNullOrEmpty(item.ubicacion) || String.IsNullOrEmpty(item.marca) || String.IsNullOrEmpty(item.unidad))
+                    if (String.IsNullOrEmpty(item.descripcion) || String.IsNullOrEmpty(item.marca) || String.IsNullOrEmpty(item.unidad))
                         errMessage = "Campos del detalle están incompletos, favor llenarlos.";
                 }
 
@@ -232,8 +234,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 if (cotizacion.instalacion.Length <= 0 || cotizacion.instalacion == null ||
                     cotizacion.garantia_equipos.Length <= 0 || cotizacion.garantia_equipos == null ||
                     cotizacion.forma_pago.Length <= 0 || cotizacion.forma_pago == null ||
-                    cotizacion.validez.Length <= 0 || cotizacion.validez == null ||
-                    cotizacion.observaciones.Length <= 0 || cotizacion.observaciones == null)
+                    cotizacion.validez.Length <= 0 || cotizacion.validez == null)
                     errMessage = "Campos de la cotización están incompletos, favor llenarlos.";
 
 

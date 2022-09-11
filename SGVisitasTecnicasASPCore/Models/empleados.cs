@@ -17,12 +17,11 @@ namespace SGVisitasTecnicasASPCore.Models
         
         [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
         [Required(ErrorMessage = "Ingrese los nombres.")]
-        [StringLength(64)]
+        [StringLength(128)]
         public string nombres { get; set; }
 
         [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
-        [Required(ErrorMessage = "Ingrese los apellidos.")]
-        [StringLength(64)]
+        [StringLength(128)]
         public string apellidos { get; set; }
 
         [DataType(DataType.Date)]
@@ -38,7 +37,6 @@ namespace SGVisitasTecnicasASPCore.Models
         public bool es_activo { get; set; }
         
         [Required(ErrorMessage = "Ingrese el email.")]
-        [StringLength(64)]
         public string email { get; set; }
 
         [Required(ErrorMessage = "Ingrese el teléfono.")]
@@ -54,7 +52,7 @@ namespace SGVisitasTecnicasASPCore.Models
         public string perfil { get; set; }
 
         [Required(ErrorMessage = "Ingrese el cargo.")]
-        [StringLength(32)]
+        [StringLength(252)]
         public string cargo { get; set; }
 
         public enum Profile

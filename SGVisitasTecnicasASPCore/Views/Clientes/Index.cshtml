@@ -83,7 +83,11 @@
                             @Html.DisplayFor(modelItem => item.nombres)
                         </td>
                         <td data-title="Apellidos">
-                            @Html.DisplayFor(modelItem => item.apellidos)
+                            @if (!String.IsNullOrEmpty(item.apellidos))
+                            {
+                                @Html.DisplayFor(modelItem => item.apellidos)
+                            }
+                            &nbsp;
                         </td>
                         <td data-title="Fecha de Registro">
                             @Html.DisplayFor(modelItem => item.fecha_registro)

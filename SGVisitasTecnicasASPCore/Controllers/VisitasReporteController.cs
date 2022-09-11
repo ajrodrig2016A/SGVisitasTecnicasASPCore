@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SGVisitasTecnicasASPCore.Controllers
@@ -40,7 +41,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
         public IActionResult GenerateVisitasReporte(visitasReporte model)
         {
             MemoryStream ms = new MemoryStream();
-            string nameReport = "";          
+            StringBuilder nameReport = new StringBuilder();
 
             try
             {
@@ -68,7 +69,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
                     rep.SetParameterValue("prmFechaAgendamiento", model.fecha_agendada);
                     rep.SetParameterValue("prmFechaCierre", model.fecha_cierre);
                     rep.RegisterData(visitasReporte, "VisitasRef");
-                    nameReport = "Reporte de Visitas por rango de Fechas.pdf";
+                    nameReport.Append("Reporte de Visitas por rango de Fechas_");
+                    nameReport.Append(DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss"));
+                    nameReport.Append(".pdf");
                 }
 
                 if (!String.IsNullOrEmpty(model.fecha_agendada) && String.IsNullOrEmpty(model.fecha_cierre))
@@ -88,7 +91,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
                     rep.SetParameterValue("prmCliente", @User.Identity.Name);
                     rep.SetParameterValue("prmFechaAgendamiento", model.fecha_agendada);
                     rep.RegisterData(visitasReporte, "VisitasRef");
-                    nameReport = "Reporte de Visitas por Fecha de Agendamiento.pdf";
+                    nameReport.Append("Reporte de Visitas por Fecha de Agendamiento_");
+                    nameReport.Append(DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss"));
+                    nameReport.Append(".pdf");
                 }
 
                 if (String.IsNullOrEmpty(model.fecha_agendada) && !String.IsNullOrEmpty(model.fecha_cierre))
@@ -108,7 +113,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
                     rep.SetParameterValue("prmCliente", @User.Identity.Name);
                     rep.SetParameterValue("prmFechaCierre", model.fecha_cierre);
                     rep.RegisterData(visitasReporte, "VisitasRef");
-                    nameReport = "Reporte de Visitas por Fecha de Cierre.pdf";
+                    nameReport.Append("Reporte de Visitas por Fecha de Cierre_");
+                    nameReport.Append(DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss"));
+                    nameReport.Append(".pdf");
                 }
 
                 if (model.cliente == "0" && String.IsNullOrEmpty(model.fecha_agendada) && String.IsNullOrEmpty(model.fecha_cierre))
@@ -127,7 +134,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
                     }
                     rep.SetParameterValue("prmCliente", @User.Identity.Name);
                     rep.RegisterData(visitasReporte, "VisitasRef");
-                    nameReport = "Reporte General de Visitas.pdf";
+                    nameReport.Append("Reporte General de Visitas_");
+                    nameReport.Append(DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss"));
+                    nameReport.Append(".pdf");
 
                 }
 
@@ -147,7 +156,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
                     }
                     rep.SetParameterValue("prmCliente", @User.Identity.Name);
                     rep.RegisterData(visitasReporte, "VisitasRef");
-                    nameReport = "Reporte de Visitas por Cliente.pdf";
+                    nameReport.Append("Reporte de Visitas por Cliente_");
+                    nameReport.Append(DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss"));
+                    nameReport.Append(".pdf");
                 }
 
 
@@ -186,7 +197,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 //ModelState.AddModelError("", errMessage);
             }
             //Response.Redirect(String.Concat(Request.Host.ToUriComponent(), Request.Path).Replace("GenerateVisitasReporte", "VisitasReporte"));
-            return File(ms, "application/pdf", nameReport);            
+            return File(ms, "application/pdf", nameReport.ToString());            
         }
 
         private ViewResult EmptyGetDataFromDB(visitasReporte model)

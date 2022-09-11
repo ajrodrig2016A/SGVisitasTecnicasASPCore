@@ -17,12 +17,11 @@ namespace SGVisitasTecnicasASPCore.Models
 
         [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
         [Required(ErrorMessage = "Ingrese los nombres.")]
-        [StringLength(64)]
+        [StringLength(128)]
         public string nombres { get; set; }
 
         [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
-        [Required(ErrorMessage = "Ingrese los apellidos.")]
-        [StringLength(64)]
+        [StringLength(128)]
         public string apellidos { get; set; }
 
         [DataType(DataType.Date)]
@@ -44,7 +43,6 @@ namespace SGVisitasTecnicasASPCore.Models
         public string direccion { get; set; }
 
         [Required(ErrorMessage = "Ingrese el email.")]
-        [StringLength(64)]
         public string email { get; set; }
 
         [Required(ErrorMessage = "Ingrese el password.")]

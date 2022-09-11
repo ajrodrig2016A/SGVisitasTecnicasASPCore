@@ -36,7 +36,6 @@ namespace SGVisitasTecnicasASPCore.Models
         [StringLength(int.MaxValue)]
         public string descripcion { get; set; }
 
-        [Required(ErrorMessage = "Ingrese la ubicación.")]
         [StringLength(90)]
         public string ubicacion { get; set; }
 
@@ -68,5 +67,7 @@ namespace SGVisitasTecnicasASPCore.Models
 
         [NotMapped]
         public bool IsDeleted { get; set; } = false;
+        [NotMapped]
+        public bool IsSelected { get; set; } = false;
     }
 }

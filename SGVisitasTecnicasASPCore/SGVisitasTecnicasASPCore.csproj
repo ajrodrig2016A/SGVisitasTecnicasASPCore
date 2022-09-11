@@ -80,6 +80,8 @@
     <Compile Remove="Migrations\20220814174747_createTables_detalles_venta_ventas.Designer.cs" />
     <Compile Remove="Migrations\20220814175113_createTables_detalles_venta_ventas.cs" />
     <Compile Remove="Migrations\20220814175113_createTables_detalles_venta_ventas.Designer.cs" />
+    <Compile Remove="Migrations\20220911163513_alter table cotizaciones detallescotizacion ventas.cs" />
+    <Compile Remove="Migrations\20220911163513_alter table cotizaciones detallescotizacion ventas.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

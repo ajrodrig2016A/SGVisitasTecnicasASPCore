@@ -85,7 +85,7 @@
                         <thead>
                             <tr>
                                 <th>
-                                    Código Producto
+                                    Ítem
                                 </th>
                                 <th>
                                     Descripción
@@ -121,11 +121,13 @@
                             {
                             <tr>
                                 <td>
-                                    <input asp-for="@Model.DetallesCotizacion[i].codigoProducto" class="form-control" />
+                                    <input asp-for="@Model.DetallesCotizacion[i].codigoProducto" class="form-control form-control-plaintext detCtzCodeProduct" readonly />
                                 </td>
                                 <td>
-                                    <input asp-for="@Model.DetallesCotizacion[i].descripcion" class="form-control form-control-plaintext" readonly />
-                                    <br /><span asp-validation-for="@Model.DetallesCotizacion[i].descripcion" class="text-danger"></span>
+                                    <select id='cmbProductos-@i' asp-for="@Model.DetallesCotizacion[i].descripcion" class="form-control" asp-items="ViewBag.productos">
+                                        <option value="@Model.DetallesCotizacion[i].codigoProducto">@Model.DetallesCotizacion[i].descripcion</option>
+                                    </select>
+                                    <input type="hidden" asp-for="@Model.DetallesCotizacion[i].IsSelected" />
                                 </td>
                                 <td>
                                     <input asp-for="@Model.DetallesCotizacion[i].ubicacion" class="form-control" />
@@ -152,8 +154,8 @@
                                     <br /><span asp-validation-for="@Model.DetallesCotizacion[i].descuento" class="text-danger"></span>
                                 </td>
                                 <td>
-                                    @*<input type="hidden" asp-for="@Model.DetallesCotizacion[i].IsDeleted" />*@
                                     <input asp-for="@Model.DetallesCotizacion[i].valorTotal" class="form-control form-control-plaintext detCtzValTotal" readonly />
+                                    <input type="hidden" asp-for="@Model.DetallesCotizacion[i].IsDeleted" />
                                 </td>
                                 <td>
                                     <button id='btnRemove-@i' type="button" class="btn btn-sm btn-danger visible" onclick="DeleteItem(this)">Eliminar</button>

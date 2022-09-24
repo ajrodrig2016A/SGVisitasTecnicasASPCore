@@ -39,21 +39,21 @@
                             Número de Factura
                         </a>
                     </th>
-                    <th>
+                    <th class="text-center">
                         <i class="@sortModel.GetColumn("Fecha de Creación").SortIcon" arial-hidden="true"></i>
 
                         <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Fecha de Creación").SortExpression">
                             Fecha de Creación
                         </a>
                     </th>
-                    <th>
+                    <th class="text-center">
                         <i class="@sortModel.GetColumn("Fecha de Cierre").SortIcon" arial-hidden="true"></i>
 
                         <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Fecha de Cierre").SortExpression">
                             Fecha de Cierre
                         </a>
                     </th>
-                    <th>
+                    <th class="text-center">
                         Estado
                     </th>
                     <th>
@@ -84,13 +84,13 @@
                         <td data-title="Número Factura">
                             @Html.DisplayFor(modelItem => item.numero_factura)
                         </td>
-                        <td data-title="Fecha de Creación">
+                        <td data-title="Fecha de Creación" class="text-center">
                             @Html.DisplayFor(modelItem => item.fecha_creacion)
                         </td>
-                        <td data-title="Fecha de Cierre">
+                        <td data-title="Fecha de Cierre" class="text-center">
                             @Html.DisplayFor(modelItem => item.fecha_cierre)
                         </td>
-                        <td data-title="Estado">
+                        <td data-title="Estado" class="text-center">
                             @Html.DisplayFor(modelItem => item.estado)
                         </td>
                         <td data-title="Cliente">
@@ -105,7 +105,7 @@
                         <td data-title="Total">
                             @Html.DisplayFor(modelItem => item.total)
                         </td>
-                        <td>
+                        <td class="text-center">
                             <div class="btn-group">
                                 <a asp-action="Edit" asp-route-id="@item.id_venta">
                                     <span class="btn btn-sm btn-outline-primary">

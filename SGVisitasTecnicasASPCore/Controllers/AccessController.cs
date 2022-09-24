@@ -103,12 +103,11 @@ namespace SGVisitasTecnicasASPCore.Controllers
                     //enviar email
                     string user = oUser.Nombre;
                     string url = "http://" + HttpContext.Request.Host.Value + "/Access/Recovery?token=" + oUser.token_recovery;
-                    string emailOrigen = "rodandrews90210@gmail.com";
+                    string emailOrigen = "ventas.saimec@gmail.com";
                     string emailDestino = oUser.Correo;
                     string asunto = "SAIMEC - Recuperación de Contraseña";
                     string urlRecovery = "<a href='"+url+"'>Click para recuperar</a>";
                     bool statusEmailSend = Utils.SendEmailRecuperarClave(emailOrigen, emailDestino, asunto, htmlFilePath, user, urlRecovery);
-                    //bool statusEmailSend = objSendMail.SendEmail(emailOrigen, emailDestino, asunto, cuerpo);
 
                     if (statusEmailSend)
                     {

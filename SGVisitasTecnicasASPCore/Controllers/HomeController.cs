@@ -68,12 +68,11 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 {
                     //enviar email
                     string user = model.nombres + " " + model.apellidos;
-                    string emailOrigen = "rodandrews90210@gmail.com";
+                    string emailOrigen = "ventas.saimec@gmail.com";
                     string emailDestino = model.email;
                     string asunto = "SAIMEC - Solicitud de Información: " + model.servicio + ".";
                     string datosCliente = "<p>" + model.mensaje + "</p><br/>" + "<p>Número de contacto: " + model.telefono + "</p><br/>";
-                    Utils objSendMail = new Utils();
-                    bool statusEmailSend = objSendMail.SendEmailSolicitarInformacion(emailOrigen, emailDestino, asunto, htmlFilePath, user,  datosCliente);
+                    bool statusEmailSend = Utils.SendEmailSolicitarInformacion(emailOrigen, emailDestino, asunto, htmlFilePath, user,  datosCliente);
 
                     if (statusEmailSend)
                     {

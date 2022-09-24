@@ -66,13 +66,6 @@ namespace SGVisitasTecnicasASPCore.Repositories
                 else
                     items = items.OrderByDescending(n => n.nombres).ToList();
             }
-            else if (SortProperty.ToLower() == "apellidos")
-            {
-                if (sortOrder == SortOrder.Ascending)
-                    items = items.OrderBy(d => d.apellidos).ToList();
-                else
-                    items = items.OrderByDescending(d => d.apellidos).ToList();
-            }
             else if (SortProperty.ToLower() == "fecha de registro")
             {
                 if (sortOrder == SortOrder.Ascending)
@@ -97,7 +90,7 @@ namespace SGVisitasTecnicasASPCore.Repositories
 
             if (SearchText != "" && SearchText != null)
             {
-                items = _context.clientes.Where(n => n.numero_documento.Contains(SearchText) || n.nombres.Contains(SearchText) || n.apellidos.Contains(SearchText) || n.genero.Contains(SearchText) || n.direccion.Contains(SearchText) || n.email.Contains(SearchText) || n.numero_contacto.Contains(SearchText))
+                items = _context.clientes.Where(n => n.numero_documento.Contains(SearchText) || n.nombres.Contains(SearchText) || n.genero.Contains(SearchText) || n.direccion.Contains(SearchText) || n.email.Contains(SearchText) || n.numero_contacto.Contains(SearchText))
                     .ToList();
             }
             else

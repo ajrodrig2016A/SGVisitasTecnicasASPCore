@@ -28,21 +28,21 @@
                     <input asp-for="fecha_cierre" type="text" class="form-control" value="@DateTime.Now.Add(TimeSpan.FromDays(30)).ToString("yyyy-MM-dd HH:mm:ss")" readonly />
                     <span asp-validation-for="fecha_cierre" class="text-danger"></span>
                 </div>
-                <hr />
-                <div class="form-group form-check">
+                <div class="form-group">
+                    <label class="control-label">Escoja un motivo:</label>
                     <div class="row">
                         <div class="col-sm-4">
-                            <label class="form-check-label">
+                            <label class="form-check form-check-label">
                                 <input class="form-check-input" asp-for="esProblema" /> Problema
                             </label>
                         </div>
                         <div class="col-sm-4">
-                            <label class="form-check-label">
+                            <label class="form-check form-check-label">
                                 <input class="form-check-input" asp-for="requiereInstalacion" /> Instalación
                             </label>
                         </div>
                         <div class="col-sm-4">
-                            <label class="form-check-label">
+                            <label class="form-check form-check-label">
                                 <input class="form-check-input" asp-for="requiereMantenimiento" /> Mantenimiento
                             </label>
                         </div>

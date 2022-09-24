@@ -5458,11 +5458,8 @@ a.close.disabled {
 .carousel-caption {
   position: absolute;
   right: 15%;
-  bottom: 20px;
   left: 15%;
   z-index: 10;
-  padding-top: 20px;
-  padding-bottom: 20px;
   color: #fc5e28;
   text-align: center; }
 
@@ -10271,26 +10268,105 @@ textarea.form-control {
         width:calc(100%-1em) !important;
     }
 
-/*    .CodesTable tbody {
-        display:block; 
-        height:130px; 
-        overflow-y:scroll; 
-        overflow-x:hidden;
+    /* Extra small devices (phones, 600px and down) */
+    @media only screen and (max-width: 600px) {
+        .example {
+            /*background: red;*/
+            height: 300px;
+            margin: 0;
+        }
+        .foto {
+            height: 300px;
+            width: 100%;
+            object-fit: contain;
+        }
+        .carousel-caption {
+            font-size: x-small;
+            font-stretch:expanded;
+            bottom: 0;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
     }
-    .CodesTable thead, .CodesTable tbody tr {
-        display:table; 
-        width:98%; 
-        table-layout:fixed;
-    }
-    .CodesTable thead, .CodesTable tbody, .CodesTable td {
-        border:none !important;
-    } */   
 
-/*    .detCtzValUnit{
-        background-image:none;
+    /* Small devices (portrait tablets and large phones, 600px and up) */
+    @media only screen and (min-width: 600px) {
+        .example {
+            /*background: green;*/
+            height: 300px;
+            margin: 0;
+        }
+        .foto {
+            height: 300px;
+            width: 100%;
+            object-fit: contain;
+        }
+        .carousel-caption {
+            font-size: small;
+            bottom: 0;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
     }
 
-    detCtzValTotal {
-        background-image: none;
-    }*/
+    /* Medium devices (landscape tablets, 768px and up) */
+    @media only screen and (min-width: 768px) {
+        .example {
+            /*background: blue;*/
+            height: 400px;
+            margin: 0;
+        }
+        .foto {
+            height: 400px;
+            width: 100%;
+            object-fit: contain;
+        }
+        .carousel-caption {
+            font-size: medium;
+            bottom: 15px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+    }
+
+    /* Large devices (laptops/desktops, 992px and up) */
+    @media only screen and (min-width: 992px) {
+        .example {
+            /*background: orange;*/
+            height: 400px;
+            margin: 0;
+        }
+        .foto {
+            height: 400px;
+            width: 100%;
+            object-fit: contain;
+        }
+        .carousel-caption {
+            font-size: large;
+            bottom: 20px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+    }
+
+    /* Extra large devices (large laptops and desktops, 1200px and up) */
+    @media only screen and (min-width: 1200px) {
+        .example {
+            /*background: pink;*/
+            height: 500px;
+            margin: 0;
+        }
+        .foto {
+            height: 500px;
+            width: 100%;
+            object-fit: contain;
+        }
+        .carousel-caption {
+            font-size: x-large;
+            bottom: 20px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+    }
+
 

@@ -36,17 +36,9 @@
                         <i class="@sortModel.GetColumn("Nombres").SortIcon" arial-hidden="true"></i>
 
                         <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Nombres").SortExpression">
-                            Nombres
+                            Nombres y Apellidos
                         </a>
                     </th>
-                    <th>
-                        <i class="@sortModel.GetColumn("Apellidos").SortIcon" arial-hidden="true"></i>
-
-                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Apellidos").SortExpression">
-                            Apellidos
-                        </a>
-                    </th>
-
                     <th>
                         <i class="@sortModel.GetColumn("Fecha de Registro").SortIcon" arial-hidden="true"></i>
 
@@ -78,64 +70,60 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td data-title="Número Documento">
-                            @Html.DisplayFor(modelItem => item.numero_documento)
-                        </td>
-                        <td data-title="Nombres">
-                            @Html.DisplayFor(modelItem => item.nombres)
-                        </td>
-                        <td data-title="Apellidos">
-                            @if (!String.IsNullOrEmpty(item.apellidos))
-                            {
-                                @Html.DisplayFor(modelItem => item.apellidos)
-                            }
-                            &nbsp;
-                        </td>
-                        <td data-title="Fecha de Registro">
-                            @Html.DisplayFor(modelItem => item.fecha_registro)
-                        </td>
-                        <td data-title="Activo">
-                            @Html.DisplayFor(modelItem => item.es_activo)
-                        </td>
-                        <td data-title="Email">
-                            @Html.DisplayFor(modelItem => item.email)
-                        </td>
-                        <td data-title="Teléfono">
-                            @Html.DisplayFor(modelItem => item.telefono)
-                        </td>
-                        <td data-title="Password">
-                            @Html.DisplayFor(modelItem => item.password)
-                        </td>
-                        <td data-title="Perfil">
-                            @Html.DisplayFor(modelItem => item.perfil)
-                        </td>
-                        <td data-title="Cargo">
-                            @Html.DisplayFor(modelItem => item.cargo)
-                        </td>
-                        <td>
-                            <div class="btn-group">
-                                <a asp-action="Edit" asp-route-id="@item.id_empleado">
-                                    <span class="btn btn-sm btn-outline-primary">
-                                        <i class="fa fa-edit" aria-hidden="true"></i>
-                                    </span>
-                                </a>
+                <tr>
+                    <td data-title="Número Documento" class="text-center">
+                        @Html.DisplayFor(modelItem => item.numero_documento)
+                    </td>
+                    <td data-title="Nombres y Apellidos">
+                        @Html.DisplayFor(modelItem => item.nombres)
+                    </td>
+                    <td data-title="Fecha de Registro" class="text-center">
+                        @Html.DisplayFor(modelItem => item.fecha_registro)
+                    </td>
+                    <td data-title="Activo" class="text-center">
+                        @Html.DisplayFor(modelItem => item.es_activo)
+                    </td>
+                    <td data-title="Email">
+                        @Html.DisplayFor(modelItem => item.email)
+                    </td>
+                    <td data-title="Teléfono">
+                        @Html.DisplayFor(modelItem => item.telefono)
+                    </td>
+                    <td data-title="Password">
+                        @{
+                            string pwd = SGVisitasTecnicasASPCore.Data.Utils.Mask(item.password, '*', 3, SGVisitasTecnicasASPCore.Data.Utils.MaskStyle.All);
+                        }
+                        @Html.DisplayFor(modelItem => pwd)
+                    </td>
+                    <td data-title="Perfil" class="text-center">
+                        @Html.DisplayFor(modelItem => item.perfil)
+                    </td>
+                    <td data-title="Cargo">
+                        @Html.DisplayFor(modelItem => item.cargo)
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group">
+                            <a asp-action="Edit" asp-route-id="@item.id_empleado">
+                                <span class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                </span>
+                            </a>
 
-                                <a asp-action="Details" asp-route-id="@item.id_empleado">
-                                    <span class="btn btn-sm btn-outline-dark">
-                                        <i class="fa fa-eye" aria-hidden="true"></i>
-                                    </span>
-                                </a>
+                            <a asp-action="Details" asp-route-id="@item.id_empleado">
+                                <span class="btn btn-sm btn-outline-dark">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </span>
+                            </a>
 
-                                <a asp-action="Delete" asp-route-id="@item.id_empleado">
-                                    <span class="btn btn-sm btn-outline-danger">
-                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                    </span>
-                                </a>
+                            <a asp-action="Delete" asp-route-id="@item.id_empleado">
+                                <span class="btn btn-sm btn-outline-danger">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </span>
+                            </a>
 
-                            </div>
-                        </td>
-                    </tr>
+                        </div>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

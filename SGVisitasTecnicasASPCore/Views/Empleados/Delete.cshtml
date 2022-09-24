@@ -29,15 +29,15 @@
                         @Html.DisplayFor(model => model.numero_documento)
                     </dd>
                     <dt>
-                        Nombres
+                        Nombres y Apellidos
                     </dt>
                     <dd>
                         @Html.DisplayFor(model => model.nombres)
                     </dd>
-                    <dt>
+                    <dt style="display:none;">
                         Apellidos
                     </dt>
-                    <dd>
+                    <dd style="display:none;">
                         @Html.DisplayFor(model => model.apellidos)
                     </dd>
                     <dt>
@@ -74,7 +74,10 @@
                         Password
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.password)
+                        @{
+                            string pwd = SGVisitasTecnicasASPCore.Data.Utils.Mask(Model.password, '*', 3, SGVisitasTecnicasASPCore.Data.Utils.MaskStyle.All);
+                        }
+                        @Html.DisplayFor(model => pwd)
                     </dd>
                     <dt>
                         Perfil

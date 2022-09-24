@@ -80,22 +80,22 @@
                         @*<td data-title="Código">
                                 @Html.DisplayFor(modelItem => item.id_visita)
                             </td>*@
-                        <td data-title="Fecha de Agendamiento">
+                        <td data-title="Fecha de Agendamiento" class="text-center">
                             @Html.DisplayFor(modelItem => item.fecha_agendada)
                         </td>
-                        <td data-title="Fecha de Cierre">
+                        <td data-title="Fecha de Cierre" class="text-center">
                             @Html.DisplayFor(modelItem => item.fecha_cierre)
                         </td>
                         <td data-title="Descripción">
                             @Html.DisplayFor(modelItem => item.descripcion)
                         </td>
-                        <td data-title="Problema">
+                        <td data-title="Problema" class="text-center">
                             @Html.DisplayFor(modelItem => item.esProblema)
                         </td>
-                        <td data-title="Instalación">
+                        <td data-title="Instalación" class="text-center">
                             @Html.DisplayFor(modelItem => item.requiereInstalacion)
                         </td>
-                        <td data-title="Mantenimiento">
+                        <td data-title="Mantenimiento" class="text-center">
                             @Html.DisplayFor(modelItem => item.requiereMantenimiento)
                         </td>
                         @*<td data-title="@Html.DisplayNameFor(model => model.ubicacionDispSeguridad)">
@@ -104,7 +104,7 @@
                             <td data-title="@Html.DisplayNameFor(model => model.tiempoEntrega)">
                                 @Html.DisplayFor(modelItem => item.tiempoEntrega)
                             </td>*@
-                        <td data-title="Estado">
+                        <td data-title="Estado" class="text-center">
                             @Html.DisplayFor(modelItem => item.estado)
                         </td>
                         <td data-title="Cliente">
@@ -113,7 +113,7 @@
                         <td data-title="Empleado">
                             @Html.DisplayFor(modelItem => item.Empleado.nombres)
                         </td>
-                        <td>
+                        <td class="text-center">
                             <div class="btn-group">
                                 <a asp-action="Edit" asp-route-id="@item.id_visita">
                                     <span class="btn btn-sm btn-outline-primary">

@@ -27,7 +27,6 @@ namespace SGVisitasTecnicasASPCore.Controllers
             SortModel sortModel = new SortModel();
             sortModel.AddColumn("Número Documento");
             sortModel.AddColumn("Nombres");
-            sortModel.AddColumn("Apellidos");
             sortModel.AddColumn("Fecha de Registro");
             //sortModel.AddColumn("Es Activo");
             //sortModel.AddColumn("Email");
@@ -71,6 +70,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 if (item.numero_documento.Length < 10 || item.numero_documento == null)
                     errMessage = "Número de identificación debe ser al menos de 10 caracteres";
 
+                if (!Utils.VerificaIdentificacion(item.numero_documento))
+                    errMessage = "Ingrese un número de documento válido.";
+
                 if (_Repo.IsEmployeeExists(item.nombres) == true)
                     errMessage = errMessage + " " + " nombres " + item.nombres + " ya existe";
 
@@ -107,6 +109,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
         public IActionResult Edit(int id)
         {
             empleados item = _Repo.GetItem(id);
+            item.password = Utils.Mask(item.password, '*', 3, Utils.MaskStyle.All);
             TempData.Keep();
             return View(item);
         }

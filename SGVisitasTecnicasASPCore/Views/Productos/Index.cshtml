@@ -27,16 +27,16 @@ else
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
             </ol>
-            <div class="carousel-inner">
+            <div class="carousel-inner example" role="listbox">
                 @foreach (var i in Model)
                 {
                     a++;
                     var active = a == 1 ? "active" : "";
                     <div class="carousel-item @active">
-                        <img class="d-block w-100" src="@Url.Content("~/image/"+i.ImageName)" alt="@i.nombre">
-                        <div class="carousel-caption d-none d-md-block">
+                        <img class="d-block foto" src="@Url.Content("~/image/"+i.ImageName)" alt="@i.nombre">
+                        <div class="carousel-caption d-md-block">
                             <h5>@i.nombre</h5>
-                            <p>@i.id_marca</p>
+                            <p>@i.Marca.nombre</p>
                         </div>
                     </div>
                 }
@@ -169,7 +169,7 @@ else
 
                     @if (!User.IsInRole("CLI"))
                     {
-                        <td>
+                        <td class="text-center">
                             <div class="btn-group">
                                 <a asp-action="Edit" asp-route-id="@item.id_producto">
                                     <span class="btn btn-sm btn-outline-primary">

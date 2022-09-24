@@ -28,9 +28,6 @@ namespace SGVisitasTecnicasASPCore.Repositories
             empleados empleado = _context.empleados.Where(x => x.id_empleado == id).FirstOrDefault();
             _context.empleados.Remove(empleado);
             _context.SaveChanges();
-            //_context.empleados.Attach(empleado);
-            //_context.Entry(empleado).State = EntityState.Deleted;
-            //_context.SaveChanges();
             return empleado;
         }
 
@@ -64,13 +61,6 @@ namespace SGVisitasTecnicasASPCore.Repositories
                 else
                     items = items.OrderByDescending(n => n.nombres).ToList();
             }
-            else if (SortProperty.ToLower() == "apellidos")
-            {
-                if (sortOrder == SortOrder.Ascending)
-                    items = items.OrderBy(d => d.apellidos).ToList();
-                else
-                    items = items.OrderByDescending(d => d.apellidos).ToList();
-            }
             else if (SortProperty.ToLower() == "fecha de registro")
             {
                 if (sortOrder == SortOrder.Ascending)
@@ -95,7 +85,7 @@ namespace SGVisitasTecnicasASPCore.Repositories
 
             if (SearchText != "" && SearchText != null)
             {
-                items = _context.empleados.Where(n => n.numero_documento.Contains(SearchText) || n.nombres.Contains(SearchText) || n.apellidos.Contains(SearchText) || n.email.Contains(SearchText) || n.telefono.Contains(SearchText) || n.perfil.Contains(SearchText) || n.cargo.Contains(SearchText))
+                items = _context.empleados.Where(n => n.numero_documento.Contains(SearchText) || n.nombres.Contains(SearchText) || n.email.Contains(SearchText) || n.telefono.Contains(SearchText) || n.perfil.Contains(SearchText) || n.cargo.Contains(SearchText))
                     .ToList();
             }
             else

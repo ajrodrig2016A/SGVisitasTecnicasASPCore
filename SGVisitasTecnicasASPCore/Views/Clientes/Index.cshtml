@@ -36,14 +36,7 @@
                         <i class="@sortModel.GetColumn("Nombres").SortIcon" arial-hidden="true"></i>
 
                         <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Nombres").SortExpression">
-                            Nombres
-                        </a>
-                    </th>
-                    <th>
-                        <i class="@sortModel.GetColumn("Apellidos").SortIcon" arial-hidden="true"></i>
-
-                        <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Apellidos").SortExpression">
-                            Apellidos
+                            Nombres y Apellidos
                         </a>
                     </th>
 
@@ -76,23 +69,16 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td data-title="Número Documento">
+                        <td data-title="Número Documento" class="text-center">
                             @Html.DisplayFor(modelItem => item.numero_documento)
                         </td>
-                        <td data-title="Nombres">
+                        <td data-title="Nombres y Apellidos">
                             @Html.DisplayFor(modelItem => item.nombres)
                         </td>
-                        <td data-title="Apellidos">
-                            @if (!String.IsNullOrEmpty(item.apellidos))
-                            {
-                                @Html.DisplayFor(modelItem => item.apellidos)
-                            }
-                            &nbsp;
-                        </td>
-                        <td data-title="Fecha de Registro">
+                        <td data-title="Fecha de Registro" class="text-center">
                             @Html.DisplayFor(modelItem => item.fecha_registro)
                         </td>
-                        <td data-title="Género">
+                        <td data-title="Género" class="text-center">
                             @Html.DisplayFor(modelItem => item.genero)
                         </td>
                         <td data-title="Dirección">
@@ -102,12 +88,15 @@
                             @Html.DisplayFor(modelItem => item.email)
                         </td>
                         <td data-title="Password">
-                            @Html.DisplayFor(modelItem => item.password)
+                            @{ 
+                                string pwd = SGVisitasTecnicasASPCore.Data.Utils.Mask(item.password,'*',3, SGVisitasTecnicasASPCore.Data.Utils.MaskStyle.All);
+                            }
+                            @Html.DisplayFor(modelItem => pwd)
                         </td>
                         <td data-title="Número de Contacto">
                             @Html.DisplayFor(modelItem => item.numero_contacto)
                         </td>
-                        <td>
+                        <td class="text-center">
                             <div class="btn-group">
                                 <a asp-action="Edit" asp-route-id="@item.id_cliente">
                                     <span class="btn btn-sm btn-outline-primary">
@@ -160,5 +149,14 @@
 
         });
 
+        // Function for masking the character
+        function MaskCharacter(str, mask, n = 1) {
+
+            // Slice the string and replace with
+            // mask then add remaining string
+            return ('' + str).slice(0, -n)
+                .replace(/./g, mask)
+                + ('' + str).slice(-n);
+        }
     </script>
 }

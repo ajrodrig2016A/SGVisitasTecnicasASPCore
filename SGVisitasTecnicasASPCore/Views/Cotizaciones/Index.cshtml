@@ -32,7 +32,7 @@
                             Código
                         </a>
                     </th>
-                    <th>
+                    <th class="text-center">
                         <i class="@sortModel.GetColumn("Servicio").SortIcon" arial-hidden="true"></i>
 
                         <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Servicio").SortExpression">
@@ -53,7 +53,7 @@
                             Dirección del Inmueble
                         </a>
                     </th>
-                    <th>
+                    <th class="text-center">
                         <i class="@sortModel.GetColumn("Fecha de Registro").SortIcon" arial-hidden="true"></i>
 
                         <a asp-action="Index" asp-route-sortExpression="@sortModel.GetColumn("Fecha de Registro").SortExpression">
@@ -69,7 +69,7 @@
                     <th>
                         Teléfono
                     </th>
-                    <th>
+                    <th class="text-center">
                         Estado
                     </th>
                     <th>
@@ -85,8 +85,11 @@
                         <td data-title="Código">
                             @Html.DisplayFor(modelItem => item.codigo)
                         </td>
-                        <td data-title="Servicio">
-                            @Html.DisplayFor(modelItem => item.servicio)
+                        <td data-title="Servicio" class="text-center">
+                            @{
+                                string service = item.servicio.Replace("_", " ");
+                            }
+                            @Html.DisplayFor(modelItem => service)
                         </td>
                         <td data-title="Sector del Inmueble">
                             @Html.DisplayFor(modelItem => item.sector_inmueble)
@@ -94,7 +97,7 @@
                         <td data-title="Dirección del Inmueble">
                             @Html.DisplayFor(modelItem => item.direccion_inmueble)
                         </td>
-                        <td data-title="Fecha de Registro">
+                        <td data-title="Fecha de Registro" class="text-center">
                             @Html.DisplayFor(modelItem => item.fecha_registro)
                         </td>
                         <td data-title="Cliente">
@@ -106,13 +109,13 @@
                         <td data-title="Teléfono">
                             @Html.DisplayFor(modelItem => item.telefono)
                         </td>
-                        <td data-title="Estado">
+                        <td data-title="Estado" class="text-center">
                             @Html.DisplayFor(modelItem => item.estado)
                         </td>
                         <td data-title="Tiempo de entrega">
                             @Html.DisplayFor(modelItem => item.tiempo_entrega)
                         </td>
-                        <td>
+                        <td class="text-center">
                             <div class="btn-group">
                                 <a asp-action="Edit" asp-route-id="@item.id_cotizacion">
                                     <span class="btn btn-sm btn-outline-primary">

@@ -83,12 +83,12 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        Ítem
+                                        Código
                                     </th>
                                     <th>
                                         Descripción
                                     </th>
-                                    <th>
+                                    <th style="display:none;">
                                         Ubicación
                                     </th>
                                     <th>
@@ -115,35 +115,35 @@
                             <tbody>
                                 @for (int i = 0; i < Model.DetallesCotizacion.Count; i++)
                                 {
-                                <tr>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].codigoProducto" class="form-control" readonly />
-                                    </td>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].descripcion" class="form-control-plaintext" readonly />
-                                    </td>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].ubicacion" class="form-control-plaintext" readonly />
-                                    </td>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].marca" class="form-control-plaintext" readonly />
-                                    </td>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].unidad" class="form-control-plaintext" readonly />
-                                    </td>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].cantidad" class="form-control-plaintext" readonly />
-                                    </td>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].valorUnitario" class="form-control-plaintext" readonly />
-                                    </td>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].descuento" class=" form-control form-control-plaintext" readonly />
-                                    </td>
-                                    <td>
-                                        <input asp-for="@Model.DetallesCotizacion[i].valorTotal" class="form-control-plaintext" readonly />
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            <select id='cmbProductos-@i' asp-for="@Model.DetallesCotizacion[i].codigoProducto" class="form-control" asp-items="ViewBag.productos" style="width: auto;" disabled></select>
+                                        </td>
+                                        <td>
+                                            <input asp-for="@Model.DetallesCotizacion[i].descripcion" class="form-control-plaintext" readonly />
+                                        </td>
+                                        <td style="display:none;">
+                                            <input asp-for="@Model.DetallesCotizacion[i].ubicacion" class="form-control-plaintext" readonly />
+                                        </td>
+                                        <td>
+                                            <input asp-for="@Model.DetallesCotizacion[i].marca" class="form-control-plaintext" readonly />
+                                        </td>
+                                        <td>
+                                            <input asp-for="@Model.DetallesCotizacion[i].unidad" class="form-control-plaintext" readonly />
+                                        </td>
+                                        <td>
+                                            <input asp-for="@Model.DetallesCotizacion[i].cantidad" class="form-control-plaintext" readonly />
+                                        </td>
+                                        <td>
+                                            <input asp-for="@Model.DetallesCotizacion[i].valorUnitario" class="form-control-plaintext" readonly />
+                                        </td>
+                                        <td>
+                                            <input asp-for="@Model.DetallesCotizacion[i].descuento" class=" form-control form-control-plaintext" readonly />
+                                        </td>
+                                        <td>
+                                            <input asp-for="@Model.DetallesCotizacion[i].valorTotal" class="form-control-plaintext" readonly />
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>

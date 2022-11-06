@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SGVisitasTecnicasASPCore.Models;
 
 namespace SGVisitasTecnicasASPCore.Migrations
 {
     [DbContext(typeof(SgvtDB))]
-    partial class SgvtDBModelSnapshot : ModelSnapshot
+    [Migration("20221105165044_Change_datatype_password_empleados")]
+    partial class Change_datatype_password_empleados
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,7 +120,8 @@ namespace SGVisitasTecnicasASPCore.Migrations
 
                     b.Property<string>("password")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(20)")
+                        .HasMaxLength(20);
 
                     b.HasKey("id_cliente");
 

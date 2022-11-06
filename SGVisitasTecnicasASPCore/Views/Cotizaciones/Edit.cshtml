@@ -84,13 +84,16 @@
                     <table id="DetCtzTable" class="table table-borderless table-sm mb-0 pb-0 border CodesTable">
                         <thead>
                             <tr>
-                                <th>
+                                <th style="display:none;">
                                     Ítem
+                                </th>
+                                <th>
+                                    Código
                                 </th>
                                 <th>
                                     Descripción
                                 </th>
-                                <th>
+                                <th style="display:none;">
                                     Ubicación
                                 </th>
                                 <th>
@@ -119,48 +122,49 @@
                         <tbody>
                             @for (int i = 0; i < Model.DetallesCotizacion.Count; i++)
                             {
-                            <tr>
-                                <td>
-                                    <input asp-for="@Model.DetallesCotizacion[i].codigoProducto" class="form-control form-control-plaintext detCtzCodeProduct" readonly />
-                                </td>
-                                <td>
-                                    <select id='cmbProductos-@i' asp-for="@Model.DetallesCotizacion[i].descripcion" class="form-control" asp-items="ViewBag.productos">
-                                        <option value="@Model.DetallesCotizacion[i].codigoProducto">@Model.DetallesCotizacion[i].descripcion</option>
-                                    </select>
-                                    <input type="hidden" asp-for="@Model.DetallesCotizacion[i].IsSelected" />
-                                </td>
-                                <td>
-                                    <input asp-for="@Model.DetallesCotizacion[i].ubicacion" class="form-control" />
-                                    <br /><span asp-validation-for="@Model.DetallesCotizacion[i].ubicacion" class="text-danger"></span>
-                                </td>
-                                <td>
-                                    <input asp-for="@Model.DetallesCotizacion[i].marca" class="form-control form-control-plaintext detCtzNameBrand" readonly />
-                                    <br /><span asp-validation-for="@Model.DetallesCotizacion[i].marca" class="text-danger"></span>
-                                </td>
-                                <td>
-                                    <input asp-for="@Model.DetallesCotizacion[i].unidad" class="form-control form-control-plaintext detCtzNameUnit" readonly />
-                                    <br /><span asp-validation-for="@Model.DetallesCotizacion[i].unidad" class="text-danger"></span>
-                                </td>
-                                <td>
-                                    <input asp-for="@Model.DetallesCotizacion[i].cantidad" class="form-control detCtzCantidad" />
-                                    <br /><span asp-validation-for="@Model.DetallesCotizacion[i].cantidad" class="text-danger"></span>
-                                </td>
-                                <td>
-                                    <input asp-for="@Model.DetallesCotizacion[i].valorUnitario" class=" form-control form-control-plaintext detCtzValUnit" readonly />
-                                    <br /><span asp-validation-for="@Model.DetallesCotizacion[i].valorUnitario" class="text-danger"></span>
-                                </td>
-                                <td>
-                                    <input asp-for="@Model.DetallesCotizacion[i].descuento" type="number" step="0.01" min="0" lang="en" max="1" class=" form-control detCtzDcto" />
-                                    <br /><span asp-validation-for="@Model.DetallesCotizacion[i].descuento" class="text-danger"></span>
-                                </td>
-                                <td>
-                                    <input asp-for="@Model.DetallesCotizacion[i].valorTotal" class="form-control form-control-plaintext detCtzValTotal" readonly />
-                                    <input type="hidden" asp-for="@Model.DetallesCotizacion[i].IsDeleted" />
-                                </td>
-                                <td>
-                                    <button id='btnRemove-@i' type="button" class="btn btn-sm btn-danger visible" onclick="DeleteItem(this)">Eliminar</button>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td style="display:none;">
+                                        <input asp-for="@Model.DetallesCotizacion[i].idProducto" class="form-control form-control-plaintext detCtzCodeProduct" readonly />
+                                    </td>
+                                    <td>
+                                        <select id='cmbProductos-@i' asp-for="@Model.DetallesCotizacion[i].codigoProducto" class="form-control" asp-items="ViewBag.productos" style="width: auto;" ></select>
+                                        <input type="hidden" asp-for="@Model.DetallesCotizacion[i].IsSelected" />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].descripcion" class="form-control form-control-plaintext detCtzNameProduct" readonly />
+                                    </td>
+                                    <td style="display:none;">
+                                        <input asp-for="@Model.DetallesCotizacion[i].ubicacion" class="form-control" readonly />
+                                        <br /><span asp-validation-for="@Model.DetallesCotizacion[i].ubicacion" class="text-danger"></span>
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].marca" class="form-control form-control-plaintext detCtzNameBrand" readonly />
+                                        <br /><span asp-validation-for="@Model.DetallesCotizacion[i].marca" class="text-danger"></span>
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].unidad" class="form-control form-control-plaintext detCtzNameUnit" readonly />
+                                        <br /><span asp-validation-for="@Model.DetallesCotizacion[i].unidad" class="text-danger"></span>
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].cantidad" class="form-control detCtzCantidad" />
+                                        <br /><span asp-validation-for="@Model.DetallesCotizacion[i].cantidad" class="text-danger"></span>
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].valorUnitario" class=" form-control form-control-plaintext detCtzValUnit" readonly />
+                                        <br /><span asp-validation-for="@Model.DetallesCotizacion[i].valorUnitario" class="text-danger"></span>
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].descuento" type="number" step="0.01" min="0" lang="en" max="1" class=" form-control detCtzDcto" />
+                                        <br /><span asp-validation-for="@Model.DetallesCotizacion[i].descuento" class="text-danger"></span>
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.DetallesCotizacion[i].valorTotal" class="form-control form-control-plaintext detCtzValTotal" readonly />
+                                        <input type="hidden" asp-for="@Model.DetallesCotizacion[i].IsDeleted" />
+                                    </td>
+                                    <td>
+                                        <button id='btnRemove-@i' type="button" class="btn btn-sm btn-danger visible" onclick="DeleteItem(this)">Eliminar</button>
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -211,26 +215,17 @@
                     <a class="col-md-5 btn btn-secondary" asp-action="Index">Cancelar</a>
                 </div>
             </div>
-            <div class="form-group invisible">
-                <select id="mySelect" class="form-control" size="5" style="visibility:hidden; height: auto !important;" asp-items="ViewBag.productos"></select>
-                <input id="txtValue" class="form-control col-2 invisible" />
-            </div>
-            <div id="HiddenDiv" style="visibility:hidden;">
-                <select id="ddlBrandsIdAllProducts" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.IdMarcasAllProducts"></select>
-                <select id="ddlBrandNames" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.nombresMarca"></select>
-                <select id="ddlUnitsIdAllProducts" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.IdUnidadesAllProducts"></select>
-                <select id="ddlUnitNames" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.nombresUnidad"></select>
-                <select id="ddlUnitPrAllProducts" class="form-control" size="1" style="visibility:hidden;" asp-items="ViewBag.PrUnitariosAllProducts"></select>
-                <input id="txtIdMarca" class="form-control col-2 invisible" />
-                <input id="txtNombreMarca" class="form-control col-2 invisible" />
-                <input id="txtIdUnidad" class="form-control col-2 invisible" />
-                <input id="txtNombreUnidad" class="form-control col-2 invisible" />
-                <input id="txtvalorUnitario" class="form-control col-2 invisible" />
+            <div id="HiddenDiv" class="row" style="visibility:hidden;">
+                <div class="col-2" style="visibility:hidden;"><select id="ddlProductNames" class="form-control" size="1" asp-items="ViewBag.nombresProducto"></select></div>
+                <div class="col-2" style="visibility:hidden;"><select id="ddlBrandsIdAllProducts" class="form-control" size="1" asp-items="ViewBag.IdMarcasAllProducts"></select></div>
+                <div class="col-2" style="visibility:hidden;"><select id="ddlBrandNames" class="form-control" size="1" asp-items="ViewBag.nombresMarca"></select></div>
+                <div class="col-2" style="visibility:hidden;"><select id="ddlUnitsIdAllProducts" class="form-control" asp-items="ViewBag.IdUnidadesAllProducts"></select></div>
+                <div class="col-2" style="visibility:hidden;"><select id="ddlUnitNames" class="form-control" size="1" asp-items="ViewBag.nombresUnidad"></select></div>
+                <div class="col-2" style="visibility:hidden;"><select id="ddlUnitPrAllProducts" class="form-control" size="1" asp-items="ViewBag.PrUnitariosAllProducts"></select></div>
             </div>
         </div>
     </div>
 </form>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

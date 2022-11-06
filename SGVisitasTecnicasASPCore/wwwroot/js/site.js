@@ -133,12 +133,10 @@ function rebindvalidatorsCotizacionForm() {
 }
 
 function bloquearCamposDetCtz(lastRowIdx) {
-    var detCtzCodigo = 'DetallesCotizacion_' + lastRowIdx + '__codigoProducto';
-    document.getElementById(detCtzCodigo).readOnly = true;
-    var detCtzDescripcion = 'cmbProductos-' + lastRowIdx;
-    document.getElementById(detCtzDescripcion).setAttribute("disabled", "disabled");
-    var detCtzUbicacion = 'DetallesCotizacion_' + lastRowIdx + '__ubicacion';
-    document.getElementById(detCtzUbicacion).readOnly = true;
+    var detCtzCodigo = 'cmbProductos-' + lastRowIdx;
+    document.getElementById(detCtzCodigo).setAttribute("disabled", "disabled");
+    var detCtzDescripcion = 'DetallesCotizacion_' + lastRowIdx + '__descripcion';
+    document.getElementById(detCtzDescripcion).readOnly = true;
     document.getElementsByClassName('detCtzCantidad')[lastRowIdx].readOnly = true;
     document.getElementsByClassName('detCtzDcto')[lastRowIdx].readOnly = true;
 }
@@ -159,38 +157,39 @@ function fillFieldsProductDetails(cmbProductosIdx) {
 
     if (table !== null) {
         var cmbIdx = cmbProductosIdx.replaceAll('cmbProductos-', '')
-        var IdNameProduct = cmbProductosIdx;
-        var idProducto = document.getElementById(IdNameProduct).value;
+        var idProducto = document.getElementById(cmbProductosIdx).value;
         document.getElementsByClassName('detCtzCodeProduct')[cmbIdx].value = idProducto;
 
-        var lstBoxBrands = document.getElementById("ddlBrandsIdAllProducts");
-        var txtIdMarca = document.getElementById("txtIdMarca");
+        var lstBoxProducts = document.getElementById("ddlProductNames");
+        var itemsP = lstBoxProducts.options;
 
-        var itemsB = lstBoxBrands.options;
+        for (var i = itemsP.length - 1; i >= 0; i--) {
+            if (itemsP[i].value === idProducto) {
+                document.getElementsByClassName('detCtzNameProduct')[cmbIdx].value = itemsP[i].text;
 
-        for (var i = itemsB.length - 1; i >= 0; i--) {
-            if (itemsB[i].value === idProducto) {
-                txtIdMarca.value = itemsB[i].text;
-                SetBrandName(txtIdMarca.value, cmbIdx);
-                //return;
-                var lstBoxUnits = document.getElementById("ddlUnitsIdAllProducts");
-                var txtIdUnidad = document.getElementById("txtIdUnidad");
+                var lstBoxBrands = document.getElementById("ddlBrandsIdAllProducts");
+                var itemsB = lstBoxBrands.options;
 
-                var itemsU = lstBoxUnits.options;
-
-                for (var i = itemsU.length - 1; i >= 0; i--) {
-                    if (itemsU[i].value === idProducto) {
-                        txtIdUnidad.value = itemsU[i].text;
-                        SetUnitName(txtIdUnidad.value, cmbIdx);
+                for (var i = itemsB.length - 1; i >= 0; i--) {
+                    if (itemsB[i].value === idProducto) {
+                        SetBrandName(itemsB[i].text, cmbIdx);
                         //return;
-                        var lstBoxPrices = document.getElementById("ddlUnitPrAllProducts");
-
-                        var itemsP = lstBoxPrices.options;
+                        var lstBoxUnits = document.getElementById("ddlUnitsIdAllProducts");
+                        var itemsU = lstBoxUnits.options;
 
                         for (var i = itemsU.length - 1; i >= 0; i--) {
-                            if (itemsP[i].value === idProducto) {
-                                document.getElementsByClassName('detCtzValUnit')[cmbIdx].value = eval(itemsP[i].text);
-                                return;
+                            if (itemsU[i].value === idProducto) {
+                                SetUnitName(itemsU[i].text, cmbIdx);
+                                //return;
+                                var lstBoxPrices = document.getElementById("ddlUnitPrAllProducts");
+                                var itemsP = lstBoxPrices.options;
+
+                                for (var i = itemsU.length - 1; i >= 0; i--) {
+                                    if (itemsP[i].value === idProducto) {
+                                        document.getElementsByClassName('detCtzValUnit')[cmbIdx].value = eval(itemsP[i].text);
+                                        return;
+                                    }
+                                }
                             }
                         }
                     }
@@ -201,17 +200,13 @@ function fillFieldsProductDetails(cmbProductosIdx) {
     return;
 }
 
-
 function SetBrandName(txtIdMarca, cmbIdx) {
-    var txtBrandName = document.getElementById("txtNombreMarca");
-
     var lstbox = document.getElementById('ddlBrandNames');
     var items = lstbox.options;
 
     for (var i = items.length - 1; i >= 0; i--) {
         if (items[i].value === txtIdMarca) {
-            txtBrandName.value = items[i].text;
-            document.getElementsByClassName('detCtzNameBrand')[cmbIdx].value = txtBrandName.value;
+            document.getElementsByClassName('detCtzNameBrand')[cmbIdx].value = items[i].text;
             return;
         }
     }
@@ -220,15 +215,12 @@ function SetBrandName(txtIdMarca, cmbIdx) {
 
 
 function SetUnitName(txtIdUnidad, cmbIdx) {
-    var txtUnitName = document.getElementById("txtNombreUnidad");
-
     var lstbox = document.getElementById('ddlUnitNames');
     var items = lstbox.options;
 
     for (var i = items.length - 1; i >= 0; i--) {
         if (items[i].value === txtIdUnidad) {
-            txtUnitName.value = items[i].text;
-            document.getElementsByClassName('detCtzNameUnit')[cmbIdx].value = txtUnitName.value;
+            document.getElementsByClassName('detCtzNameUnit')[cmbIdx].value = items[i].text;
             return;
         }
     }
@@ -236,28 +228,46 @@ function SetUnitName(txtIdUnidad, cmbIdx) {
 }
 
 document.addEventListener('change', function (e) {
-    if (e.target.classList.contains('detCtzCantidad') || e.target.classList.contains('detCtzDcto') || e.target.classList.contains('detCtzValTotal')) {
-        table = document.getElementById('DetCtzTable');
-        var rows = table.getElementsByTagName('tr');
-        var lastRowIdx = rows.length - 2;
+    var idElementFired = e.target.id;
 
-        CalcTotalQuoteDetail(lastRowIdx);
+    if (e.target.id.match('DetallesCotizacion') !== null && e.target.id.match('cantidad') !== null && idElementFired !== null) {
+        var indexCantidad = idElementFired.replaceAll('DetallesCotizacion_', '').replaceAll('__cantidad', '');
+        CalcTotalQuoteDetail(indexCantidad);
         calcSubtotalCotizacion();
+        return;
     }
+
+    if (e.target.id.match('DetallesCotizacion') !== null && e.target.id.match('descuento') !== null && idElementFired !== null) {
+        var indexDescuento = idElementFired.replaceAll('DetallesCotizacion_', '').replaceAll('__descuento', '');
+        CalcTotalQuoteDetail(indexDescuento);
+        calcSubtotalCotizacion();
+        return;
+    }
+
 }, false);
 
 
 document.addEventListener('change', function (e) {
-if (e.target.classList.contains('detVtaCantidad') || e.target.classList.contains('detVtaDcto') || e.target.classList.contains('detVtaValTotal')) {
-        table = document.getElementById('DetVtaTable');
-        var rows = table.getElementsByTagName('tr');
-        var lastRowIdx = rows.length - 2;
+    var idHtmlElemFired = e.target.id;
 
-        CalcTotalSaleDetail(lastRowIdx);
+    if (e.target.id.match('DetallesVenta') !== null && e.target.id.match('cantidad') !== null && idHtmlElemFired !== null) {
+        var indexCantidad = idHtmlElemFired.replaceAll('DetallesVenta_', '').replaceAll('__cantidad', '');
+        CalcTotalSaleDetail(indexCantidad);
         calcSubtotalVenta();
         calcIvaVenta();
         calcTotalVenta();
+        return;
     }
+
+    if (e.target.id.match('DetallesVenta') !== null && e.target.id.match('descuento') !== null && idHtmlElemFired !== null) {
+        var indexDescuento = idHtmlElemFired.replaceAll('DetallesVenta_', '').replaceAll('__descuento', '');
+        CalcTotalSaleDetail(indexDescuento);
+        calcSubtotalVenta();
+        calcIvaVenta();
+        calcTotalVenta();
+        return;
+    }
+
 }, false);
 
 function CalcTotalQuoteDetail(lastRowIdx) {

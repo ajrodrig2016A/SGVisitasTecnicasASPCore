@@ -29,10 +29,13 @@ namespace SGVisitasTecnicasASPCore.Models
 
         [NotMapped]
         [StringLength(10)]
+        public string idProducto { get; set; }
+
+        [NotMapped]
+        [StringLength(10)]
         public string codigoProducto { get; set; }
 
         [NotMapped]
-        //[Required(ErrorMessage = "Ingrese la descripción.")]
         [StringLength(int.MaxValue)]
         public string descripcion { get; set; }
 

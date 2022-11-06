@@ -21,11 +21,13 @@ namespace SGVisitasTecnicasASPCore.Controllers
         private readonly IClientes _clientesRepo;
         private readonly IEmpleados _empleadosRepo;
         private readonly IVisitas _visitasRepo;
-        public VisitasController(IVisitas visitasRepo, IClientes clientesRepo, IEmpleados empleadosRepo) // here the repository will be passed by the dependency injection.
+        private readonly IWebHostEnvironment _webHost;
+        public VisitasController(IVisitas visitasRepo, IClientes clientesRepo, IEmpleados empleadosRepo, IWebHostEnvironment webHost) // here the repository will be passed by the dependency injection.
         {
             _visitasRepo = visitasRepo;
             _clientesRepo = clientesRepo;
             _empleadosRepo = empleadosRepo;
+            _webHost = webHost;
         }
 
         public IActionResult Index(string sortExpression = "", string SearchText = "", int pg = 1, int pageSize = 5)
@@ -157,12 +159,20 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 if (visita.ubicacionDispSeguridad.Length < 4 || visita.ubicacionDispSeguridad == null)
                     errMessage = "Ubicación del dispositivo de seguridad  Debe tener al menos 4 caracteres";
 
-                //if (_visitasRepo.IsItemCodeExists(visita.id_visita) == true)
-                //    errMessage = errMessage + " " + " El código de visita " + visita.id_visita + " ya existe";
+                if (visita.File.ContentType != "application/pdf")
+                    errMessage = "Favor seleccione un archivo PDF!";
 
-                //if (_visitasRepo.IsItemExists(clsCliente.nombres) == true)
-                //    errMessage = errMessage + " " + " La visita del cliente " + clsCliente.nombres + " ya existe";
+                if (visita.FileName != null)
+                {
+                    string filePath = Path.Combine(_webHost.WebRootPath, "InformesVisitas", visita.FileName);
+                    System.IO.File.Delete(filePath);
+                }
 
+                if (visita.File.FileName != null)
+                {
+                    string uniqueFileName = GetUploadedFileName(visita);
+                    visita.FileName = uniqueFileName;
+                }
 
                 if (errMessage == "")
                 {
@@ -210,6 +220,10 @@ namespace SGVisitasTecnicasASPCore.Controllers
             visitas visita = new visitas();
             try
             {
+                //delete from wwwroot/image
+                var imagePath = Path.Combine(_webHost.WebRootPath, "InformesVisitas", visita.FileName);
+                if (System.IO.File.Exists(imagePath))
+                    System.IO.File.Delete(imagePath);
                 visita = _visitasRepo.Delete(id);
             }
             catch (Exception ex)
@@ -276,5 +290,21 @@ namespace SGVisitasTecnicasASPCore.Controllers
             return lstItems;
         }
 
+        private string GetUploadedFileName(visitas visita)
+        {
+            string uniqueFileName = null;
+
+            if (visita.File != null)
+            {
+                string uploadsFolder = Path.Combine(_webHost.WebRootPath, "InformesVisitas");
+                uniqueFileName = visita.File.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    visita.File.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
     }
 }

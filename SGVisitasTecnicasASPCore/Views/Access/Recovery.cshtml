@@ -45,16 +45,19 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-2">Crear una nueva contraseña</h1>
                                     </div>
+                                    <p class="mb-4">
+                                        Recuerda que la contraseña debe tener de 8 hasta 12 caracteres!
+                                    </p>
                                     <form class="user" asp-controller="Access" asp-action="Recovery" method="post">
                                         <input asp-for="token" style="display:none" />
                                         <div class="form-group">
                                             <input asp-for="Password" type="password" class="form-control form-control-user"
-                                                   placeholder="Escriba su nueva contraseña..." />
+                                                    placeholder="Escriba su nueva contraseña..." />
                                             <span asp-validation-for="Password" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <input asp-for="Password2" type="password" class="form-control form-control-user"
-                                                   placeholder="Vuelva a escribir la contraseña..." />
+                                                    placeholder="Vuelva a escribir la contraseña..." />
                                             <span asp-validation-for="Password2" class="text-danger"></span>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">Recuperar Contraseña</button>

@@ -41,13 +41,20 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
             DA_Logica _da_usuario = new DA_Logica(_context);
 
+            if (!String.IsNullOrEmpty(_usuario.Correo))
+                _usuario.Correo = Utils.cifrarTextoAES(_usuario.Correo, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg);
+
+            if (!String.IsNullOrEmpty(_usuario.Clave))
+                _usuario.Clave = Utils.cifrarTextoAES(_usuario.Clave, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg);
+                string desClave = Utils.descifrarTextoAES(_usuario.Clave, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg);
+
             var usuario = _da_usuario.ValidarUsuario(_usuario.Correo, _usuario.Clave);
 
             if (usuario != null)
             {
                 claims = new List<Claim> {
                     new Claim(ClaimTypes.Name, usuario.Nombre),
-                    new Claim("Correo", usuario.Correo),
+                    new Claim("Correo", Utils.cifrarTextoAES(_usuario.Correo, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg)),
                     new Claim(ClaimTypes.Role, usuario.Rol)
                 };
 
@@ -90,6 +97,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
                     return View(model);
                 }
 
+                if (!String.IsNullOrEmpty(model.email))
+                    model.email = Utils.cifrarTextoAES(model.email, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg);
+
                 string token = Utils.GetSHA256(Guid.NewGuid().ToString());
 
                 var oUser = _context.usuarios.Where(d => d.Correo == model.email).FirstOrDefault();
@@ -104,7 +114,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                     string user = oUser.Nombre;
                     string url = "http://" + HttpContext.Request.Host.Value + "/Access/Recovery?token=" + oUser.token_recovery;
                     string emailOrigen = "ventas.saimec@gmail.com";
-                    string emailDestino = oUser.Correo;
+                    string emailDestino = Utils.descifrarTextoAES(oUser.Correo, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg);
                     string asunto = "SAIMEC - Recuperación de Contraseña";
                     string urlRecovery = "<a href='"+url+"'>Click para recuperar</a>";
                     bool statusEmailSend = Utils.SendEmailRecuperarClave(emailOrigen, emailDestino, asunto, htmlFilePath, user, urlRecovery);
@@ -160,9 +170,21 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                 var oUser = _context.usuarios.Where(d => d.token_recovery == model.token).FirstOrDefault();
 
-                if (oUser != null && (model.Password.Equals(model.Password2)))
+                if (oUser != null && (model.Password.Length < 8 || model.Password.Length > 20))
                 {
-                    oUser.Clave = model.Password;
+                    ViewBag.Message = "La nueva contraseña debe tener mínimo 8 caracteres y máximo 20 caracteres!";
+                    return View(model);
+                }
+
+                if (!model.Password.Equals(model.Password2))
+                {
+                    ViewBag.Message = "Las contraseñas no son iguales. Favor ingréselas nuevamente!";
+                    return View(model);
+                }
+
+                if (oUser != null)
+                {
+                    oUser.Clave = Utils.cifrarTextoAES(model.Password, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg);
                     oUser.token_recovery = null;
                     _context.Entry(oUser).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
@@ -188,7 +210,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 {
                     ViewBag.Error = "Token expirado.";
                 }
-                
+
             }
             catch (Exception ex)
             {

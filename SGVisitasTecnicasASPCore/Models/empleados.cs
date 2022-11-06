@@ -44,7 +44,6 @@ namespace SGVisitasTecnicasASPCore.Models
         public string telefono { get; set; }
 
         [Required(ErrorMessage = "Ingrese el password.")]
-        [StringLength(20)]
         public string password { get; set; }
 
         [Required(ErrorMessage = "Seleccione el perfil.")]

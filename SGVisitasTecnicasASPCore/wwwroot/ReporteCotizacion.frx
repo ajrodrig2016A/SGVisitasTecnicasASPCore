@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="08/27/2022 16:45:51" ReportInfo.Modified="09/11/2022 13:09:37" ReportInfo.CreatorVersion="2022.2.0.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/27/2022 16:45:51" ReportInfo.Modified="11/03/2022 16:50:42" ReportInfo.CreatorVersion="2022.2.0.0">
   <Dictionary>
-    <MySqlDataConnection Name="Connection" ConnectionString="rijcmlqfO676v1IWzs2frIWzLKxr/b7cp1j0ezMM7v4OjSGbLgHle0V6qFZwPwq4OqxrylaFxphKZCX5YdLan6R1r57XfdChosqmPk8tezNSuhpd1kbz2Ka3sGBpXKltksO1sQ5Neg6t3pkX4p8LUiVafIjtQ==">
+    <MySqlDataConnection Name="Connection" ConnectionString="rijcmlqfO676v1IWzs2frIWzLKxr/b7cp1j0ezMM7v4OjSGbLgHle0V6qFZwPwq4OqxrylaFxphKZCX5YdLan6R1r57XfdChosqmPk8tezNSuhpd1kbz2Ka3sGBpXKltksO1sQ5UzV7KGbClkAfRD64ZIgkmQ==">
       <TableDataSource Name="Table" Alias="CotizacionTable" DataType="System.Int32" Enabled="true" SelectCommand="SELECT C.id_cotizacion AS 'ID COTIZACION', C.codigo AS 'NRO COTIZACION', c1.nombres AS 'CLI NOMBRES', c1.apellidos AS 'CLI APELLIDOS', c1.direccion AS 'DIRECCION DEL CLIENTE', c1.numero_contacto AS 'TELEFONO DEL CLIENTE', C.servicio AS 'NOMBRE DEL SERVICIO', C.subtotal AS 'SUBTOTAL', C.observaciones AS 'OBSERVACIONES', C.sector_inmueble AS 'LUGAR DE ENTREGA', C.tiempo_entrega AS 'TIEMPO DE ENTREGA', C.forma_pago AS 'FORMA DE PAGO', C.garantia_equipos AS 'GARANTIA DE EQUIPOS', C.validez AS 'VALIDEZ DE LA OFERTA', E.nombres AS 'EMP NOMBRES', E.apellidos AS 'EMP APELLIDOS'&#13;&#10;FROM (`cotizaciones` C INNER JOIN `clientes` c1 ON C.id_cliente = c1.id_cliente &#13;&#10;) INNER JOIN `empleados` E ON C.id_empleado = E.id_empleado &#13;&#10;&#13;&#10;">
         <Column Name="ID COTIZACION" DataType="System.Int32"/>
         <Column Name="NRO COTIZACION" DataType="System.String"/>
@@ -54,7 +54,7 @@
       <TextObject Name="Text17" Left="113.4" Top="264.6" Width="538.65" Height="18.9" CanGrow="true" Text="[CotizacionTable.NOMBRE DEL SERVICIO]" HorzAlign="Center" Font="Calibri, 11.25pt, style=Bold"/>
     </ReportTitleBand>
     <PageHeaderBand Name="PageHeader1" Top="296.95" Width="793.8" Height="18.9">
-      <TextObject Name="Text18" Left="18.9" Width="85.05" Height="18.9" Text="ITEM" HorzAlign="Center" Font="Calibri, 9.75pt, style=Bold"/>
+      <TextObject Name="Text18" Left="18.9" Width="85.05" Height="18.9" Text="CÓDIGO" HorzAlign="Center" Font="Calibri, 9.75pt, style=Bold"/>
       <TextObject Name="Text19" Left="113.4" Width="103.95" Height="18.9" Text="DESCRIPCIÓN" HorzAlign="Center" Font="Calibri, 9.75pt, style=Bold"/>
       <TextObject Name="Text20" Left="226.8" Width="75.6" Height="18.9" Text="MARCA" HorzAlign="Center" Font="Calibri, 9.75pt, style=Bold"/>
       <TextObject Name="Text21" Left="311.85" Width="94.5" Height="18.9" Text="CANTIDAD" HorzAlign="Center" Font="Calibri, 9.75pt, style=Bold"/>

@@ -73,8 +73,14 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 if (!Utils.VerificaIdentificacion(item.numero_documento))
                     errMessage = "Ingrese un número de documento válido.";
 
-                if (_Repo.IsCustomerExists(item.nombres) == true)
-                    errMessage = errMessage + " " + " nombres " + item.nombres + " ya existe";
+                if (String.IsNullOrEmpty(item.password) && (item.password.Length < 8 || item.password.Length > 20))
+                    errMessage = "La contraseña debe tener mínimo 8 caracteres y máximo 20 caracteres!";
+
+                if (!String.IsNullOrEmpty(item.email))
+                    item.email = Utils.cifrarTextoAES(item.email, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg);
+
+                if (!String.IsNullOrEmpty(item.password))
+                    item.password = Utils.cifrarTextoAES(item.password, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg);
 
                 if (errMessage == "")
                 {
@@ -102,6 +108,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
         public IActionResult Details(int id) //Read
         {
             clientes item = _Repo.GetItem(id);
+            item.email = Utils.descifrarTextoAES(item.email, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg);
             return View(item);
         }
 
@@ -109,7 +116,8 @@ namespace SGVisitasTecnicasASPCore.Controllers
         public IActionResult Edit(int id)
         {
             clientes item = _Repo.GetItem(id);
-            item.password = Utils.Mask(item.password, '*', 3, Utils.MaskStyle.All);
+            item.email = Utils.descifrarTextoAES(item.email, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg);
+            item.password = Utils.descifrarTextoAES(item.password, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg);
             TempData.Keep();
             return View(item);
         }
@@ -127,6 +135,15 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                 if (_Repo.IsCustomerExists(item.nombres, item.id_cliente) == true)
                     errMessage = errMessage + item.nombres + " ya existe";
+
+                if (String.IsNullOrEmpty(item.password) && (item.password.Length < 8 || item.password.Length > 20))
+                    errMessage = "La contraseña debe tener mínimo 8 caracteres y máximo 20 caracteres!";
+
+                if (!String.IsNullOrEmpty(item.email))
+                    item.email = Utils.cifrarTextoAES(item.email, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg);
+
+                if (!String.IsNullOrEmpty(item.password))
+                    item.password = Utils.cifrarTextoAES(item.password, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg);
 
                 if (errMessage == "")
                 {
@@ -160,6 +177,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
         public IActionResult Delete(int id)
         {
             clientes item = _Repo.GetItem(id);
+            item.email = Utils.descifrarTextoAES(item.email, Utils.palabraPasoArg, Utils.valorRGBSaltArg, Utils.MD5Arg, Utils.iteracionesArg, Utils.vectorInicialArg, Utils.tamanoClaveArg);
             TempData.Keep();
             return View(item);
         }

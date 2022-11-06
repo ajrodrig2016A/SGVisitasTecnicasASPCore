@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -43,6 +45,13 @@ namespace SGVisitasTecnicasASPCore.Models
         [Required(ErrorMessage = "Seleccione el estado.")]
         [StringLength(50)]
         public string estado { get; set; }
+
+        [DisplayName("File Name")]
+        public string FileName { get; set; }
+
+        [NotMapped]
+        [DisplayName("Subir archivo")]
+        public IFormFile File { get; set; }
 
         [Required(ErrorMessage = "Seleccione el empleado.")]
         [ForeignKey("Empleado")]

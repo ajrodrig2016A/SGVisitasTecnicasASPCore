@@ -70,6 +70,8 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
             ViewBag.productos = GetProductos();
 
+            ViewBag.nombresProducto = GetDescripcionProducto();
+
             ViewBag.nombresUnidad = GetUnidades();
 
             ViewBag.IdUnidadesAllProducts = GetIdUnidadesAllProducts();
@@ -90,7 +92,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
             for (int i = 0; i < cotizacion.DetallesCotizacion.Count; i++)
             {
                 cotizacion.DetallesCotizacion[i].codigoProducto = cotizacion.DetallesCotizacion[i].id_producto.ToString();
-                cotizacion.DetallesCotizacion[i].descripcion = cotizacion.DetallesCotizacion[i].Producto.nombre;
+                cotizacion.DetallesCotizacion[i].descripcion = cotizacion.DetallesCotizacion[i].Producto.descripcion;
                 cotizacion.DetallesCotizacion[i].marca = cotizacion.DetallesCotizacion[i].Producto.Marca.nombre;
                 cotizacion.DetallesCotizacion[i].unidad = cotizacion.DetallesCotizacion[i].Producto.Unidad.nombre;
             }
@@ -130,8 +132,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                 for (int i = 0; i < cotizacion.DetallesCotizacion.Count; i++)
                 {
-                    cotizacion.DetallesCotizacion[i].id_producto = int.Parse(cotizacion.DetallesCotizacion[i].codigoProducto.Trim());
-                    cotizacion.DetallesCotizacion[i].descripcion = _context.productos.Where(p => p.id_producto == cotizacion.DetallesCotizacion[i].id_producto).Select(c => c.nombre).FirstOrDefault();
+                    cotizacion.DetallesCotizacion[i].id_producto = int.Parse(cotizacion.DetallesCotizacion[i].idProducto.Trim());
+                    cotizacion.DetallesCotizacion[i].codigoProducto = _context.productos.Where(p => p.id_producto == cotizacion.DetallesCotizacion[i].id_producto).Select(c => c.nombre).FirstOrDefault();
+                    cotizacion.DetallesCotizacion[i].descripcion = _context.productos.Where(p => p.id_producto == cotizacion.DetallesCotizacion[i].id_producto).Select(c => c.descripcion).FirstOrDefault();
                 }
 
                 //if (_cotizacionesRepo.IsQuoteExists(cotizacion.nombre_cliente) == true)
@@ -186,7 +189,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
             for (int i = 0; i < cotizacion.DetallesCotizacion.Count; i++)
             {
                 cotizacion.DetallesCotizacion[i].codigoProducto = cotizacion.DetallesCotizacion[i].id_producto.ToString();
-                cotizacion.DetallesCotizacion[i].descripcion = cotizacion.DetallesCotizacion[i].Producto.nombre;
+                cotizacion.DetallesCotizacion[i].descripcion = cotizacion.DetallesCotizacion[i].Producto.descripcion;
                 cotizacion.DetallesCotizacion[i].marca = cotizacion.DetallesCotizacion[i].Producto.Marca.nombre;
                 cotizacion.DetallesCotizacion[i].unidad = cotizacion.DetallesCotizacion[i].Producto.Unidad.nombre;
             }
@@ -276,7 +279,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
             for (int i = 0; i < cotizacion.DetallesCotizacion.Count; i++)
             {
                 cotizacion.DetallesCotizacion[i].codigoProducto = cotizacion.DetallesCotizacion[i].id_producto.ToString();
-                cotizacion.DetallesCotizacion[i].descripcion = cotizacion.DetallesCotizacion[i].Producto.nombre;
+                cotizacion.DetallesCotizacion[i].descripcion = cotizacion.DetallesCotizacion[i].Producto.descripcion;
                 cotizacion.DetallesCotizacion[i].marca = cotizacion.DetallesCotizacion[i].Producto.Marca.nombre;
                 cotizacion.DetallesCotizacion[i].unidad = cotizacion.DetallesCotizacion[i].Producto.Unidad.nombre;
             }
@@ -440,6 +443,28 @@ namespace SGVisitasTecnicasASPCore.Controllers
             return lstQuotes;
         }
 
+        private List<SelectListItem> GetDescripcionProducto()
+        {
+            var lstQuotes = new List<SelectListItem>();
+            List<productos> items = _context.productos.ToList();
+
+            lstQuotes = items.Select(emp => new SelectListItem()
+            {
+                Value = emp.id_producto.ToString(),
+                Text = emp.descripcion
+            }).ToList();
+
+            var defQuote = new SelectListItem()
+            {
+                Value = null,
+                Text = "----Seleccione el producto----"
+            };
+
+            lstQuotes.Insert(0, defQuote);
+
+            return lstQuotes;
+        }
+
         private List<SelectListItem> GetUnidades()
         {
             var lstQuotes = new List<SelectListItem>();
@@ -450,14 +475,6 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 Value = emp.id_unidad.ToString(),
                 Text = emp.nombre
             }).ToList();
-
-            var defQuote = new SelectListItem()
-            {
-                Value = null,
-                Text = "----Seleccione la unidad----"
-            };
-
-            lstQuotes.Insert(0, defQuote);
 
             return lstQuotes;
         }

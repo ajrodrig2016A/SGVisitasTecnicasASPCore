@@ -76,6 +76,10 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label asp-for="FileName" class="control-label">Nombre Archivo (Informe de la Visita)</label>
+                        <input asp-for="FileName" class="form-control" readonly />
+                    </div>
+                    <div class="form-group">
                         <label asp-for="id_cliente" class="control-label">Cliente</label>
                         <div style="display: inherit;">
                             <select asp-for="id_cliente" class="form-control" asp-items="ViewBag.Clientes" disabled="disabled"></select>

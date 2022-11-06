@@ -36,10 +36,9 @@ namespace SGVisitasTecnicasASPCore.Repositories
             _context.empleados.Attach(empleado);
             _context.Entry(empleado).State = EntityState.Modified;
             Usuario user = new Usuario();
-            user = _context.usuarios.Where(u => u.Correo.Trim() == empleado.email.Trim()).FirstOrDefault();
+            user = _context.usuarios.Where(u => u.Nombre.Trim() == empleado.nombres.Trim()).FirstOrDefault();
             if (user != null && (!empleado.nombres.Trim().Equals(user.Nombre.Trim()) || !empleado.email.Trim().Equals(user.Correo.Trim()) || !empleado.password.Trim().Equals(user.Clave.Trim()) || !empleado.perfil.Trim().Equals(user.Rol.Trim())))
-            {
-                user.Nombre = empleado.nombres;
+            {                
                 user.Correo = empleado.email;
                 user.Clave = empleado.password;
                 user.Rol = empleado.perfil;

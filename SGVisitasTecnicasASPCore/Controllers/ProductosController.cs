@@ -32,22 +32,22 @@ namespace SGVisitasTecnicasASPCore.Controllers
             _categoriasRepo = categoriasRepo;
         }
 
-        private string GetUploadedFileName(productos producto)
+        private string GetUploadedImageName(productos producto)
         {
-            string uniqueFileName = null;
+            string uniqueImageName = null;
 
             if (producto.ImageFile != null)
             {
                 string uploadsFolder = Path.Combine(_webHost.WebRootPath, "image");
-                uniqueFileName = producto.ImageFile.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                uniqueImageName = producto.ImageFile.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueImageName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     producto.ImageFile.CopyTo(fileStream);
                 }
             }
             //ViewData["message"] = $"{producto.ImageFile.Length} bytes uploaded successfully!";
-            return uniqueFileName;
+            return uniqueImageName;
         }
 
 
@@ -125,7 +125,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                 if (errMessage == "")
                 {
 
-                    string uniqueFileName = GetUploadedFileName(product);
+                    string uniqueFileName = GetUploadedImageName(product);
                     product.ImageName = uniqueFileName;
 
 
@@ -193,7 +193,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
                     string filePath = Path.Combine(_webHost.WebRootPath, "image", product.ImageName);
                     System.IO.File.Delete(filePath);
 
-                    string uniqueFileName = GetUploadedFileName(product);
+                    string uniqueFileName = GetUploadedImageName(product);
                     product.ImageName = uniqueFileName;
                 }
 

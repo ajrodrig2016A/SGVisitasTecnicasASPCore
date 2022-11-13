@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="08/28/2022 12:28:50" ReportInfo.Modified="09/25/2022 11:38:00" ReportInfo.CreatorVersion="2022.2.0.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/28/2022 12:28:50" ReportInfo.Modified="11/13/2022 11:49:23" ReportInfo.CreatorVersion="2022.2.0.0">
   <Dictionary>
-    <MySqlDataConnection Name="Connection" ConnectionString="rijcmlqfO676v1IWzs2frIWzLKxr/b7cp1j0ezMM7v4OjSGbLgHle0V6qFZwPwq4OqxrylaFxphKZCX5YdLan6R1r57XfdChosqmPk8tezNSuhpd1kbz2Ka3sGBpXKltksO1sQ5L3Sf0sc/Ht8L94qfZ3KroQ==">
+    <MySqlDataConnection Name="Connection" ConnectionString="rijcmlqfO676v1IWzs2frIWzLKxr/b7cp1j0ezMM7v4OjSGbLi3QOLQEKGCC+M6OEbBX4MfzeCdypE2nFHDVAF3gWLQjdycrvet10SEzGJxs75lE4RJftLSWg9CD5TqEUmN+Ev3">
       <TableDataSource Name="Table" Alias="VentasTable" DataType="System.Int32" Enabled="true" SelectCommand="SELECT C.id_cliente AS 'ID CLIENTE', V.id_venta AS 'ID VTA', V.codigo_venta AS 'NRO VENTA', V.numero_factura AS 'NRO FACTURA', C.nombres AS 'CLI NOMBRES', C.apellidos AS 'CLI APELLIDOS', V.fecha_creacion AS 'FECHA DE CREACION', V.fecha_cierre AS 'FECHA DE CIERRE', V.estado AS 'ESTADO VTA', V.subtotal AS 'SUBTOTAL', V.Iva AS 'IVA', V.total AS 'TOTAL', V.observaciones AS 'OBSERVACIONES'&#13;&#10;FROM `ventas` V INNER JOIN `clientes` C ON V.id_cliente = C.id_cliente &#13;&#10;WHERE V.id_cliente = @prmIdCliente&#13;&#10;">
         <Column Name="NRO VENTA" DataType="System.String"/>
         <Column Name="NRO FACTURA" DataType="System.String"/>

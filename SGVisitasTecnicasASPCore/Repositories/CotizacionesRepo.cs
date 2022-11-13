@@ -156,9 +156,7 @@ namespace SGVisitasTecnicasASPCore.Repositories
 
         public cotizaciones GetQuote(int id)
         {
-            cotizaciones item = _context.cotizaciones.Where(u => u.id_cotizacion == id)
-                .Include(d => d.DetallesCotizacion)
-                .FirstOrDefault();
+            cotizaciones item = _context.cotizaciones.Include(d => d.DetallesCotizacion).Where(u => u.id_cotizacion == id).FirstOrDefault();
             return item;
         }
         public bool IsQuoteExists(string name)

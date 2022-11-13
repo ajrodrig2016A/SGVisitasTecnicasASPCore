@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="08/27/2022 16:45:51" ReportInfo.Modified="11/03/2022 16:50:42" ReportInfo.CreatorVersion="2022.2.0.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/27/2022 16:45:51" ReportInfo.Modified="11/13/2022 11:48:19" ReportInfo.CreatorVersion="2022.2.0.0">
   <Dictionary>
-    <MySqlDataConnection Name="Connection" ConnectionString="rijcmlqfO676v1IWzs2frIWzLKxr/b7cp1j0ezMM7v4OjSGbLgHle0V6qFZwPwq4OqxrylaFxphKZCX5YdLan6R1r57XfdChosqmPk8tezNSuhpd1kbz2Ka3sGBpXKltksO1sQ5UzV7KGbClkAfRD64ZIgkmQ==">
+    <MySqlDataConnection Name="Connection" ConnectionString="rijcmlqfO676v1IWzs2frIWzLKxr/b7cp1j0ezMM7v4OjSGbLi3QOLQEKGCC+M6OEbBX4MfzeCdypE2nFHDVAF3gWLQjdycrvet10SEzGJxs75lE4RIUxq9dlRvqQzZblCqpn8O">
       <TableDataSource Name="Table" Alias="CotizacionTable" DataType="System.Int32" Enabled="true" SelectCommand="SELECT C.id_cotizacion AS 'ID COTIZACION', C.codigo AS 'NRO COTIZACION', c1.nombres AS 'CLI NOMBRES', c1.apellidos AS 'CLI APELLIDOS', c1.direccion AS 'DIRECCION DEL CLIENTE', c1.numero_contacto AS 'TELEFONO DEL CLIENTE', C.servicio AS 'NOMBRE DEL SERVICIO', C.subtotal AS 'SUBTOTAL', C.observaciones AS 'OBSERVACIONES', C.sector_inmueble AS 'LUGAR DE ENTREGA', C.tiempo_entrega AS 'TIEMPO DE ENTREGA', C.forma_pago AS 'FORMA DE PAGO', C.garantia_equipos AS 'GARANTIA DE EQUIPOS', C.validez AS 'VALIDEZ DE LA OFERTA', E.nombres AS 'EMP NOMBRES', E.apellidos AS 'EMP APELLIDOS'&#13;&#10;FROM (`cotizaciones` C INNER JOIN `clientes` c1 ON C.id_cliente = c1.id_cliente &#13;&#10;) INNER JOIN `empleados` E ON C.id_empleado = E.id_empleado &#13;&#10;&#13;&#10;">
         <Column Name="ID COTIZACION" DataType="System.Int32"/>
         <Column Name="NRO COTIZACION" DataType="System.String"/>

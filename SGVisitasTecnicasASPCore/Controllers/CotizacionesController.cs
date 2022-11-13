@@ -188,7 +188,8 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
             for (int i = 0; i < cotizacion.DetallesCotizacion.Count; i++)
             {
-                cotizacion.DetallesCotizacion[i].codigoProducto = cotizacion.DetallesCotizacion[i].id_producto.ToString();
+                cotizacion.DetallesCotizacion[i].idProducto = cotizacion.DetallesCotizacion[i].id_producto.ToString();
+                cotizacion.DetallesCotizacion[i].codigoProducto = cotizacion.DetallesCotizacion[i].Producto.nombre;
                 cotizacion.DetallesCotizacion[i].descripcion = cotizacion.DetallesCotizacion[i].Producto.descripcion;
                 cotizacion.DetallesCotizacion[i].marca = cotizacion.DetallesCotizacion[i].Producto.Marca.nombre;
                 cotizacion.DetallesCotizacion[i].unidad = cotizacion.DetallesCotizacion[i].Producto.Unidad.nombre;
@@ -218,8 +219,9 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                 for (int i = 0; i < cotizacion.DetallesCotizacion.Count; i++)
                 {
-                    cotizacion.DetallesCotizacion[i].id_producto = int.Parse(cotizacion.DetallesCotizacion[i].codigoProducto.Trim());
-                    cotizacion.DetallesCotizacion[i].descripcion = _context.productos.Where(p => p.id_producto == cotizacion.DetallesCotizacion[i].id_producto).Select(c => c.nombre).FirstOrDefault();
+                    cotizacion.DetallesCotizacion[i].id_producto = int.Parse(cotizacion.DetallesCotizacion[i].idProducto.Trim());
+                    cotizacion.DetallesCotizacion[i].codigoProducto = _context.productos.Where(p => p.id_producto == cotizacion.DetallesCotizacion[i].id_producto).Select(c => c.nombre).FirstOrDefault();
+                    cotizacion.DetallesCotizacion[i].descripcion = _context.productos.Where(p => p.id_producto == cotizacion.DetallesCotizacion[i].id_producto).Select(c => c.descripcion).FirstOrDefault();
                 }
 
                 //if (_cotizacionesRepo.IsQuoteExists(cotizacion.nombre_cliente) == true)
@@ -227,7 +229,7 @@ namespace SGVisitasTecnicasASPCore.Controllers
 
                 foreach (var item in cotizacion.DetallesCotizacion.ToList())
                 {
-                    if (String.IsNullOrEmpty(item.descripcion) || String.IsNullOrEmpty(item.marca) || String.IsNullOrEmpty(item.unidad))
+                    if (String.IsNullOrEmpty(item.codigoProducto) || String.IsNullOrEmpty(item.descripcion) || String.IsNullOrEmpty(item.marca) || String.IsNullOrEmpty(item.unidad))
                         errMessage = "Campos del detalle están incompletos, favor llenarlos.";
                 }
 

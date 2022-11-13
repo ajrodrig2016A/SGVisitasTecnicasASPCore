@@ -127,7 +127,9 @@
                                         <input asp-for="@Model.DetallesCotizacion[i].idProducto" class="form-control form-control-plaintext detCtzCodeProduct" readonly />
                                     </td>
                                     <td>
-                                        <select id='cmbProductos-@i' asp-for="@Model.DetallesCotizacion[i].codigoProducto" class="form-control" asp-items="ViewBag.productos" style="width: auto;" ></select>
+                                        <select id='cmbProductos-@i' asp-for="@Model.DetallesCotizacion[i].codigoProducto" class="form-control" asp-items="ViewBag.productos" style="width: auto;">
+                                            <option value="@Model.DetallesCotizacion[i].idProducto">@Model.DetallesCotizacion[i].codigoProducto</option>
+                                        </select>
                                         <input type="hidden" asp-for="@Model.DetallesCotizacion[i].IsSelected" />
                                     </td>
                                     <td>
